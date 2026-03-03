@@ -84,10 +84,12 @@ section h2 {
   border-radius: 10px;
   padding: 1.5rem;
   position: relative;
+  height: 420px;
 }
 
 #playoffChart {
-  max-height: 480px;
+  width: 100% !important;
+  height: 100% !important;
 }
 
 /* Base table styles */
@@ -192,6 +194,20 @@ tbody tr.out-playoffs td:nth-child(2) {
   font-weight: 600;
   min-width: 10rem;
   text-align: center;
+}
+
+/* Scroll wrapper for narrow tables (standings, top scorers) */
+.table-scroll {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  border: 1px solid #1e2535;
+  border-radius: 10px;
+}
+
+.table-scroll table {
+  border: none;
+  border-radius: 0;
+  min-width: 380px;
 }
 
 /* Wide table wrapper for weekly tables */
@@ -312,13 +328,28 @@ footer {
 
 /* Responsive */
 @media (max-width: 600px) {
+  .container {
+    padding: 1.25rem 0.75rem;
+  }
+
   header h1 {
     font-size: 1.4rem;
   }
 
+  .chart-wrapper {
+    height: 320px;
+    padding: 1rem 0.5rem;
+  }
+
   tbody td, thead th {
-    padding: 0.6rem 0.6rem;
+    padding: 0.55rem 0.6rem;
     font-size: 0.82rem;
+  }
+
+  /* Hide MLB team column in top scorers — saves enough width to fit comfortably */
+  #top-scorers-table thead th:nth-child(3),
+  #top-scorers-table tbody td:nth-child(3) {
+    display: none;
   }
 
   .wide-table-wrapper thead th,
