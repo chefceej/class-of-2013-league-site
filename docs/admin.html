@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin — Week Config</title>
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>Week Config Admin</h1>
+      <p class="subtitle">Map ESPN weeks to matchup weeks</p>
+    </header>
+
+    <section>
+      <p class="admin-instructions">
+        ESPN sometimes creates short partial weeks that the league combines into one matchup week.
+        Use the <strong>Matchup Week</strong> inputs below to assign each ESPN week to the correct matchup week.
+        To merge two ESPN weeks (e.g. weeks 3 and 4) into one matchup week, set both to the same number.
+        Weeks must be assigned in non-decreasing order.
+      </p>
+    </section>
+
+    <section class="table-section">
+      <h2>ESPN Week Scores</h2>
+      <div id="admin-error" style="color:#f87171;display:none;margin-bottom:1rem;"></div>
+      <div class="wide-table-wrapper">
+        <table id="admin-table">
+          <thead id="admin-head"></thead>
+          <tbody id="admin-body"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <div class="admin-actions">
+      <button id="download-btn" class="btn">Download week_config.json</button>
+    </div>
+
+    <section class="admin-instructions-section">
+      <h2>Workflow After Editing</h2>
+      <ol>
+        <li>Click <strong>Download week_config.json</strong></li>
+        <li>Move the downloaded file to <code>docs/data/week_config.json</code> in your local repo</li>
+        <li>Run <code>python3 src/fetch_data.py</code> locally to regenerate league data</li>
+        <li>Run <code>git add docs/data/ &amp;&amp; git commit -m "chore: update week config" &amp;&amp; git push</code></li>
+      </ol>
+    </section>
+
+    <footer>
+      <p>Admin page — not linked from main site</p>
+    </footer>
+  </div>
+
+  <script src="js/admin.js"></script>
+</body>
+</html>

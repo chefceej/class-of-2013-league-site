@@ -1,5 +1,6 @@
 import os
 import json
+from collections import defaultdict
 from datetime import datetime, timezone
 
 # espn_api uses an outdated base URL; patch it before importing League
@@ -20,6 +21,18 @@ SEASON_YEAR = 2025
 TOTAL_WEEKS = 19
 PLAYOFF_CUTOFF = 6
 OUTPUT_PATH = os.path.join(os.path.dirname(__file__), "..", "docs", "data", "league_data.json")
+WEEK_CONFIG_PATH = os.path.join(os.path.dirname(__file__), "..", "docs", "data", "week_config.json")
+
+
+def load_week_config(path, total_espn_weeks):
+    try:
+        with open(path) as f:
+            cfg = json.load(f)
+        mapping = cfg["espn_to_matchup"]
+        assert len(mapping) == total_espn_weeks
+        return mapping
+    except Exception:
+        return list(range(1, total_espn_weeks + 1))  # fallback: 1:1
 
 
 def assign_ranking_points(scores_by_team_id, num_teams):
@@ -52,7 +65,15 @@ def main():
         raise RuntimeError("No teams found in league — check ESPN credentials or league ID.")
 
     num_teams = len(league.teams)
-    current_week = min(league.current_week, TOTAL_WEEKS)
+
+    # Load week config
+    espn_to_matchup = load_week_config(WEEK_CONFIG_PATH, TOTAL_WEEKS)
+    total_matchup_weeks = max(espn_to_matchup)
+    matchup_to_espn = defaultdict(list)
+    for idx, mw in enumerate(espn_to_matchup):
+        matchup_to_espn[mw].append(idx + 1)
+    current_espn_week = min(league.current_week, TOTAL_WEEKS)
+    current_matchup_week = espn_to_matchup[current_espn_week - 1]
 
     # Build team lookup keyed by team_id
     team_data = {}
@@ -63,46 +84,57 @@ def main():
             "team_abbrev": team.team_abbrev,
             "wins": team.wins,
             "losses": team.losses,
-            "scores_by_week": [None] * TOTAL_WEEKS,
-            "ranking_points_by_week": [None] * TOTAL_WEEKS,
-            "cumulative_points_by_week": [None] * TOTAL_WEEKS,
-            "normalized_by_week": [None] * TOTAL_WEEKS,
+            "scores_by_week": [None] * total_matchup_weeks,
+            "ranking_points_by_week": [None] * total_matchup_weeks,
+            "cumulative_points_by_week": [None] * total_matchup_weeks,
+            "normalized_by_week": [None] * total_matchup_weeks,
         }
 
-    # Fetch weekly scores and compute rankings
-    cumulative = {tid: 0.0 for tid in team_data}
+    # Pass 1: Collect raw ESPN scores into matchup-week accumulators
+    raw_scores = defaultdict(lambda: defaultdict(float))  # mw -> {team_id: summed score}
+    raw_espn_week_scores = {}  # espn_week -> {team_id: score}
 
-    for week in range(1, current_week + 1):
-        week_idx = week - 1
-        matchups = league.scoreboard(week)
-
-        scores_this_week = {}
+    for espn_week in range(1, current_espn_week + 1):
+        mw = espn_to_matchup[espn_week - 1]
+        matchups = league.scoreboard(espn_week)
+        wk_scores = {}
         for matchup in matchups:
             home_id = matchup.home_team.team_id
             away_id = matchup.away_team.team_id
             if home_id in team_data:
-                scores_this_week[home_id] = matchup.home_final_score
-                team_data[home_id]["scores_by_week"][week_idx] = matchup.home_final_score
+                raw_scores[mw][home_id] += matchup.home_final_score
+                wk_scores[home_id] = matchup.home_final_score
             if away_id in team_data:
-                scores_this_week[away_id] = matchup.away_final_score
-                team_data[away_id]["scores_by_week"][week_idx] = matchup.away_final_score
+                raw_scores[mw][away_id] += matchup.away_final_score
+                wk_scores[away_id] = matchup.away_final_score
+        raw_espn_week_scores[espn_week] = wk_scores
 
-        if not scores_this_week:
+    # Pass 2: Compute ranking points, cumulative, normalized per matchup week
+    cumulative = {tid: 0.0 for tid in team_data}
+    for mw in range(1, current_matchup_week + 1):
+        mw_idx = mw - 1
+        scores_this_mw = dict(raw_scores[mw])
+        if not scores_this_mw:
             continue
-
-        ranking_pts = assign_ranking_points(scores_this_week, num_teams)
+        for tid, score in scores_this_mw.items():
+            team_data[tid]["scores_by_week"][mw_idx] = round(score, 2)
+        ranking_pts = assign_ranking_points(scores_this_mw, num_teams)
         for tid, pts in ranking_pts.items():
-            team_data[tid]["ranking_points_by_week"][week_idx] = pts
+            team_data[tid]["ranking_points_by_week"][mw_idx] = pts
             cumulative[tid] += pts
-            team_data[tid]["cumulative_points_by_week"][week_idx] = cumulative[tid]
-
-        # Normalize: sorted cumulative values, 6th place (index 5) = 0
+            team_data[tid]["cumulative_points_by_week"][mw_idx] = cumulative[tid]
         sorted_cumulative = sorted(cumulative.values(), reverse=True)
         cutoff_value = sorted_cumulative[PLAYOFF_CUTOFF - 1]
         for tid in team_data:
-            team_data[tid]["normalized_by_week"][week_idx] = round(
+            team_data[tid]["normalized_by_week"][mw_idx] = round(
                 cumulative[tid] - cutoff_value, 4
             )
+
+    # Add total_score per team
+    for tid in team_data:
+        team_data[tid]["total_score"] = round(
+            sum(s for s in team_data[tid]["scores_by_week"] if s is not None), 2
+        )
 
     output = {
         "metadata": {
@@ -112,16 +144,23 @@ def main():
             "total_weeks": TOTAL_WEEKS,
             "playoff_cutoff": PLAYOFF_CUTOFF,
             "last_updated": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
-            "current_week": current_week,
+            "current_week": current_espn_week,
+            "total_matchup_weeks": total_matchup_weeks,
+            "current_matchup_week": current_matchup_week,
+            "espn_to_matchup": espn_to_matchup,
         },
         "teams": list(team_data.values()),
+        "espn_week_scores": {
+            str(wk): {str(tid): score for tid, score in scores.items()}
+            for wk, scores in raw_espn_week_scores.items()
+        },
     }
 
     os.makedirs(os.path.dirname(OUTPUT_PATH), exist_ok=True)
     with open(OUTPUT_PATH, "w") as f:
         json.dump(output, f, indent=2)
 
-    print(f"Wrote {OUTPUT_PATH} (through week {current_week})")
+    print(f"Wrote {OUTPUT_PATH} (through ESPN week {current_espn_week} / matchup week {current_matchup_week})")
 
 
 if __name__ == "__main__":

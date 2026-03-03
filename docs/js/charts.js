@@ -1,3 +1,116 @@
+function rankingPointsColor(val, min, max) {
+  const t = max === min ? 0.5 : (val - min) / (max - min);
+  return `hsla(${Math.round(t * 120)}, 60%, 25%, 0.8)`;
+}
+
+function actualPointsColor(val, min, max) {
+  const t = max === min ? 0.5 : (val - min) / (max - min);
+  return `hsla(${Math.round(t * 120)}, 55%, 22%, 0.8)`;
+}
+
+function buildWeeklyTable(headEl, bodyEl, teams, currentWeek, dataKey, colorFn) {
+  // Compute global min/max across all weekly values
+  let globalMin = Infinity, globalMax = -Infinity;
+  teams.forEach(team => {
+    team[dataKey].slice(0, currentWeek).forEach(v => {
+      if (v != null) {
+        if (v < globalMin) globalMin = v;
+        if (v > globalMax) globalMax = v;
+      }
+    });
+  });
+
+  // Build header row
+  const headerRow = document.createElement("tr");
+
+  const teamTh = document.createElement("th");
+  teamTh.textContent = "Team";
+  teamTh.className = "sticky-col";
+  headerRow.appendChild(teamTh);
+
+  for (let w = 1; w <= currentWeek; w++) {
+    const th = document.createElement("th");
+    th.textContent = `Wk ${w}`;
+    th.dataset.week = w;
+    headerRow.appendChild(th);
+  }
+
+  const totalTh = document.createElement("th");
+  totalTh.textContent = "Total";
+  totalTh.dataset.week = "total";
+  totalTh.className = "total-col";
+  headerRow.appendChild(totalTh);
+
+  headEl.innerHTML = "";
+  headEl.appendChild(headerRow);
+
+  let sortWeek = "total";
+  let sortDir = -1; // -1 = descending
+
+  function computeTotal(team) {
+    return team[dataKey].slice(0, currentWeek).reduce((sum, v) => sum + (v ?? 0), 0);
+  }
+
+  function render() {
+    const sorted = [...teams].sort((a, b) => {
+      let av, bv;
+      if (sortWeek === "total") {
+        av = computeTotal(a);
+        bv = computeTotal(b);
+      } else {
+        av = a[dataKey][sortWeek - 1] ?? -Infinity;
+        bv = b[dataKey][sortWeek - 1] ?? -Infinity;
+      }
+      return sortDir === -1 ? (bv - av) : (av - bv);
+    });
+
+    bodyEl.innerHTML = "";
+    sorted.forEach(team => {
+      const tr = document.createElement("tr");
+
+      const nameTd = document.createElement("td");
+      nameTd.textContent = team.team_abbrev || team.team_name;
+      nameTd.className = "sticky-col";
+      tr.appendChild(nameTd);
+
+      for (let w = 1; w <= currentWeek; w++) {
+        const val = team[dataKey][w - 1];
+        const td = document.createElement("td");
+        if (val != null) {
+          td.textContent = val.toFixed(1);
+          td.style.background = colorFn(val, globalMin, globalMax);
+        } else {
+          td.textContent = "—";
+        }
+        tr.appendChild(td);
+      }
+
+      const total = computeTotal(team);
+      const totalTd = document.createElement("td");
+      totalTd.textContent = total.toFixed(1);
+      totalTd.className = "total-col";
+      tr.appendChild(totalTd);
+
+      bodyEl.appendChild(tr);
+    });
+  }
+
+  headEl.querySelectorAll("th[data-week]").forEach(th => {
+    th.addEventListener("click", () => {
+      const w = th.dataset.week === "total" ? "total" : parseInt(th.dataset.week);
+      if (sortWeek === w) {
+        sortDir *= -1;
+      } else {
+        sortWeek = w;
+        sortDir = -1;
+      }
+      render();
+    });
+  });
+
+  render();
+}
+
 (async () => {
   let data;
   try {
@@ -11,7 +124,7 @@
   }
 
   const { metadata, teams } = data;
-  const currentWeek = metadata.current_week;
+  const currentMatchupWeek = metadata.current_matchup_week ?? metadata.current_week;
   const numTeams = metadata.num_teams;
   const playoffCutoff = metadata.playoff_cutoff;
 
@@ -21,15 +134,15 @@
     `Last updated: ${updated.toLocaleString("en-US", { timeZoneName: "short" })}`;
 
   // Week labels
-  const weekLabels = Array.from({ length: currentWeek }, (_, i) => `Wk ${i + 1}`);
+  const weekLabels = Array.from({ length: currentMatchupWeek }, (_, i) => `Wk ${i + 1}`);
 
   // Evenly spaced HSL colors
   const color = (i) => `hsl(${Math.round((i / numTeams) * 360)}, 70%, 62%)`;
 
-  // Build datasets — one per team, only up to currentWeek
+  // Build datasets — one per team, only up to currentMatchupWeek
   const teamDatasets = teams.map((team, i) => ({
     label: team.team_abbrev || team.team_name,
-    data: team.normalized_by_week.slice(0, currentWeek),
+    data: team.normalized_by_week.slice(0, currentMatchupWeek),
     borderColor: color(i),
     backgroundColor: color(i) + "22",
     borderWidth: 2,
@@ -41,7 +154,7 @@
   // Zero-line dataset (no plugin needed)
   const zeroLine = {
     label: "6th Place (0)",
-    data: Array(currentWeek).fill(0),
+    data: Array(currentMatchupWeek).fill(0),
     borderColor: "#f87171",
     borderDash: [6, 4],
     borderWidth: 1.5,
@@ -103,16 +216,17 @@
     },
   });
 
-  // Standings table — sorted by normalized score at latest week
+  // Standings table — sorted by normalized score at latest matchup week
   const sorted = [...teams].sort((a, b) => {
-    const av = a.normalized_by_week[currentWeek - 1] ?? -Infinity;
-    const bv = b.normalized_by_week[currentWeek - 1] ?? -Infinity;
+    const av = a.normalized_by_week[currentMatchupWeek - 1] ?? -Infinity;
+    const bv = b.normalized_by_week[currentMatchupWeek - 1] ?? -Infinity;
     return bv - av;
   });
 
   const tbody = document.getElementById("standings-body");
   sorted.forEach((team, rank) => {
-    const norm = team.normalized_by_week[currentWeek - 1];
+    const norm = team.normalized_by_week[currentMatchupWeek - 1];
+    const cumPts = team.cumulative_points_by_week?.[currentMatchupWeek - 1];
     const normDisplay = norm == null ? "—" : (norm > 0 ? `+${norm.toFixed(1)}` : norm.toFixed(1));
     const scoreClass = norm == null ? "" : norm > 0 ? "score-positive" : norm < 0 ? "score-negative" : "score-zero";
     const rowClass = norm == null ? "" : norm >= 0 ? "in-playoffs" : "out-playoffs";
@@ -126,10 +240,22 @@
     tr.innerHTML = `
       <td>${rank + 1}</td>
       <td>${team.team_name}</td>
-      <td>${team.wins}</td>
-      <td>${team.losses}</td>
+      <td>${cumPts?.toFixed(1) ?? "—"}</td>
+      <td>${team.total_score?.toFixed(1) ?? "—"}</td>
       <td class="${scoreClass}">${normDisplay}</td>
     `;
     tbody.appendChild(tr);
   });
+
+  // Weekly tables
+  buildWeeklyTable(
+    document.getElementById("ranking-points-head"),
+    document.getElementById("ranking-points-body"),
+    teams, currentMatchupWeek, "ranking_points_by_week", rankingPointsColor
+  );
+  buildWeeklyTable(
+    document.getElementById("actual-points-head"),
+    document.getElementById("actual-points-body"),
+    teams, currentMatchupWeek, "scores_by_week", actualPointsColor
+  );
 })();

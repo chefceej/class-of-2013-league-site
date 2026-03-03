@@ -72,7 +72,7 @@ section h2 {
   max-height: 480px;
 }
 
-/* Standings Table */
+/* Base table styles */
 table {
   width: 100%;
   border-collapse: collapse;
@@ -93,13 +93,6 @@ thead th {
   text-align: left;
 }
 
-thead th:nth-child(1),
-thead th:nth-child(3),
-thead th:nth-child(4),
-thead th:nth-child(5) {
-  text-align: center;
-}
-
 tbody tr {
   border-top: 1px solid #1e2535;
   transition: background 0.15s;
@@ -114,14 +107,22 @@ tbody td {
   font-size: 0.9rem;
 }
 
-tbody td:nth-child(1),
-tbody td:nth-child(3),
-tbody td:nth-child(4) {
+/* Standings table column alignment */
+#standings-table thead th:nth-child(1),
+#standings-table thead th:nth-child(3),
+#standings-table thead th:nth-child(4),
+#standings-table thead th:nth-child(5) {
+  text-align: center;
+}
+
+#standings-table tbody td:nth-child(1),
+#standings-table tbody td:nth-child(3),
+#standings-table tbody td:nth-child(4) {
   text-align: center;
   color: #94a3b8;
 }
 
-tbody td:nth-child(5) {
+#standings-table tbody td:nth-child(5) {
   text-align: center;
   font-weight: 700;
   font-variant-numeric: tabular-nums;
@@ -148,6 +149,113 @@ tbody tr.out-playoffs td:nth-child(2) {
   padding-left: calc(1rem - 3px);
 }
 
+/* Wide table wrapper for weekly tables */
+.wide-table-wrapper {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  border: 1px solid #1e2535;
+  border-radius: 10px;
+}
+
+.wide-table-wrapper table {
+  width: auto;
+  min-width: 100%;
+  border: none;
+  border-radius: 0;
+}
+
+.wide-table-wrapper thead th,
+.wide-table-wrapper tbody td {
+  padding: 0.5rem 0.6rem;
+  text-align: center;
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+  font-size: 0.85rem;
+}
+
+.wide-table-wrapper thead th[data-week] {
+  cursor: pointer;
+}
+
+.wide-table-wrapper thead th[data-week]:hover {
+  background: #334155;
+}
+
+/* Sticky first column */
+.wide-table-wrapper .sticky-col {
+  position: sticky;
+  left: 0;
+  background: #161b27;
+  min-width: 7rem;
+  text-align: left !important;
+  z-index: 1;
+}
+
+.wide-table-wrapper thead .sticky-col {
+  background: #1e2535;
+  z-index: 2;
+}
+
+tbody tr:hover .sticky-col {
+  background: #1e2535;
+}
+
+/* Total column */
+.wide-table-wrapper .total-col {
+  font-weight: 700;
+  border-left: 1px solid #334155;
+}
+
+/* Admin page styles */
+.admin-instructions {
+  color: #94a3b8;
+  font-size: 0.9rem;
+  margin-bottom: 1rem;
+}
+
+.admin-instructions-section ol {
+  color: #94a3b8;
+  font-size: 0.9rem;
+  padding-left: 1.5rem;
+  line-height: 2;
+}
+
+.admin-actions {
+  margin-bottom: 2rem;
+}
+
+.btn {
+  background: #334155;
+  color: #e2e8f0;
+  border: 1px solid #475569;
+  border-radius: 6px;
+  padding: 0.6rem 1.2rem;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.btn:hover {
+  background: #475569;
+}
+
+.matchup-week-input {
+  width: 4rem;
+  background: #0f1117;
+  color: #e2e8f0;
+  border: 1px solid #334155;
+  border-radius: 4px;
+  padding: 0.3rem 0.4rem;
+  font-size: 0.85rem;
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+}
+
+.matchup-week-input:focus {
+  outline: none;
+  border-color: #64748b;
+}
+
 /* Footer */
 footer {
   text-align: center;
@@ -166,5 +274,11 @@ footer {
   tbody td, thead th {
     padding: 0.6rem 0.6rem;
     font-size: 0.82rem;
+  }
+
+  .wide-table-wrapper thead th,
+  .wide-table-wrapper tbody td {
+    padding: 0.4rem 0.45rem;
+    font-size: 0.78rem;
   }
 }
