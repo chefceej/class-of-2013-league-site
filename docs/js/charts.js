@@ -1,3 +1,37 @@
+function buildTopScorersTable(topPlayersByWeek, currentMatchupWeek) {
+  let displayWeek = currentMatchupWeek - 1; // 0-indexed, default to latest week
+
+  const label = document.getElementById("week-nav-label");
+  const tbody = document.getElementById("top-scorers-body");
+  const prevBtn = document.getElementById("prev-week-btn");
+  const nextBtn = document.getElementById("next-week-btn");
+
+  function render() {
+    label.textContent = `Week ${displayWeek + 1} of ${currentMatchupWeek}`;
+    prevBtn.disabled = displayWeek === 0;
+    nextBtn.disabled = displayWeek === currentMatchupWeek - 1;
+
+    const players = topPlayersByWeek[displayWeek] || [];
+    tbody.innerHTML = "";
+    players.forEach((p, i) => {
+      const tr = document.createElement("tr");
+      tr.innerHTML = `
+        <td style="text-align:center;color:#94a3b8">${i + 1}</td>
+        <td>${p.name}</td>
+        <td style="text-align:center;color:#94a3b8">${p.mlb_team}</td>
+        <td>${p.fantasy_team}</td>
+        <td style="text-align:center;font-weight:700;font-variant-numeric:tabular-nums">${p.score.toFixed(1)}</td>
+      `;
+      tbody.appendChild(tr);
+    });
+  }
+
+  prevBtn.addEventListener("click", () => { if (displayWeek > 0) { displayWeek--; render(); } });
+  nextBtn.addEventListener("click", () => { if (displayWeek < currentMatchupWeek - 1) { displayWeek++; render(); } });
+
+  render();
+}
+
 function rankingPointsColor(val, min, max) {
   const t = max === min ? 0.5 : (val - min) / (max - min);
   return `hsla(${Math.round(t * 120)}, 60%, 25%, 0.8)`;
@@ -123,7 +157,7 @@ function buildWeeklyTable(headEl, bodyEl, teams, currentWeek, dataKey, colorFn) 
     return;
   }
 
-  const { metadata, teams } = data;
+  const { metadata, teams, top_players_by_week } = data;
   const currentMatchupWeek = metadata.current_matchup_week ?? metadata.current_week;
   const numTeams = metadata.num_teams;
   const playoffCutoff = metadata.playoff_cutoff;
@@ -246,6 +280,11 @@ function buildWeeklyTable(headEl, bodyEl, teams, currentWeek, dataKey, colorFn) 
     `;
     tbody.appendChild(tr);
   });
+
+  // Top scorers table
+  if (top_players_by_week?.length) {
+    buildTopScorersTable(top_players_by_week, currentMatchupWeek);
+  }
 
   // Weekly tables
   buildWeeklyTable(

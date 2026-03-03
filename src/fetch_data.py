@@ -8,6 +8,7 @@ import espn_api.requests.espn_requests as _espn_req
 _espn_req.FANTASY_BASE_ENDPOINT = "https://lm-api-reads.fantasy.espn.com/apis/v3/games/"
 
 from espn_api.baseball import League
+from espn_api.baseball.constant import PRO_TEAM_MAP
 
 # Auth: env vars take priority, fall back to hardcoded session cookies
 ESPN_S2 = os.environ.get(
@@ -58,6 +59,76 @@ def assign_ranking_points(scores_by_team_id, num_teams):
     return points
 
 
+def build_espn_period_scoring_map(req):
+    """
+    Returns {espn_matchup_period_id: last_scoring_period_in_that_week}.
+    Used to select the right scoringPeriodId when fetching rosterForMatchupPeriod.
+    """
+    data = req.league_get(params={"view": "mMatchup"})
+    period_map = {}
+    for matchup in data["schedule"]:
+        period_id = matchup["matchupPeriodId"]
+        for side in ["home", "away"]:
+            if side in matchup and "pointsByScoringPeriod" in matchup[side]:
+                last_sp = max(int(sp) for sp in matchup[side]["pointsByScoringPeriod"])
+                if period_id not in period_map or last_sp > period_map[period_id]:
+                    period_map[period_id] = last_sp
+    return period_map
+
+
+def fetch_top_players(req, espn_periods, espn_period_sp_map, team_abbrev_map, top_n=10):
+    """
+    Fetches top N active players by fantasy score across all ESPN matchup periods
+    that make up one custom matchup week. Sums scores across periods for merged weeks.
+
+    espn_periods: list of ESPN matchup period IDs (e.g. [1, 2] for a merged week)
+    espn_period_sp_map: {espn_period_id: scoring_period_id}
+    team_abbrev_map: {team_id: team_abbrev}
+    """
+    player_totals = {}  # player_id -> {name, mlb_team, fantasy_team, score}
+
+    for espn_period in espn_periods:
+        sp = espn_period_sp_map.get(espn_period)
+        if sp is None:
+            continue
+
+        filters = {"schedule": {"filterMatchupPeriodIds": {"value": [espn_period]}}}
+        headers = {"x-fantasy-filter": json.dumps(filters)}
+        data = req.league_get(
+            params={"view": ["mMatchupScore", "mScoreboard"], "scoringPeriodId": sp},
+            headers=headers,
+        )
+
+        for matchup in data["schedule"]:
+            if matchup["matchupPeriodId"] != espn_period:
+                continue
+            for side in ["home", "away"]:
+                if side not in matchup:
+                    continue
+                side_data = matchup[side]
+                fantasy_team = team_abbrev_map.get(side_data["teamId"], str(side_data["teamId"]))
+                for entry in side_data.get("rosterForMatchupPeriod", {}).get("entries", []):
+                    pool = entry["playerPoolEntry"]
+                    p = pool["player"]
+                    pid = p["id"]
+                    score = pool["appliedStatTotal"]
+                    if pid in player_totals:
+                        player_totals[pid]["score"] += score
+                    else:
+                        player_totals[pid] = {
+                            "name": p["fullName"],
+                            "mlb_team": PRO_TEAM_MAP.get(p["proTeamId"], "?"),
+                            "fantasy_team": fantasy_team,
+                            "score": score,
+                        }
+
+    players = list(player_totals.values())
+    players.sort(key=lambda x: x["score"], reverse=True)
+    for p in players:
+        p["score"] = round(p["score"], 2)
+    return players[:top_n]
+
+
 def main():
     league = League(league_id=LEAGUE_ID, year=SEASON_YEAR, espn_s2=ESPN_S2, swid=SWID)
 
@@ -65,6 +136,7 @@ def main():
         raise RuntimeError("No teams found in league — check ESPN credentials or league ID.")
 
     num_teams = len(league.teams)
+    req = league.espn_request
 
     # Load week config
     espn_to_matchup = load_week_config(WEEK_CONFIG_PATH, TOTAL_WEEKS)
@@ -89,6 +161,8 @@ def main():
             "cumulative_points_by_week": [None] * total_matchup_weeks,
             "normalized_by_week": [None] * total_matchup_weeks,
         }
+
+    team_abbrev_map = {tid: tdata["team_abbrev"] for tid, tdata in team_data.items()}
 
     # Pass 1: Collect raw ESPN scores into matchup-week accumulators
     raw_scores = defaultdict(lambda: defaultdict(float))  # mw -> {team_id: summed score}
@@ -136,6 +210,16 @@ def main():
             sum(s for s in team_data[tid]["scores_by_week"] if s is not None), 2
         )
 
+    # Fetch top players per matchup week
+    print("Fetching player scores per matchup week...")
+    espn_period_sp_map = build_espn_period_scoring_map(req)
+    top_players_by_week = []
+    for mw in range(1, current_matchup_week + 1):
+        espn_periods = matchup_to_espn[mw]
+        top = fetch_top_players(req, espn_periods, espn_period_sp_map, team_abbrev_map)
+        top_players_by_week.append(top)
+        print(f"  MW {mw}: {top[0]['name']} ({top[0]['score']}) leads" if top else f"  MW {mw}: no data")
+
     output = {
         "metadata": {
             "league_id": LEAGUE_ID,
@@ -154,6 +238,7 @@ def main():
             str(wk): {str(tid): score for tid, score in scores.items()}
             for wk, scores in raw_espn_week_scores.items()
         },
+        "top_players_by_week": top_players_by_week,
     }
 
     os.makedirs(os.path.dirname(OUTPUT_PATH), exist_ok=True)
