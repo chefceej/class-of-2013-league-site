@@ -203,7 +203,8 @@ function buildWeeklyTable(headEl, bodyEl, teams, currentWeek, dataKey, colorFn) 
     data: { labels: weekLabels, datasets: [...teamDatasets, zeroLine] },
     options: {
       responsive: true,
-      maintainAspectRatio: false,
+      maintainAspectRatio: true,
+      aspectRatio: window.innerWidth <= 600 ? 1.1 : 2,
       interaction: { mode: "index", intersect: false },
       plugins: {
         legend: {

@@ -84,12 +84,10 @@ section h2 {
   border-radius: 10px;
   padding: 1.5rem;
   position: relative;
-  height: 420px;
 }
 
 #playoffChart {
-  width: 100% !important;
-  height: 100% !important;
+  max-height: 480px;
 }
 
 /* Base table styles */
@@ -334,11 +332,6 @@ footer {
 
   header h1 {
     font-size: 1.4rem;
-  }
-
-  .chart-wrapper {
-    height: 320px;
-    padding: 1rem 0.5rem;
   }
 
   tbody td, thead th {
