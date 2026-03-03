@@ -34,4 +34,5 @@ jobs:
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add docs/data/league_data.json
           git diff --staged --quiet || git commit -m "chore: update league data $(date -u '+%Y-%m-%d %H:%M UTC')"
+          git pull --rebase origin main
           git push
