@@ -164,7 +164,7 @@ function buildWeeklyTable(headEl, bodyEl, teams, currentWeek, dataKey, colorFn) 
   };
 
   const ctx = document.getElementById("playoffChart").getContext("2d");
-  new Chart(ctx, {
+  try { new Chart(ctx, {
     type: "line",
     data: { labels: weekLabels, datasets: [...teamDatasets, zeroLine] },
     options: {
@@ -214,7 +214,7 @@ function buildWeeklyTable(headEl, bodyEl, teams, currentWeek, dataKey, colorFn) 
         },
       },
     },
-  });
+  }); } catch (chartErr) { console.error("Chart error:", chartErr); }
 
   // Standings table — sorted by normalized score at latest matchup week
   const sorted = [...teams].sort((a, b) => {

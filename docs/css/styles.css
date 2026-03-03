@@ -45,6 +45,24 @@ header h1 {
   font-size: 0.8rem;
 }
 
+.header-nav {
+  margin-top: 0.75rem;
+}
+
+.nav-link {
+  color: #64748b;
+  font-size: 0.8rem;
+  text-decoration: none;
+  border: 1px solid #334155;
+  border-radius: 4px;
+  padding: 0.2rem 0.6rem;
+}
+
+.nav-link:hover {
+  color: #94a3b8;
+  border-color: #475569;
+}
+
 /* Sections */
 section {
   margin-bottom: 3rem;
