@@ -10,6 +10,20 @@ _espn_req.FANTASY_BASE_ENDPOINT = "https://lm-api-reads.fantasy.espn.com/apis/v3
 from espn_api.baseball import League
 from espn_api.baseball.constant import PRO_TEAM_MAP
 
+# ESPN baseball uses its own 1-based defaultPositionId system (different from POSITION_MAP)
+BASEBALL_POSITION_MAP = {
+    1: "SP",
+    2: "C",
+    3: "1B",
+    4: "2B",
+    5: "3B",
+    6: "SS",
+    7: "OF",
+    8: "OF",
+    9: "OF",
+    11: "RP",
+}
+
 # Auth: env vars take priority, fall back to hardcoded session cookies
 ESPN_S2 = os.environ.get(
     "ESPN_S2",
@@ -81,11 +95,14 @@ def fetch_top_players(req, espn_periods, espn_period_sp_map, team_abbrev_map, to
     Fetches top N active players by fantasy score across all ESPN matchup periods
     that make up one custom matchup week. Sums scores across periods for merged weeks.
 
+    Returns (top_players list, position_scores dict {team_abbrev: {pos_name: score}}).
+
     espn_periods: list of ESPN matchup period IDs (e.g. [1, 2] for a merged week)
     espn_period_sp_map: {espn_period_id: scoring_period_id}
     team_abbrev_map: {team_id: team_abbrev}
     """
     player_totals = {}  # player_id -> {name, mlb_team, fantasy_team, score}
+    position_scores = defaultdict(lambda: defaultdict(float))  # team_abbrev -> {pos_name: score}
 
     for espn_period in espn_periods:
         sp = espn_period_sp_map.get(espn_period)
@@ -112,6 +129,11 @@ def fetch_top_players(req, espn_periods, espn_period_sp_map, team_abbrev_map, to
                     p = pool["player"]
                     pid = p["id"]
                     score = pool["appliedStatTotal"]
+                    pos_name = BASEBALL_POSITION_MAP.get(p.get("defaultPositionId", 0))
+
+                    if pos_name:
+                        position_scores[fantasy_team][pos_name] += score
+
                     if pid in player_totals:
                         player_totals[pid]["score"] += score
                     else:
@@ -126,7 +148,12 @@ def fetch_top_players(req, espn_periods, espn_period_sp_map, team_abbrev_map, to
     players.sort(key=lambda x: x["score"], reverse=True)
     for p in players:
         p["score"] = round(p["score"], 2)
-    return players[:top_n]
+
+    pos_scores_rounded = {
+        team: {pos: round(score, 2) for pos, score in slots.items()}
+        for team, slots in position_scores.items()
+    }
+    return players[:top_n], pos_scores_rounded
 
 
 def main():
@@ -210,14 +237,16 @@ def main():
             sum(s for s in team_data[tid]["scores_by_week"] if s is not None), 2
         )
 
-    # Fetch top players per matchup week
+    # Fetch top players + position scores per matchup week
     print("Fetching player scores per matchup week...")
     espn_period_sp_map = build_espn_period_scoring_map(req)
     top_players_by_week = []
+    position_scores_by_week = []
     for mw in range(1, current_matchup_week + 1):
         espn_periods = matchup_to_espn[mw]
-        top = fetch_top_players(req, espn_periods, espn_period_sp_map, team_abbrev_map)
+        top, pos_scores = fetch_top_players(req, espn_periods, espn_period_sp_map, team_abbrev_map)
         top_players_by_week.append(top)
+        position_scores_by_week.append(pos_scores)
         print(f"  MW {mw}: {top[0]['name']} ({top[0]['score']}) leads" if top else f"  MW {mw}: no data")
 
     output = {
@@ -239,6 +268,7 @@ def main():
             for wk, scores in raw_espn_week_scores.items()
         },
         "top_players_by_week": top_players_by_week,
+        "position_scores_by_week": position_scores_by_week,
     }
 
     os.makedirs(os.path.dirname(OUTPUT_PATH), exist_ok=True)

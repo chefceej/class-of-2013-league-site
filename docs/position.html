@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Position Scores — 2025 Fantasy Baseball</title>
+  <link rel="stylesheet" href="css/styles.css" />
+  <link rel="stylesheet" href="css/position.css" />
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>2025 Fantasy Baseball</h1>
+      <p class="subtitle">Playoff Position — Points vs. 6th Place</p>
+      <p class="last-updated" id="last-updated"></p>
+      <nav class="header-nav">
+        <a href="index.html" class="nav-link">Standings</a>
+        <a href="position.html" class="nav-link active">Position Scores</a>
+        <a href="admin.html" class="nav-link">Admin</a>
+      </nav>
+    </header>
+
+    <section class="table-section">
+      <div class="pivot-controls">
+
+        <div class="pivot-control-group">
+          <label class="control-label">Weeks</label>
+          <label class="checkbox-label all-weeks-label">
+            <input type="checkbox" id="all-weeks-cb" checked />
+            All weeks to date
+          </label>
+          <div id="week-range" class="week-range-row" style="display:none">
+            <select id="start-week" class="pivot-select"></select>
+            <span class="week-range-sep">to</span>
+            <select id="end-week" class="pivot-select"></select>
+          </div>
+        </div>
+
+        <div class="pivot-control-group">
+          <div class="control-label-row">
+            <label class="control-label">Positions</label>
+            <button class="mini-btn" id="pos-all">All</button>
+            <button class="mini-btn" id="pos-none">None</button>
+          </div>
+          <div class="checkbox-group" id="position-checkboxes"></div>
+        </div>
+
+        <div class="pivot-control-group">
+          <div class="control-label-row">
+            <label class="control-label">Teams</label>
+            <button class="mini-btn" id="team-all">All</button>
+            <button class="mini-btn" id="team-none">None</button>
+          </div>
+          <div class="checkbox-group" id="team-checkboxes"></div>
+        </div>
+
+        <div class="pivot-control-group">
+          <label class="control-label">Totals</label>
+          <label class="checkbox-label">
+            <input type="checkbox" id="show-team-totals" checked />
+            Team subtotals
+          </label>
+          <label class="checkbox-label">
+            <input type="checkbox" id="show-league-total" />
+            League total
+          </label>
+        </div>
+
+      </div>
+
+      <div class="wide-table-wrapper" id="pivot-wrapper">
+        <table id="pivot-table">
+          <thead id="pivot-head"></thead>
+          <tbody id="pivot-body"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <footer>
+      <p>Data from ESPN Fantasy Baseball · Updated daily via GitHub Actions</p>
+    </footer>
+  </div>
+
+  <script src="js/position.js"></script>
+</body>
+</html>
