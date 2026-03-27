@@ -41,7 +41,7 @@ sheet = client.open("2025 League Standings").worksheet("scores_import")  # Make 
 # NFL Import
 from espn_api.baseball import League
 # public league
-league = League(league_id=37734, year=2025, espn_s2='AECCtMzl9%2FUwP6qFaFVuGExQ5hMreSOxHPX4NpS%2FQsPqRZeNuDEIUC4zUR%2FmKSCv2ZODeVLqYTffutEqYdqsfhLjavBW2rAItLKCqCQuvPeDsR85qspcNoXEbBMHiwQkwSuA0IiyzDRGDW0L0HR0SydAKhpwU5vL7gC8JcJEmOHOEauprzzT56saXzJi%2F8djB8QQKFPKVN3lBmGvUNtH3jjZxhF0Laj5VpvKADwBQWyDW0EoN32UienLg9xC8K3inV3oeahnZFnzV0Nu8b7V42Y67eYmxRzJx4Pp8yi8oQra3Q%3D%3D', swid='{EEFDF804-ED17-4981-BDF8-04ED173981C0}')
+league = League(league_id=37734, year=2026, espn_s2='AECCtMzl9%2FUwP6qFaFVuGExQ5hMreSOxHPX4NpS%2FQsPqRZeNuDEIUC4zUR%2FmKSCv2ZODeVLqYTffutEqYdqsfhLjavBW2rAItLKCqCQuvPeDsR85qspcNoXEbBMHiwQkwSuA0IiyzDRGDW0L0HR0SydAKhpwU5vL7gC8JcJEmOHOEauprzzT56saXzJi%2F8djB8QQKFPKVN3lBmGvUNtH3jjZxhF0Laj5VpvKADwBQWyDW0EoN32UienLg9xC8K3inV3oeahnZFnzV0Nu8b7V42Y67eYmxRzJx4Pp8yi8oQra3Q%3D%3D', swid='{EEFDF804-ED17-4981-BDF8-04ED173981C0}')
 league.teams
 
 

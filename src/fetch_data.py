@@ -32,7 +32,7 @@ ESPN_S2 = os.environ.get(
 SWID = os.environ.get("SWID", "{EEFDF804-ED17-4981-BDF8-04ED173981C0}")
 
 LEAGUE_ID = 37734
-SEASON_YEAR = 2025
+SEASON_YEAR = 2026
 TOTAL_WEEKS = 19
 PLAYOFF_CUTOFF = 6
 OUTPUT_PATH = os.path.join(os.path.dirname(__file__), "..", "docs", "data", "league_data.json")
