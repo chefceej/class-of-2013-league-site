@@ -210,6 +210,14 @@ def main():
                 wk_scores[away_id] = matchup.away_final_score
         raw_espn_week_scores[espn_week] = wk_scores
 
+    # Recalculate current_matchup_week based on last MW with any non-zero scores
+    # (ESPN's current_week counter can run ahead of actual scored data)
+    last_scored_mw = 0
+    for mw in range(1, current_matchup_week + 1):
+        if any(s > 0 for s in raw_scores[mw].values()):
+            last_scored_mw = mw
+    current_matchup_week = last_scored_mw or 1
+
     # Pass 2: Compute ranking points, cumulative, normalized per matchup week
     cumulative = {tid: 0.0 for tid in team_data}
     for mw in range(1, current_matchup_week + 1):
