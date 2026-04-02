@@ -76,13 +76,18 @@ tbody tr:hover .starts-name-col {
   margin-top: 0.1rem;
 }
 
-/* ── Dimmed when toggled off ── */
-tr.pitcher-off td {
+/* ── Dimmed when all starts toggled off ── */
+tr.pitcher-off .starts-name-col {
   opacity: 0.35;
 }
 
 tr.pitcher-off .starts-check-col {
   opacity: 1;
+}
+
+/* ── Individual start toggled off ── */
+.start-cell.start-off {
+  opacity: 0.3;
 }
 
 /* ── Day header ── */

@@ -71,7 +71,16 @@ def fetch_probable_starters(week_start, week_end):
     return by_date
 
 
-def fetch_team_ops_30d(week_end):
+def fetch_mlb_teams():
+    """Returns {team_id: abbreviation} for all active MLB teams."""
+    data = mlb_get(f"/teams?sportId=1&season={SEASON_YEAR}")
+    return {
+        t["id"]: t.get("abbreviation", "?")
+        for t in data.get("teams", [])
+    }
+
+
+def fetch_team_ops_30d(week_end, team_id_map):
     """Returns {mlb_team_abbrev: ops_float} for the 30 days ending on week_end."""
     end_str = week_end.strftime("%Y-%m-%d")
     start_str = (week_end - timedelta(days=30)).strftime("%Y-%m-%d")
@@ -82,9 +91,10 @@ def fetch_team_ops_30d(week_end):
         )
         ops_map = {}
         for entry in data.get("stats", [{}])[0].get("splits", []):
-            abbrev = entry.get("team", {}).get("abbreviation", "?")
+            team_id = entry.get("team", {}).get("id")
+            abbrev = team_id_map.get(team_id, "?")
             ops = entry.get("stat", {}).get("ops")
-            if abbrev and ops is not None:
+            if abbrev != "?" and ops is not None:
                 ops_map[abbrev] = round(float(ops), 3)
         return ops_map
     except Exception as e:
@@ -126,8 +136,12 @@ def main():
     total_games = sum(len(v) for v in probable_by_date.values())
     print(f"  Found {total_games} probable pitcher slots across {len(probable_by_date)} days")
 
+    print("Fetching MLB team info...")
+    team_id_map = fetch_mlb_teams()
+    print(f"  Got {len(team_id_map)} MLB teams")
+
     print("Fetching team OPS (last 30 days)...")
-    team_ops = fetch_team_ops_30d(week_end)
+    team_ops = fetch_team_ops_30d(week_end, team_id_map)
     print(f"  Got OPS for {len(team_ops)} MLB teams")
 
     print("Fetching ESPN rosters...")

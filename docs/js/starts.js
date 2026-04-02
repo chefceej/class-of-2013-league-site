@@ -3,8 +3,12 @@ const START_LIMIT = 8;
 let state = {
   data: null,
   team: null,
-  checked: new Set(), // pitcher names currently toggled ON
+  checked: new Set(), // start keys: "PitcherName|date"
 };
+
+function startKey(name, date) {
+  return `${name}|${date}`;
+}
 
 function opsClass(ops) {
   if (ops == null) return "ops-none";
@@ -27,9 +31,13 @@ function updateCounter() {
 
 function countSelectedStarts() {
   const pitchers = (state.data?.fantasy_teams?.[state.team] || []);
-  return pitchers
-    .filter(p => state.checked.has(p.name))
-    .reduce((s, p) => s + p.starts.length, 0);
+  let count = 0;
+  for (const p of pitchers) {
+    for (const s of p.starts) {
+      if (state.checked.has(startKey(p.name, s.date))) count++;
+    }
+  }
+  return count;
 }
 
 function render() {
@@ -97,19 +105,28 @@ function render() {
     for (const s of pitcher.starts) startsByDate[s.date] = s;
 
     const row = document.createElement("tr");
-    if (!state.checked.has(pitcher.name)) row.classList.add("pitcher-off");
 
-    // Checkbox
+    // How many of this pitcher's starts are checked?
+    const allKeys = pitcher.starts.map(s => startKey(pitcher.name, s.date));
+    const checkedCount = allKeys.filter(k => state.checked.has(k)).length;
+    const allChecked = checkedCount === pitcher.starts.length;
+    const noneChecked = checkedCount === 0;
+
+    if (noneChecked && pitcher.starts.length > 0) row.classList.add("pitcher-off");
+
+    // Checkbox (toggles all starts for this pitcher)
     const cbTd = document.createElement("td");
     cbTd.className = "sticky-col starts-check-col";
     const cb = document.createElement("input");
     cb.type = "checkbox";
-    cb.checked = state.checked.has(pitcher.name);
+    cb.checked = allChecked;
+    cb.indeterminate = !allChecked && !noneChecked;
     cb.addEventListener("change", () => {
-      if (cb.checked) state.checked.add(pitcher.name);
-      else state.checked.delete(pitcher.name);
-      row.classList.toggle("pitcher-off", !cb.checked);
-      updateCounter();
+      for (const key of allKeys) {
+        if (cb.checked) state.checked.add(key);
+        else state.checked.delete(key);
+      }
+      render();
     });
     cbTd.appendChild(cb);
     row.appendChild(cbTd);
@@ -125,16 +142,25 @@ function render() {
       const td = document.createElement("td");
       const start = startsByDate[date];
       if (start) {
+        const key = startKey(pitcher.name, date);
+        const isOn = state.checked.has(key);
         const ops = start.opponent_ops ?? teamOps[start.opponent];
         td.className = "start-cell " + opsClass(ops);
+        if (!isOn) td.classList.add("start-off");
         td.innerHTML = `<span class="opp-name">${start.home ? "" : "@"}${start.opponent}</span><span class="opp-ops">${opsLabel(ops)}</span>`;
+        td.style.cursor = "pointer";
+        td.addEventListener("click", () => {
+          if (state.checked.has(key)) state.checked.delete(key);
+          else state.checked.add(key);
+          render();
+        });
       }
       row.appendChild(td);
     }
 
-    // Starts total
+    // Starts total (selected count)
     const totalTd = document.createElement("td");
-    totalTd.textContent = pitcher.starts.length;
+    totalTd.textContent = checkedCount;
     totalTd.className = "total-col";
     row.appendChild(totalTd);
 
@@ -153,7 +179,7 @@ function initTeamSelect(data) {
   state.team = teams[0];
   sel.value = state.team;
 
-  // Default: check all pitchers for initial team
+  // Default: check all starts for initial team
   resetChecked();
 
   sel.addEventListener("change", () => {
@@ -166,7 +192,11 @@ function initTeamSelect(data) {
 function resetChecked() {
   state.checked.clear();
   const pitchers = state.data?.fantasy_teams?.[state.team] || [];
-  for (const p of pitchers) state.checked.add(p.name);
+  for (const p of pitchers) {
+    for (const s of p.starts) {
+      state.checked.add(startKey(p.name, s.date));
+    }
+  }
 }
 
 fetch("data/starts_data.json")
