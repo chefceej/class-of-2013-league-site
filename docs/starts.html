@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pitcher Starts — 2026 Fantasy Baseball</title>
+  <link rel="stylesheet" href="css/styles.css" />
+  <link rel="stylesheet" href="css/starts.css" />
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>2026 Fantasy Baseball</h1>
+      <p class="subtitle">Pitcher Start Planner</p>
+      <p class="last-updated" id="last-updated"></p>
+      <nav class="header-nav">
+        <a href="index.html" class="nav-link">Standings</a>
+        <a href="position.html" class="nav-link">Position Scores</a>
+        <a href="starts.html" class="nav-link active">Start Planner</a>
+        <a href="admin.html" class="nav-link">Admin</a>
+      </nav>
+    </header>
+
+    <section class="table-section">
+      <div class="starts-controls">
+        <div class="pivot-control-group">
+          <label class="control-label">Team</label>
+          <select id="team-select" class="pivot-select"></select>
+        </div>
+        <div class="start-counter-wrap">
+          <span class="control-label">Selected Starts</span>
+          <span id="start-counter" class="start-counter">0 / 8</span>
+        </div>
+      </div>
+
+      <div class="wide-table-wrapper">
+        <table id="starts-table">
+          <thead id="starts-head"></thead>
+          <tbody id="starts-body"></tbody>
+        </table>
+      </div>
+
+      <p class="ops-legend">
+        Opponent OPS (last 30 days):
+        <span class="ops-chip ops-easy">≤ .680</span>
+        <span class="ops-chip ops-ok">.681–.740</span>
+        <span class="ops-chip ops-tough">&gt; .740</span>
+        <span class="ops-chip ops-none">No data</span>
+      </p>
+    </section>
+
+    <footer>
+      <p>Data from ESPN Fantasy Baseball &amp; MLB Stats API · Updated daily via GitHub Actions</p>
+    </footer>
+  </div>
+
+  <script src="js/starts.js"></script>
+</body>
+</html>

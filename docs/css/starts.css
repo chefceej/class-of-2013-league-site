@@ -1,0 +1,160 @@
+/* ── Controls ── */
+.starts-controls {
+  display: flex;
+  align-items: flex-end;
+  gap: 2rem;
+  margin-bottom: 1.25rem;
+  flex-wrap: wrap;
+}
+
+.start-counter-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.start-counter {
+  font-size: 1.4rem;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  color: #4ade80;
+  letter-spacing: -0.02em;
+}
+
+.start-counter.at-limit {
+  color: #facc15;
+}
+
+.start-counter.over-limit {
+  color: #f87171;
+}
+
+/* ── Table sticky columns ── */
+.starts-check-col {
+  position: sticky;
+  left: 0;
+  width: 2.5rem;
+  min-width: 2.5rem;
+  background: #161b27;
+  z-index: 2;
+  text-align: center !important;
+}
+
+.starts-name-col {
+  position: sticky;
+  left: 2.5rem;
+  min-width: 11rem;
+  width: 11rem;
+  background: #161b27;
+  z-index: 2;
+  text-align: left !important;
+}
+
+thead .starts-check-col,
+thead .starts-name-col {
+  background: #1e2535;
+  z-index: 3;
+}
+
+tbody tr:hover .starts-check-col,
+tbody tr:hover .starts-name-col {
+  background: #1e2535;
+}
+
+/* ── Pitcher name cell ── */
+.pitcher-name {
+  display: block;
+  font-weight: 500;
+  font-size: 0.88rem;
+  color: #e2e8f0;
+}
+
+.pitcher-team {
+  display: block;
+  font-size: 0.75rem;
+  color: #64748b;
+  margin-top: 0.1rem;
+}
+
+/* ── Dimmed when toggled off ── */
+tr.pitcher-off td {
+  opacity: 0.35;
+}
+
+tr.pitcher-off .starts-check-col {
+  opacity: 1;
+}
+
+/* ── Day header ── */
+.day-name {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: #94a3b8;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.day-date {
+  font-size: 0.75rem;
+  color: #64748b;
+  font-variant-numeric: tabular-nums;
+}
+
+/* ── Start cell ── */
+.start-cell {
+  text-align: center;
+  vertical-align: middle;
+  padding: 0.4rem 0.5rem !important;
+  border-radius: 0;
+}
+
+.opp-name {
+  display: block;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: #e2e8f0;
+}
+
+.opp-ops {
+  display: block;
+  font-size: 0.72rem;
+  font-variant-numeric: tabular-nums;
+  margin-top: 0.1rem;
+  color: #cbd5e1;
+}
+
+/* OPS color coding */
+.ops-easy  { background: hsla(120, 55%, 18%, 0.9); }
+.ops-ok    { background: hsla(50,  55%, 18%, 0.9); }
+.ops-tough { background: hsla(0,   55%, 20%, 0.9); }
+.ops-none  { background: #1a2030; }
+
+/* ── Legend ── */
+.ops-legend {
+  margin-top: 0.85rem;
+  font-size: 0.78rem;
+  color: #64748b;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.ops-chip {
+  padding: 0.15rem 0.55rem;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  color: #cbd5e1;
+}
+
+.ops-chip.ops-easy  { background: hsla(120, 55%, 18%, 0.9); }
+.ops-chip.ops-ok    { background: hsla(50,  55%, 18%, 0.9); }
+.ops-chip.ops-tough { background: hsla(0,   55%, 20%, 0.9); }
+.ops-chip.ops-none  { background: #1a2030; border: 1px solid #334155; }
+
+@media (max-width: 600px) {
+  .starts-name-col {
+    min-width: 8rem;
+    width: 8rem;
+  }
+}
