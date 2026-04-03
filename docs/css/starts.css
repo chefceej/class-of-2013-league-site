@@ -1,56 +1,29 @@
-/* ── Password overlay ── */
-.pw-overlay {
-  position: fixed;
-  inset: 0;
-  background: rgba(15, 17, 23, 0.95);
-  z-index: 100;
+/* ── Streaming password gate (inline) ── */
+.stream-lock {
   display: flex;
   align-items: center;
-  justify-content: center;
+  gap: 0.5rem;
+  margin-top: 0.75rem;
 }
 
-.pw-card {
-  background: #161b27;
-  border: 1px solid #334155;
-  border-radius: 12px;
-  padding: 2.5rem 2rem;
-  text-align: center;
-  max-width: 340px;
-  width: 100%;
-}
-
-.pw-card h2 {
-  font-size: 1.4rem;
-  color: #f1f5f9;
-  margin-bottom: 0.3rem;
-}
-
-.pw-subtitle {
-  color: #64748b;
-  font-size: 0.85rem;
-  margin-bottom: 1.5rem;
-}
-
-.pw-input {
-  width: 100%;
-  padding: 0.6rem 0.8rem;
-  font-size: 1rem;
+.pw-input-inline {
+  padding: 0.45rem 0.7rem;
+  font-size: 0.88rem;
   background: #0f1117;
   border: 1px solid #334155;
   border-radius: 6px;
   color: #e2e8f0;
   outline: none;
-  margin-bottom: 0.75rem;
+  width: 180px;
 }
 
-.pw-input:focus {
+.pw-input-inline:focus {
   border-color: #3b82f6;
 }
 
-.pw-btn {
-  width: 100%;
-  padding: 0.6rem;
-  font-size: 0.95rem;
+.pw-btn-inline {
+  padding: 0.45rem 1rem;
+  font-size: 0.85rem;
   font-weight: 600;
   background: #3b82f6;
   color: #fff;
@@ -59,15 +32,13 @@
   cursor: pointer;
 }
 
-.pw-btn:hover {
+.pw-btn-inline:hover {
   background: #2563eb;
 }
 
-.pw-error {
+.pw-error-inline {
   color: #f87171;
   font-size: 0.82rem;
-  margin-top: 0.5rem;
-  min-height: 1.2em;
 }
 
 /* ── GS Summary ── */

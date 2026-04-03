@@ -10,21 +10,19 @@ let state = {
   streamSortAsc: false,
 };
 
-/* ── Password gate ── */
+/* ── Streaming password gate (inline) ── */
 
-function checkAuth() {
+function initStreamGate() {
   if (sessionStorage.getItem("starts_unlocked")) {
-    unlockApp();
+    unlockStreaming();
     return;
   }
-  document.getElementById("password-overlay").style.display = "";
-  const input = document.getElementById("pw-input");
-  input.focus();
 
+  const input = document.getElementById("pw-input");
   const submit = () => {
     if (input.value === PASSWORD) {
       sessionStorage.setItem("starts_unlocked", "1");
-      unlockApp();
+      unlockStreaming();
     } else {
       document.getElementById("pw-error").textContent = "Incorrect password";
       input.value = "";
@@ -36,10 +34,10 @@ function checkAuth() {
   input.addEventListener("keydown", e => { if (e.key === "Enter") submit(); });
 }
 
-function unlockApp() {
-  document.getElementById("password-overlay").style.display = "none";
-  document.getElementById("app-content").style.display = "";
-  loadData();
+function unlockStreaming() {
+  document.getElementById("stream-lock").style.display = "none";
+  document.getElementById("stream-content").style.display = "";
+  renderStreamingTable();
 }
 
 /* ── Helpers ── */
@@ -510,7 +508,7 @@ function loadData() {
       renderGsSummary(data);
       initTeamSelect(data);
       render();
-      renderStreamingTable();
+      initStreamGate();
     })
     .catch(() => {
       document.getElementById("starts-body").innerHTML =
@@ -519,4 +517,4 @@ function loadData() {
 }
 
 /* ── Init ── */
-checkAuth();
+loadData();
