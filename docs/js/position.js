@@ -1,4 +1,4 @@
-const POSITION_ORDER = ["C", "1B", "2B", "3B", "SS", "OF", "SP", "RP"];
+const POSITION_ORDER = ["C", "1B", "2B", "3B", "SS", "OF", "UTIL", "SP", "RP"];
 
 const state = {
   data: null,

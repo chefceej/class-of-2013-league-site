@@ -146,7 +146,8 @@ function render() {
         const isOn = state.checked.has(key);
         const ops = start.opponent_ops ?? teamOps[start.opponent];
         td.className = "start-cell " + opsClass(ops);
-        if (!isOn) td.classList.add("start-off");
+        if (isOn) td.classList.add("start-on");
+        else td.classList.add("start-off");
         td.innerHTML = `<span class="opp-name">${start.home ? "" : "@"}${start.opponent}</span><span class="opp-ops">${opsLabel(ops)}</span>`;
         td.style.cursor = "pointer";
         td.addEventListener("click", () => {
@@ -199,6 +200,27 @@ function resetChecked() {
   }
 }
 
+function renderGsSummary(data) {
+  const container = document.getElementById("gs-summary");
+  const teams = Object.keys(data.fantasy_teams).sort();
+
+  const counts = teams.map(t => ({
+    team: t,
+    gs: data.fantasy_teams[t].reduce((sum, p) => sum + p.starts.length, 0),
+  }));
+
+  // Sort by GS descending
+  counts.sort((a, b) => b.gs - a.gs);
+
+  let html = '<table class="gs-table"><thead><tr>';
+  for (const c of counts) html += `<th>${c.team}</th>`;
+  html += '</tr></thead><tbody><tr>';
+  for (const c of counts) html += `<td>${c.gs}</td>`;
+  html += '</tr></tbody></table>';
+
+  container.innerHTML = html;
+}
+
 fetch("data/starts_data.json")
   .then(r => r.json())
   .then(data => {
@@ -211,6 +233,7 @@ fetch("data/starts_data.json")
       lu.textContent = `Week of ${new Date(data.metadata.week_start + "T12:00:00").toLocaleDateString("en-US", { month: "short", day: "numeric" })}–${weekEnd.toLocaleDateString("en-US", { month: "short", day: "numeric" })} · Last updated: ${d.toLocaleString()}`;
     }
 
+    renderGsSummary(data);
     initTeamSelect(data);
     render();
   })
