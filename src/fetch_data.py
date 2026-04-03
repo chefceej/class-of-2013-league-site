@@ -24,6 +24,24 @@ BASEBALL_POSITION_MAP = {
     11: "RP",
 }
 
+# ESPN lineupSlotId → position name (actual lineup slot, not eligibility)
+LINEUP_SLOT_MAP = {
+    0: "C",
+    1: "1B",
+    2: "2B",
+    3: "SS",
+    4: "3B",
+    5: "OF",
+    6: "OF",
+    7: "OF",
+    12: "UTIL",
+    13: "SP",
+    14: "SP",
+    15: "RP",
+    16: "RP",
+    # 20 = Bench, 21 = IL — skip these
+}
+
 # Auth: env vars take priority, fall back to hardcoded session cookies
 ESPN_S2 = os.environ.get(
     "ESPN_S2",
@@ -75,19 +93,27 @@ def assign_ranking_points(scores_by_team_id, num_teams):
 
 def build_espn_period_scoring_map(req):
     """
-    Returns {espn_matchup_period_id: last_scoring_period_in_that_week}.
-    Used to select the right scoringPeriodId when fetching rosterForMatchupPeriod.
+    Returns:
+      last_sp_map: {espn_matchup_period_id: last_scoring_period_in_that_week}
+      all_sps_map: {espn_matchup_period_id: sorted list of all scoring period ids}
     """
     data = req.league_get(params={"view": "mMatchup"})
-    period_map = {}
+    last_sp_map = {}
+    all_sps_map = {}
     for matchup in data["schedule"]:
         period_id = matchup["matchupPeriodId"]
+        if period_id not in all_sps_map:
+            all_sps_map[period_id] = set()
         for side in ["home", "away"]:
             if side in matchup and "pointsByScoringPeriod" in matchup[side]:
-                last_sp = max(int(sp) for sp in matchup[side]["pointsByScoringPeriod"])
-                if period_id not in period_map or last_sp > period_map[period_id]:
-                    period_map[period_id] = last_sp
-    return period_map
+                sps = {int(sp) for sp in matchup[side]["pointsByScoringPeriod"]}
+                all_sps_map[period_id].update(sps)
+                last_sp = max(sps)
+                if period_id not in last_sp_map or last_sp > last_sp_map[period_id]:
+                    last_sp_map[period_id] = last_sp
+    # Convert sets to sorted lists
+    all_sps_map = {k: sorted(v) for k, v in all_sps_map.items()}
+    return last_sp_map, all_sps_map
 
 
 def fetch_top_players(req, espn_periods, espn_period_sp_map, team_abbrev_map, top_n=10):
@@ -95,14 +121,13 @@ def fetch_top_players(req, espn_periods, espn_period_sp_map, team_abbrev_map, to
     Fetches top N active players by fantasy score across all ESPN matchup periods
     that make up one custom matchup week. Sums scores across periods for merged weeks.
 
-    Returns (top_players list, position_scores dict {team_abbrev: {pos_name: score}}).
+    Returns top_players list.
 
     espn_periods: list of ESPN matchup period IDs (e.g. [1, 2] for a merged week)
     espn_period_sp_map: {espn_period_id: scoring_period_id}
     team_abbrev_map: {team_id: team_abbrev}
     """
     player_totals = {}  # player_id -> {name, mlb_team, fantasy_team, score}
-    position_scores = defaultdict(lambda: defaultdict(float))  # team_abbrev -> {pos_name: score}
 
     for espn_period in espn_periods:
         sp = espn_period_sp_map.get(espn_period)
@@ -129,10 +154,6 @@ def fetch_top_players(req, espn_periods, espn_period_sp_map, team_abbrev_map, to
                     p = pool["player"]
                     pid = p["id"]
                     score = pool["appliedStatTotal"]
-                    pos_name = BASEBALL_POSITION_MAP.get(p.get("defaultPositionId", 0))
-
-                    if pos_name:
-                        position_scores[fantasy_team][pos_name] += score
 
                     if pid in player_totals:
                         player_totals[pid]["score"] += score
@@ -149,11 +170,52 @@ def fetch_top_players(req, espn_periods, espn_period_sp_map, team_abbrev_map, to
     for p in players:
         p["score"] = round(p["score"], 2)
 
-    pos_scores_rounded = {
+    return players[:top_n]
+
+
+# Bench and IL lineup slot IDs (excluded from position scoring)
+BENCH_IL_SLOTS = {16, 17}
+
+
+def fetch_position_scores(req, espn_periods, all_sps_map, team_abbrev_map):
+    """
+    Fetches position scores using actual lineup slots from daily rosters (mRoster view).
+    For each scoring period (day) in the matchup week, gets each team's roster with
+    real lineup slot assignments and credits the day's score to that slot's position.
+
+    Returns {team_abbrev: {pos_name: score}}.
+    """
+    position_scores = defaultdict(lambda: defaultdict(float))
+
+    for espn_period in espn_periods:
+        scoring_periods = all_sps_map.get(espn_period, [])
+        for sp in scoring_periods:
+            data = req.league_get(
+                params={"view": "mRoster", "scoringPeriodId": sp},
+            )
+            for team in data.get("teams", []):
+                team_id = team["id"]
+                abbrev = team_abbrev_map.get(team_id, str(team_id))
+                for entry in team.get("roster", {}).get("entries", []):
+                    slot_id = entry.get("lineupSlotId")
+                    if slot_id in BENCH_IL_SLOTS:
+                        continue
+                    pos_name = LINEUP_SLOT_MAP.get(slot_id)
+                    if not pos_name:
+                        continue
+                    # Get this player's score for this specific scoring period
+                    player = entry["playerPoolEntry"]["player"]
+                    day_score = 0.0
+                    for stat in player.get("stats", []):
+                        if stat.get("scoringPeriodId") == sp and stat.get("statSplitTypeId") == 5:
+                            day_score = stat.get("appliedTotal", 0.0)
+                            break
+                    position_scores[abbrev][pos_name] += day_score
+
+    return {
         team: {pos: round(score, 2) for pos, score in slots.items()}
         for team, slots in position_scores.items()
     }
-    return players[:top_n], pos_scores_rounded
 
 
 def main():
@@ -247,12 +309,13 @@ def main():
 
     # Fetch top players + position scores per matchup week
     print("Fetching player scores per matchup week...")
-    espn_period_sp_map = build_espn_period_scoring_map(req)
+    espn_period_sp_map, all_sps_map = build_espn_period_scoring_map(req)
     top_players_by_week = []
     position_scores_by_week = []
     for mw in range(1, current_matchup_week + 1):
         espn_periods = matchup_to_espn[mw]
-        top, pos_scores = fetch_top_players(req, espn_periods, espn_period_sp_map, team_abbrev_map)
+        top = fetch_top_players(req, espn_periods, espn_period_sp_map, team_abbrev_map)
+        pos_scores = fetch_position_scores(req, espn_periods, all_sps_map, team_abbrev_map)
         top_players_by_week.append(top)
         position_scores_by_week.append(pos_scores)
         print(f"  MW {mw}: {top[0]['name']} ({top[0]['score']}) leads" if top else f"  MW {mw}: no data")
