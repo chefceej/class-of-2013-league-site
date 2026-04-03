@@ -8,17 +8,7 @@
   <link rel="stylesheet" href="css/starts.css" />
 </head>
 <body>
-  <div id="password-overlay" class="pw-overlay">
-    <div class="pw-card">
-      <h2>Start Planner</h2>
-      <p class="pw-subtitle">Enter password to access</p>
-      <input type="password" id="pw-input" class="pw-input" placeholder="Password" autocomplete="off" />
-      <button id="pw-submit" class="pw-btn">Unlock</button>
-      <p id="pw-error" class="pw-error"></p>
-    </div>
-  </div>
-
-  <div id="app-content" class="container" style="display:none;">
+  <div class="container">
     <header>
       <h1>2026 Fantasy Baseball</h1>
       <p class="subtitle">Pitcher Start Planner</p>
@@ -64,11 +54,20 @@
     <section class="table-section streaming-section">
       <h2 class="section-heading">Streaming Options</h2>
       <p class="section-sub">Free agent pitchers with starts this week</p>
-      <div class="wide-table-wrapper">
-        <table id="streaming-table">
-          <thead id="streaming-head"></thead>
-          <tbody id="streaming-body"></tbody>
-        </table>
+
+      <div id="stream-lock" class="stream-lock">
+        <input type="password" id="pw-input" class="pw-input-inline" placeholder="Enter password" autocomplete="off" />
+        <button id="pw-submit" class="pw-btn-inline">Unlock</button>
+        <span id="pw-error" class="pw-error-inline"></span>
+      </div>
+
+      <div id="stream-content" style="display:none;">
+        <div class="wide-table-wrapper">
+          <table id="streaming-table">
+            <thead id="streaming-head"></thead>
+            <tbody id="streaming-body"></tbody>
+          </table>
+        </div>
       </div>
     </section>
 
