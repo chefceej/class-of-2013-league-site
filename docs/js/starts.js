@@ -1,10 +1,48 @@
 const START_LIMIT = 8;
+const PASSWORD = "hookem";
 
 let state = {
   data: null,
   team: null,
-  checked: new Set(), // start keys: "PitcherName|date"
+  checked: new Set(),       // rostered start keys: "PitcherName|date"
+  streamChecked: new Set(), // streaming start keys: "PitcherName|date"
+  streamSort: "pts_per_gs",
+  streamSortAsc: false,
 };
+
+/* ── Password gate ── */
+
+function checkAuth() {
+  if (sessionStorage.getItem("starts_unlocked")) {
+    unlockApp();
+    return;
+  }
+  document.getElementById("password-overlay").style.display = "";
+  const input = document.getElementById("pw-input");
+  input.focus();
+
+  const submit = () => {
+    if (input.value === PASSWORD) {
+      sessionStorage.setItem("starts_unlocked", "1");
+      unlockApp();
+    } else {
+      document.getElementById("pw-error").textContent = "Incorrect password";
+      input.value = "";
+      input.focus();
+    }
+  };
+
+  document.getElementById("pw-submit").addEventListener("click", submit);
+  input.addEventListener("keydown", e => { if (e.key === "Enter") submit(); });
+}
+
+function unlockApp() {
+  document.getElementById("password-overlay").style.display = "none";
+  document.getElementById("app-content").style.display = "";
+  loadData();
+}
+
+/* ── Helpers ── */
 
 function startKey(name, date) {
   return `${name}|${date}`;
@@ -22,6 +60,13 @@ function opsLabel(ops) {
   return ops.toFixed(3);
 }
 
+function dayHeader(date) {
+  const d = new Date(date + "T12:00:00");
+  return `<span class="day-name">${d.toLocaleDateString("en-US", { weekday: "short" })}</span><br><span class="day-date">${d.toLocaleDateString("en-US", { month: "numeric", day: "numeric" })}</span>`;
+}
+
+/* ── Counter ── */
+
 function updateCounter() {
   const total = countSelectedStarts();
   const el = document.getElementById("start-counter");
@@ -37,22 +82,39 @@ function countSelectedStarts() {
       if (state.checked.has(startKey(p.name, s.date))) count++;
     }
   }
+  // Count selected streaming starts
+  count += state.streamChecked.size;
   return count;
 }
+
+/* ── Get selected streaming pitchers ── */
+
+function getSelectedStreamPitchers() {
+  if (!state.data?.streaming_options) return [];
+  const selected = [];
+  for (const p of state.data.streaming_options) {
+    const checkedStarts = p.starts.filter(s => state.streamChecked.has(startKey(p.name, s.date)));
+    if (checkedStarts.length > 0) {
+      selected.push({ ...p, starts: checkedStarts });
+    }
+  }
+  return selected;
+}
+
+/* ── Rostered starts table ── */
 
 function render() {
   if (!state.data || !state.team) return;
 
   const pitchers = state.data.fantasy_teams[state.team] || [];
+  const streamPitchers = getSelectedStreamPitchers();
   const dates = state.data.dates;
   const teamOps = state.data.team_ops_30d;
 
-  // ── Header ──
   const headEl = document.getElementById("starts-head");
   headEl.innerHTML = "";
   const tr = document.createElement("tr");
 
-  // Checkbox + name columns
   const cbTh = document.createElement("th");
   cbTh.className = "sticky-col starts-check-col";
   tr.appendChild(cbTh);
@@ -62,15 +124,12 @@ function render() {
   nameTh.className = "sticky-col2 starts-name-col";
   tr.appendChild(nameTh);
 
-  // Day columns
   for (const date of dates) {
     const th = document.createElement("th");
-    const d = new Date(date + "T12:00:00");
-    th.innerHTML = `<span class="day-name">${d.toLocaleDateString("en-US", { weekday: "short" })}</span><br><span class="day-date">${d.toLocaleDateString("en-US", { month: "numeric", day: "numeric" })}</span>`;
+    th.innerHTML = dayHeader(date);
     tr.appendChild(th);
   }
 
-  // Starts total column
   const totalTh = document.createElement("th");
   totalTh.textContent = "Starts";
   totalTh.className = "total-col";
@@ -78,11 +137,10 @@ function render() {
 
   headEl.appendChild(tr);
 
-  // ── Body ──
   const bodyEl = document.getElementById("starts-body");
   bodyEl.innerHTML = "";
 
-  if (pitchers.length === 0) {
+  if (pitchers.length === 0 && streamPitchers.length === 0) {
     const row = document.createElement("tr");
     const td = document.createElement("td");
     td.colSpan = dates.length + 3;
@@ -94,82 +152,136 @@ function render() {
     return;
   }
 
-  // Sort: most starts first, then alpha
   const sorted = [...pitchers].sort((a, b) =>
     b.starts.length - a.starts.length || a.name.localeCompare(b.name)
   );
 
-  // Build date → start info lookup per pitcher
+  // Render rostered pitchers
   for (const pitcher of sorted) {
-    const startsByDate = {};
-    for (const s of pitcher.starts) startsByDate[s.date] = s;
+    bodyEl.appendChild(buildRosteredRow(pitcher, dates, teamOps));
+  }
 
-    const row = document.createElement("tr");
-
-    // How many of this pitcher's starts are checked?
-    const allKeys = pitcher.starts.map(s => startKey(pitcher.name, s.date));
-    const checkedCount = allKeys.filter(k => state.checked.has(k)).length;
-    const allChecked = checkedCount === pitcher.starts.length;
-    const noneChecked = checkedCount === 0;
-
-    if (noneChecked && pitcher.starts.length > 0) row.classList.add("pitcher-off");
-
-    // Checkbox (toggles all starts for this pitcher)
-    const cbTd = document.createElement("td");
-    cbTd.className = "sticky-col starts-check-col";
-    const cb = document.createElement("input");
-    cb.type = "checkbox";
-    cb.checked = allChecked;
-    cb.indeterminate = !allChecked && !noneChecked;
-    cb.addEventListener("change", () => {
-      for (const key of allKeys) {
-        if (cb.checked) state.checked.add(key);
-        else state.checked.delete(key);
-      }
-      render();
-    });
-    cbTd.appendChild(cb);
-    row.appendChild(cbTd);
-
-    // Name
-    const nameTd = document.createElement("td");
-    nameTd.className = "sticky-col2 starts-name-col";
-    nameTd.innerHTML = `<span class="pitcher-name">${pitcher.name}</span><span class="pitcher-team">${pitcher.mlb_team}</span>`;
-    row.appendChild(nameTd);
-
-    // Day cells
-    for (const date of dates) {
-      const td = document.createElement("td");
-      const start = startsByDate[date];
-      if (start) {
-        const key = startKey(pitcher.name, date);
-        const isOn = state.checked.has(key);
-        const ops = start.opponent_ops ?? teamOps[start.opponent];
-        td.className = "start-cell " + opsClass(ops);
-        if (isOn) td.classList.add("start-on");
-        else td.classList.add("start-off");
-        td.innerHTML = `<span class="opp-name">${start.home ? "" : "@"}${start.opponent}</span><span class="opp-ops">${opsLabel(ops)}</span>`;
-        td.style.cursor = "pointer";
-        td.addEventListener("click", () => {
-          if (state.checked.has(key)) state.checked.delete(key);
-          else state.checked.add(key);
-          render();
-        });
-      }
-      row.appendChild(td);
-    }
-
-    // Starts total (selected count)
-    const totalTd = document.createElement("td");
-    totalTd.textContent = checkedCount;
-    totalTd.className = "total-col";
-    row.appendChild(totalTd);
-
-    bodyEl.appendChild(row);
+  // Render selected streaming pitchers (visually distinct)
+  for (const pitcher of streamPitchers) {
+    bodyEl.appendChild(buildStreamSelectedRow(pitcher, dates, teamOps));
   }
 
   updateCounter();
 }
+
+function buildRosteredRow(pitcher, dates, teamOps) {
+  const startsByDate = {};
+  for (const s of pitcher.starts) startsByDate[s.date] = s;
+
+  const row = document.createElement("tr");
+
+  const allKeys = pitcher.starts.map(s => startKey(pitcher.name, s.date));
+  const checkedCount = allKeys.filter(k => state.checked.has(k)).length;
+  const allChecked = checkedCount === pitcher.starts.length;
+  const noneChecked = checkedCount === 0;
+
+  if (noneChecked && pitcher.starts.length > 0) row.classList.add("pitcher-off");
+
+  const cbTd = document.createElement("td");
+  cbTd.className = "sticky-col starts-check-col";
+  const cb = document.createElement("input");
+  cb.type = "checkbox";
+  cb.checked = allChecked;
+  cb.indeterminate = !allChecked && !noneChecked;
+  cb.addEventListener("change", () => {
+    for (const key of allKeys) {
+      if (cb.checked) state.checked.add(key);
+      else state.checked.delete(key);
+    }
+    render();
+  });
+  cbTd.appendChild(cb);
+  row.appendChild(cbTd);
+
+  const nameTd = document.createElement("td");
+  nameTd.className = "sticky-col2 starts-name-col";
+  nameTd.innerHTML = `<span class="pitcher-name">${pitcher.name}</span><span class="pitcher-team">${pitcher.mlb_team}</span>`;
+  row.appendChild(nameTd);
+
+  for (const date of dates) {
+    const td = document.createElement("td");
+    const start = startsByDate[date];
+    if (start) {
+      const key = startKey(pitcher.name, date);
+      const isOn = state.checked.has(key);
+      const ops = start.opponent_ops ?? teamOps[start.opponent];
+      td.className = "start-cell " + opsClass(ops);
+      if (isOn) td.classList.add("start-on");
+      else td.classList.add("start-off");
+      td.innerHTML = `<span class="opp-name">${start.home ? "" : "@"}${start.opponent}</span><span class="opp-ops">${opsLabel(ops)}</span>`;
+      td.style.cursor = "pointer";
+      td.addEventListener("click", () => {
+        if (state.checked.has(key)) state.checked.delete(key);
+        else state.checked.add(key);
+        render();
+      });
+    }
+    row.appendChild(td);
+  }
+
+  const totalTd = document.createElement("td");
+  totalTd.textContent = checkedCount;
+  totalTd.className = "total-col";
+  row.appendChild(totalTd);
+
+  return row;
+}
+
+function buildStreamSelectedRow(pitcher, dates, teamOps) {
+  const startsByDate = {};
+  for (const s of pitcher.starts) startsByDate[s.date] = s;
+
+  const row = document.createElement("tr");
+  row.classList.add("stream-selected-row");
+
+  // Checkbox to deselect
+  const cbTd = document.createElement("td");
+  cbTd.className = "sticky-col starts-check-col";
+  const cb = document.createElement("input");
+  cb.type = "checkbox";
+  cb.checked = true;
+  cb.addEventListener("change", () => {
+    for (const s of pitcher.starts) {
+      state.streamChecked.delete(startKey(pitcher.name, s.date));
+    }
+    render();
+    renderStreamingTable();
+  });
+  cbTd.appendChild(cb);
+  row.appendChild(cbTd);
+
+  const nameTd = document.createElement("td");
+  nameTd.className = "sticky-col2 starts-name-col";
+  nameTd.innerHTML = `<span class="pitcher-name">${pitcher.name}</span><span class="pitcher-team stream-tag">${pitcher.mlb_team} · FA</span>`;
+  row.appendChild(nameTd);
+
+  let checkedCount = 0;
+  for (const date of dates) {
+    const td = document.createElement("td");
+    const start = startsByDate[date];
+    if (start) {
+      const ops = start.opponent_ops ?? teamOps[start.opponent];
+      td.className = "start-cell start-on " + opsClass(ops);
+      td.innerHTML = `<span class="opp-name">${start.home ? "" : "@"}${start.opponent}</span><span class="opp-ops">${opsLabel(ops)}</span>`;
+      checkedCount++;
+    }
+    row.appendChild(td);
+  }
+
+  const totalTd = document.createElement("td");
+  totalTd.textContent = checkedCount;
+  totalTd.className = "total-col";
+  row.appendChild(totalTd);
+
+  return row;
+}
+
+/* ── Team select ── */
 
 function initTeamSelect(data) {
   const sel = document.getElementById("team-select");
@@ -179,10 +291,7 @@ function initTeamSelect(data) {
   }
   state.team = teams[0];
   sel.value = state.team;
-
-  // Default: check all starts for initial team
   resetChecked();
-
   sel.addEventListener("change", () => {
     state.team = sel.value;
     resetChecked();
@@ -200,6 +309,8 @@ function resetChecked() {
   }
 }
 
+/* ── GS Summary ── */
+
 function renderGsSummary(data) {
   const container = document.getElementById("gs-summary");
   const teams = Object.keys(data.fantasy_teams).sort();
@@ -209,7 +320,6 @@ function renderGsSummary(data) {
     gs: data.fantasy_teams[t].reduce((sum, p) => sum + p.starts.length, 0),
   }));
 
-  // Sort by GS descending
   counts.sort((a, b) => b.gs - a.gs);
 
   let html = '<table class="gs-table"><thead><tr>';
@@ -221,23 +331,192 @@ function renderGsSummary(data) {
   container.innerHTML = html;
 }
 
-fetch("data/starts_data.json")
-  .then(r => r.json())
-  .then(data => {
-    state.data = data;
+/* ── Streaming Options ── */
 
-    const lu = document.getElementById("last-updated");
-    if (data.metadata?.last_updated) {
-      const d = new Date(data.metadata.last_updated);
-      const weekEnd = new Date(data.metadata.week_end + "T12:00:00");
-      lu.textContent = `Week of ${new Date(data.metadata.week_start + "T12:00:00").toLocaleDateString("en-US", { month: "short", day: "numeric" })}–${weekEnd.toLocaleDateString("en-US", { month: "short", day: "numeric" })} · Last updated: ${d.toLocaleString()}`;
+function renderStreamingTable() {
+  const data = state.data;
+  if (!data) return;
+  const options = data.streaming_options || [];
+  const dates = data.dates;
+  const teamOps = data.team_ops_30d;
+
+  // Sort
+  const sorted = [...options].sort((a, b) => {
+    const key = state.streamSort;
+    if (key.startsWith("day:")) {
+      const date = key.slice(4);
+      const opsA = getStartOps(a, date, teamOps);
+      const opsB = getStartOps(b, date, teamOps);
+      if (opsA == null && opsB == null) return 0;
+      if (opsA == null) return 1;
+      if (opsB == null) return -1;
+      return state.streamSortAsc ? opsA - opsB : opsB - opsA;
+    }
+    const va = a[key] ?? -Infinity;
+    const vb = b[key] ?? -Infinity;
+    return state.streamSortAsc ? va - vb : vb - va;
+  });
+
+  // Header
+  const headEl = document.getElementById("streaming-head");
+  headEl.innerHTML = "";
+  const tr = document.createElement("tr");
+
+  // Empty th for checkbox column
+  const cbTh = document.createElement("th");
+  cbTh.className = "stream-check-col";
+  tr.appendChild(cbTh);
+
+  const nameTh = document.createElement("th");
+  nameTh.textContent = "Pitcher";
+  nameTh.className = "stream-name-col";
+  tr.appendChild(nameTh);
+
+  for (const col of [
+    { key: "pts_per_gs", label: "Pts/GS" },
+    { key: "season_pts", label: "Season" },
+    { key: "pr30_pts", label: "PR30" },
+  ]) {
+    const th = document.createElement("th");
+    const active = state.streamSort === col.key;
+    th.className = "stream-stat-col sortable-col" + (active ? " sort-active" : "");
+    th.innerHTML = col.label + (active ? ` <span class="sort-arrow">${state.streamSortAsc ? "▲" : "▼"}</span>` : "");
+    th.style.cursor = "pointer";
+    th.addEventListener("click", () => {
+      if (state.streamSort === col.key) state.streamSortAsc = !state.streamSortAsc;
+      else { state.streamSort = col.key; state.streamSortAsc = false; }
+      renderStreamingTable();
+    });
+    tr.appendChild(th);
+  }
+
+  for (const date of dates) {
+    const th = document.createElement("th");
+    const sortKey = "day:" + date;
+    const active = state.streamSort === sortKey;
+    th.className = "sortable-col" + (active ? " sort-active" : "");
+    th.innerHTML = dayHeader(date) + (active ? `<br><span class="sort-arrow">${state.streamSortAsc ? "▲" : "▼"}</span>` : "");
+    th.style.cursor = "pointer";
+    th.addEventListener("click", () => {
+      if (state.streamSort === sortKey) state.streamSortAsc = !state.streamSortAsc;
+      else { state.streamSort = sortKey; state.streamSortAsc = true; }
+      renderStreamingTable();
+    });
+    tr.appendChild(th);
+  }
+
+  headEl.appendChild(tr);
+
+  // Body
+  const bodyEl = document.getElementById("streaming-body");
+  bodyEl.innerHTML = "";
+
+  if (sorted.length === 0) {
+    const row = document.createElement("tr");
+    const td = document.createElement("td");
+    td.colSpan = dates.length + 5;
+    td.textContent = "No streaming options found this week.";
+    td.style.cssText = "text-align:center;color:#64748b;padding:2rem";
+    row.appendChild(td);
+    bodyEl.appendChild(row);
+    return;
+  }
+
+  for (const pitcher of sorted) {
+    const startsByDate = {};
+    for (const s of pitcher.starts) startsByDate[s.date] = s;
+
+    const row = document.createElement("tr");
+
+    // Has any start selected?
+    const anyChecked = pitcher.starts.some(s => state.streamChecked.has(startKey(pitcher.name, s.date)));
+
+    // Checkbox
+    const cbTd = document.createElement("td");
+    cbTd.className = "stream-check-col";
+    const cb = document.createElement("input");
+    cb.type = "checkbox";
+    cb.checked = anyChecked;
+    cb.addEventListener("change", () => {
+      for (const s of pitcher.starts) {
+        const key = startKey(pitcher.name, s.date);
+        if (cb.checked) state.streamChecked.add(key);
+        else state.streamChecked.delete(key);
+      }
+      render();
+      renderStreamingTable();
+    });
+    cbTd.appendChild(cb);
+    row.appendChild(cbTd);
+
+    const nameTd = document.createElement("td");
+    nameTd.className = "stream-name-col";
+    nameTd.innerHTML = `<span class="pitcher-name">${pitcher.name}</span><span class="pitcher-team">${pitcher.mlb_team}</span>`;
+    row.appendChild(nameTd);
+
+    for (const key of ["pts_per_gs", "season_pts", "pr30_pts"]) {
+      const td = document.createElement("td");
+      td.className = "stream-stat-col";
+      const val = pitcher[key];
+      td.textContent = val != null ? val.toFixed(1) : "—";
+      row.appendChild(td);
     }
 
-    renderGsSummary(data);
-    initTeamSelect(data);
-    render();
-  })
-  .catch(() => {
-    document.getElementById("starts-body").innerHTML =
-      '<tr><td colspan="99" style="text-align:center;color:#f87171;padding:2rem">Could not load starts data.</td></tr>';
-  });
+    for (const date of dates) {
+      const td = document.createElement("td");
+      const start = startsByDate[date];
+      if (start) {
+        const ops = start.opponent_ops ?? teamOps[start.opponent];
+        td.className = "start-cell " + opsClass(ops);
+        if (state.streamChecked.has(startKey(pitcher.name, date))) td.classList.add("start-on");
+        td.innerHTML = `<span class="opp-name">${start.home ? "" : "@"}${start.opponent}</span><span class="opp-ops">${opsLabel(ops)}</span>`;
+        td.style.cursor = "pointer";
+        td.addEventListener("click", () => {
+          const key = startKey(pitcher.name, date);
+          if (state.streamChecked.has(key)) state.streamChecked.delete(key);
+          else state.streamChecked.add(key);
+          render();
+          renderStreamingTable();
+        });
+      }
+      row.appendChild(td);
+    }
+
+    bodyEl.appendChild(row);
+  }
+}
+
+function getStartOps(pitcher, date, teamOps) {
+  const start = pitcher.starts.find(s => s.date === date);
+  if (!start) return null;
+  return start.opponent_ops ?? teamOps[start.opponent] ?? null;
+}
+
+/* ── Data loading ── */
+
+function loadData() {
+  fetch("data/starts_data.json")
+    .then(r => r.json())
+    .then(data => {
+      state.data = data;
+
+      const lu = document.getElementById("last-updated");
+      if (data.metadata?.last_updated) {
+        const d = new Date(data.metadata.last_updated);
+        const weekEnd = new Date(data.metadata.week_end + "T12:00:00");
+        lu.textContent = `Week of ${new Date(data.metadata.week_start + "T12:00:00").toLocaleDateString("en-US", { month: "short", day: "numeric" })}–${weekEnd.toLocaleDateString("en-US", { month: "short", day: "numeric" })} · Last updated: ${d.toLocaleString()}`;
+      }
+
+      renderGsSummary(data);
+      initTeamSelect(data);
+      render();
+      renderStreamingTable();
+    })
+    .catch(() => {
+      document.getElementById("starts-body").innerHTML =
+        '<tr><td colspan="99" style="text-align:center;color:#f87171;padding:2rem">Could not load starts data.</td></tr>';
+    });
+}
+
+/* ── Init ── */
+checkAuth();
