@@ -1,3 +1,75 @@
+/* ── Password overlay ── */
+.pw-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 17, 23, 0.95);
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.pw-card {
+  background: #161b27;
+  border: 1px solid #334155;
+  border-radius: 12px;
+  padding: 2.5rem 2rem;
+  text-align: center;
+  max-width: 340px;
+  width: 100%;
+}
+
+.pw-card h2 {
+  font-size: 1.4rem;
+  color: #f1f5f9;
+  margin-bottom: 0.3rem;
+}
+
+.pw-subtitle {
+  color: #64748b;
+  font-size: 0.85rem;
+  margin-bottom: 1.5rem;
+}
+
+.pw-input {
+  width: 100%;
+  padding: 0.6rem 0.8rem;
+  font-size: 1rem;
+  background: #0f1117;
+  border: 1px solid #334155;
+  border-radius: 6px;
+  color: #e2e8f0;
+  outline: none;
+  margin-bottom: 0.75rem;
+}
+
+.pw-input:focus {
+  border-color: #3b82f6;
+}
+
+.pw-btn {
+  width: 100%;
+  padding: 0.6rem;
+  font-size: 0.95rem;
+  font-weight: 600;
+  background: #3b82f6;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.pw-btn:hover {
+  background: #2563eb;
+}
+
+.pw-error {
+  color: #f87171;
+  font-size: 0.82rem;
+  margin-top: 0.5rem;
+  min-height: 1.2em;
+}
+
 /* ── GS Summary ── */
 .gs-summary {
   margin-bottom: 1.25rem;
@@ -200,8 +272,86 @@ tr.pitcher-off .starts-check-col {
 .ops-chip.ops-tough { background: hsla(0,   55%, 20%, 0.9); }
 .ops-chip.ops-none  { background: #1a2030; border: 1px solid #334155; }
 
+/* ── Stream-selected rows in rostered table ── */
+.stream-selected-row {
+  border-top: 2px solid #334155;
+}
+
+.stream-selected-row .starts-name-col,
+.stream-selected-row .starts-check-col {
+  background: #1a1f2e;
+}
+
+.stream-tag {
+  color: #3b82f6 !important;
+}
+
+/* ── Streaming section ── */
+.streaming-section {
+  margin-top: 2.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid #1e2535;
+}
+
+.section-heading {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #f1f5f9;
+  margin-bottom: 0.2rem;
+}
+
+.section-sub {
+  font-size: 0.82rem;
+  color: #64748b;
+  margin-bottom: 1rem;
+}
+
+/* ── Streaming table ── */
+#streaming-table {
+  border-collapse: separate;
+  border-spacing: 3px 3px;
+}
+
+.stream-check-col {
+  width: 2.5rem;
+  min-width: 2.5rem;
+  text-align: center !important;
+}
+
+.stream-name-col {
+  min-width: 11rem;
+  width: 11rem;
+  text-align: left !important;
+}
+
+.stream-stat-col {
+  text-align: right !important;
+  font-variant-numeric: tabular-nums;
+  padding: 0.4rem 0.6rem !important;
+  white-space: nowrap;
+  font-size: 0.88rem;
+}
+
+.sortable-col {
+  cursor: pointer;
+}
+
+.sortable-col:hover {
+  color: #e2e8f0;
+}
+
+.sort-active {
+  color: #3b82f6 !important;
+}
+
+.sort-arrow {
+  font-size: 0.65rem;
+  color: #3b82f6;
+}
+
 @media (max-width: 600px) {
-  .starts-name-col {
+  .starts-name-col,
+  .stream-name-col {
     min-width: 8rem;
     width: 8rem;
   }
