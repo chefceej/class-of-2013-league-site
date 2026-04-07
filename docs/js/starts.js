@@ -312,10 +312,11 @@ function resetChecked() {
 function renderGsSummary(data) {
   const container = document.getElementById("gs-summary");
   const teams = Object.keys(data.fantasy_teams).sort();
+  const actualGs = data.team_actual_gs || {};
 
   const counts = teams.map(t => ({
     team: t,
-    gs: data.fantasy_teams[t].reduce((sum, p) => sum + p.starts.length, 0),
+    gs: actualGs[t] ?? 0,
   }));
 
   counts.sort((a, b) => b.gs - a.gs);
