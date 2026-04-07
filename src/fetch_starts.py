@@ -23,6 +23,17 @@ OUTPUT_PATH = os.path.join(os.path.dirname(__file__), "..", "docs", "data", "sta
 MLB_API = "https://statsapi.mlb.com/api/v1"
 ESPN_SCHEDULE_URL = f"https://lm-api-reads.fantasy.espn.com/apis/v3/games/flb/seasons/{SEASON_YEAR}?view=proTeamSchedules_wl"
 
+# MLB Stats API abbreviation → ESPN PRO_TEAM_MAP abbreviation
+MLB_TO_ESPN_ABBREV = {
+    "ATH": "Oak", "ATL": "Atl", "AZ": "Ari", "BAL": "Bal", "BOS": "Bos",
+    "CHC": "ChC", "CIN": "Cin", "CLE": "Cle", "COL": "Col", "CWS": "ChW",
+    "DET": "Det", "HOU": "Hou", "KC": "KC", "LAA": "LAA", "LAD": "LAD",
+    "MIA": "Mia", "MIL": "Mil", "MIN": "Min", "NYM": "NYM", "NYY": "NYY",
+    "OAK": "Oak", "PHI": "Phi", "PIT": "Pit", "SD": "SD", "SEA": "Sea",
+    "SF": "SF", "STL": "StL", "TB": "TB", "TEX": "Tex", "TOR": "Tor",
+    "WSH": "Wsh",
+}
+
 
 def mlb_get(path):
     url = MLB_API + path
@@ -246,7 +257,7 @@ def fetch_mlb_teams():
 
 
 def fetch_team_ops_30d(week_end, team_id_map):
-    """Returns {mlb_team_abbrev: ops_float} for the 30 days ending on week_end."""
+    """Returns {espn_team_abbrev: ops_float} for the 30 days ending on week_end."""
     end_str = week_end.strftime("%Y-%m-%d")
     start_str = (week_end - timedelta(days=30)).strftime("%Y-%m-%d")
     try:
@@ -257,10 +268,11 @@ def fetch_team_ops_30d(week_end, team_id_map):
         ops_map = {}
         for entry in data.get("stats", [{}])[0].get("splits", []):
             team_id = entry.get("team", {}).get("id")
-            abbrev = team_id_map.get(team_id, "?")
+            mlb_abbrev = team_id_map.get(team_id, "?")
+            espn_abbrev = MLB_TO_ESPN_ABBREV.get(mlb_abbrev)
             ops = entry.get("stat", {}).get("ops")
-            if abbrev != "?" and ops is not None:
-                ops_map[abbrev] = round(float(ops), 3)
+            if espn_abbrev and ops is not None:
+                ops_map[espn_abbrev] = round(float(ops), 3)
         return ops_map
     except Exception as e:
         print(f"  Warning: could not fetch team OPS — {e}")
