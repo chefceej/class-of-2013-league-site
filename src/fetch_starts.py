@@ -280,16 +280,66 @@ def fetch_team_ops_30d(week_end, team_id_map):
         return {}
 
 
-def fetch_actual_gs(league):
-    """Fetch actual GS (games started) per fantasy team for the current matchup period."""
+def find_current_matchup_period(league):
+    """Determine the current matchup period from schedule data.
+
+    league.current_week is the scoringPeriodId (day number), not the
+    matchup period. This function finds which matchupPeriodId contains
+    the current scoring period.
+    """
+    data = league.espn_request.league_get(params={"view": "mMatchup"})
+    current_sp = league.current_week
+
+    for matchup in data.get("schedule", []):
+        for side in ("home", "away"):
+            if side not in matchup:
+                continue
+            pbsp = matchup[side].get("pointsByScoringPeriod", {})
+            if str(current_sp) in pbsp or current_sp in pbsp:
+                return matchup["matchupPeriodId"]
+
+    # Fallback: find the highest matchup period that has any scoring data
+    max_mp = 0
+    for matchup in data.get("schedule", []):
+        for side in ("home", "away"):
+            if side not in matchup:
+                continue
+            if matchup[side].get("pointsByScoringPeriod"):
+                max_mp = max(max_mp, matchup["matchupPeriodId"])
+    return max_mp or 1
+
+
+def fetch_actual_gs(league, matchup_period):
+    """Fetch actual GS (games started) per fantasy team for the given matchup period."""
     filters = {
         "schedule": {
-            "filterMatchupPeriodIds": {"value": [league.current_week]}
+            "filterMatchupPeriodIds": {"value": [matchup_period]}
         }
     }
     headers = {"x-fantasy-filter": json.dumps(filters)}
+
+    # Need a valid scoringPeriodId for this matchup period to get roster data
+    matchup_data = league.espn_request.league_get(params={"view": "mMatchup"})
+    sp_for_period = None
+    for matchup in matchup_data.get("schedule", []):
+        if matchup["matchupPeriodId"] != matchup_period:
+            continue
+        for side in ("home", "away"):
+            if side not in matchup:
+                continue
+            pbsp = matchup[side].get("pointsByScoringPeriod", {})
+            if pbsp:
+                sp_for_period = max(int(k) for k in pbsp)
+                break
+        if sp_for_period:
+            break
+
+    if not sp_for_period:
+        print(f"  Warning: no scoring period found for matchup period {matchup_period}")
+        return {}
+
     data = league.espn_request.league_get(
-        params={"view": ["mMatchupScore", "mScoreboard"]},
+        params={"view": ["mMatchupScore", "mScoreboard"], "scoringPeriodId": sp_for_period},
         headers=headers,
     )
 
@@ -297,6 +347,8 @@ def fetch_actual_gs(league):
     team_gs = {}
 
     for matchup in data.get("schedule", []):
+        if matchup.get("matchupPeriodId") != matchup_period:
+            continue
         for side in ("home", "away"):
             team_data = matchup.get(side)
             if not team_data:
@@ -343,7 +395,9 @@ def main():
     print(f"  Found {rostered_count} rostered starts, {sum(len(s) for s in fa_starters.values())} FA starts")
 
     print("Fetching actual games started from ESPN...")
-    actual_gs = fetch_actual_gs(league)
+    matchup_period = find_current_matchup_period(league)
+    print(f"  Current matchup period: {matchup_period} (scoringPeriodId={league.current_week})")
+    actual_gs = fetch_actual_gs(league, matchup_period)
     print(f"  Got actual GS for {len(actual_gs)} teams: {actual_gs}")
 
     print("Fetching free agent pitcher stats...")
