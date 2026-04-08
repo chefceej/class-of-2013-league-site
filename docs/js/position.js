@@ -43,7 +43,7 @@ function render() {
     return;
   }
 
-  // Global min/max for heatmap (exclude zeros)
+  // Global min/max for weekly cell heatmap (exclude zeros)
   let globalMin = Infinity, globalMax = -Infinity;
   for (const team of teams) {
     for (const pos of positions) {
@@ -53,6 +53,19 @@ function render() {
           if (v < globalMin) globalMin = v;
           if (v > globalMax) globalMax = v;
         }
+      }
+    }
+  }
+
+  // Separate min/max for the Total column (season totals are larger)
+  let totalMin = Infinity, totalMax = -Infinity;
+  for (const team of teams) {
+    for (const pos of positions) {
+      let rowTotal = 0;
+      for (const w of weeks) rowTotal += (byWeek[w]?.[team]?.[pos] || 0);
+      if (rowTotal > 0) {
+        if (rowTotal < totalMin) totalMin = rowTotal;
+        if (rowTotal > totalMax) totalMax = rowTotal;
       }
     }
   }
@@ -123,6 +136,7 @@ function render() {
       const totalTd = document.createElement("td");
       totalTd.textContent = rowTotal > 0 ? rowTotal.toFixed(1) : "—";
       totalTd.className = "total-col";
+      if (rowTotal > 0) totalTd.style.background = cellColor(rowTotal, totalMin, totalMax);
       row.appendChild(totalTd);
 
       bodyEl.appendChild(row);

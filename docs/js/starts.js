@@ -312,19 +312,24 @@ function resetChecked() {
 function renderGsSummary(data) {
   const container = document.getElementById("gs-summary");
   const teams = Object.keys(data.fantasy_teams).sort();
-  const actualGs = data.team_actual_gs || {};
+  const actualGs = data.actual_gs || {};
+  const limit = data.metadata?.start_limit || START_LIMIT;
 
   const counts = teams.map(t => ({
     team: t,
-    gs: actualGs[t] ?? 0,
+    actual: actualGs[t] || 0,
+    probable: data.fantasy_teams[t].reduce((sum, p) => sum + p.starts.length, 0),
   }));
 
-  counts.sort((a, b) => b.gs - a.gs);
+  counts.sort((a, b) => b.actual - a.actual || b.probable - a.probable);
 
   let html = '<table class="gs-table"><thead><tr>';
   for (const c of counts) html += `<th>${c.team}</th>`;
   html += '</tr></thead><tbody><tr>';
-  for (const c of counts) html += `<td>${c.gs}</td>`;
+  for (const c of counts) {
+    const cls = c.actual >= limit ? ' class="gs-at-limit"' : c.actual > limit * 0.75 ? ' class="gs-near-limit"' : '';
+    html += `<td${cls}>${c.actual}/${limit}</td>`;
+  }
   html += '</tr></tbody></table>';
 
   container.innerHTML = html;

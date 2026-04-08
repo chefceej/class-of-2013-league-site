@@ -73,6 +73,14 @@
   border-bottom: 1px solid #1e2535;
 }
 
+.gs-table td.gs-at-limit {
+  color: #facc15;
+}
+
+.gs-table td.gs-near-limit {
+  color: #fb923c;
+}
+
 /* ── Controls ── */
 .starts-controls {
   display: flex;
