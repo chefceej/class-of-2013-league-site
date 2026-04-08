@@ -85,7 +85,16 @@ function buildWeeklyTable(headEl, bodyEl, teams, currentWeek, dataKey, colorFn) 
     return team[dataKey].slice(0, currentWeek).reduce((sum, v) => sum + (v ?? 0), 0);
   }
 
+  function updateSortIndicators() {
+    headEl.querySelectorAll("th[data-week]").forEach(th => {
+      const w = th.dataset.week === "total" ? "total" : parseInt(th.dataset.week);
+      const base = th.dataset.week === "total" ? "Total" : `Wk ${th.dataset.week}`;
+      th.textContent = w === sortWeek ? `${base} ${sortDir === -1 ? "\u25BC" : "\u25B2"}` : base;
+    });
+  }
+
   function render() {
+    updateSortIndicators();
     const sorted = [...teams].sort((a, b) => {
       let av, bv;
       if (sortWeek === "total") {
