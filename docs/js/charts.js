@@ -159,6 +159,7 @@ function buildWeeklyTable(headEl, bodyEl, teams, currentWeek, dataKey, colorFn) 
 
   const { metadata, teams, top_players_by_week } = data;
   const currentMatchupWeek = metadata.current_matchup_week ?? metadata.current_week;
+  const totalMatchupWeeks = metadata.total_matchup_weeks ?? currentMatchupWeek;
   const numTeams = metadata.num_teams;
   const playoffCutoff = metadata.playoff_cutoff;
 
@@ -167,28 +168,29 @@ function buildWeeklyTable(headEl, bodyEl, teams, currentWeek, dataKey, colorFn) 
   document.getElementById("last-updated").textContent =
     `Last updated: ${updated.toLocaleString("en-US", { timeZoneName: "short" })}`;
 
-  // Week labels
-  const weekLabels = Array.from({ length: currentMatchupWeek }, (_, i) => `Wk ${i + 1}`);
+  // Week labels — always show all weeks in the season
+  const weekLabels = Array.from({ length: totalMatchupWeeks }, (_, i) => `Wk ${i + 1}`);
 
   // Evenly spaced HSL colors
   const color = (i) => `hsl(${Math.round((i / numTeams) * 360)}, 70%, 62%)`;
 
-  // Build datasets — one per team, only up to currentMatchupWeek
+  // Build datasets — data for played weeks, null for future weeks
   const teamDatasets = teams.map((team, i) => ({
     label: team.team_abbrev || team.team_name,
-    data: team.normalized_by_week.slice(0, currentMatchupWeek),
+    data: team.normalized_by_week.slice(0, totalMatchupWeeks),
     borderColor: color(i),
     backgroundColor: color(i) + "22",
     borderWidth: 2,
     pointRadius: 3,
     pointHoverRadius: 6,
     tension: 0.3,
+    spanGaps: false,
   }));
 
-  // Zero-line dataset (no plugin needed)
+  // Zero-line dataset spans full season
   const zeroLine = {
     label: "6th Place (0)",
-    data: Array(currentMatchupWeek).fill(0),
+    data: Array(totalMatchupWeeks).fill(0),
     borderColor: "#f87171",
     borderDash: [6, 4],
     borderWidth: 1.5,

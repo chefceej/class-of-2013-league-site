@@ -19,6 +19,7 @@ SWID = os.environ.get("SWID", "{EEFDF804-ED17-4981-BDF8-04ED173981C0}")
 
 LEAGUE_ID = 37734
 SEASON_YEAR = 2026
+START_LIMIT = 8
 OUTPUT_PATH = os.path.join(os.path.dirname(__file__), "..", "docs", "data", "starts_data.json")
 MLB_API = "https://statsapi.mlb.com/api/v1"
 
@@ -40,8 +41,8 @@ def current_week_dates():
 
 def fetch_probable_starters(week_start, week_end):
     """
-    Returns {date_str: [{pitcher_name, mlb_team_abbrev, opponent_abbrev, home: bool}]}
-    using MLB Stats API probable pitchers.
+    Returns {date_str: [{pitcher_name, mlb_team_abbrev, opponent_abbrev, home: bool, game_final: bool}]}
+    using MLB Stats API probable pitchers. game_final indicates if the game has completed.
     """
     start_str = week_start.strftime("%Y-%m-%d")
     end_str = week_end.strftime("%Y-%m-%d")
@@ -58,6 +59,7 @@ def fetch_probable_starters(week_start, week_end):
             away = game["teams"]["away"]
             home_abbrev = home["team"].get("abbreviation", "?")
             away_abbrev = away["team"].get("abbreviation", "?")
+            game_final = game.get("status", {}).get("abstractGameState") == "Final"
 
             for side, opponent in [("home", away_abbrev), ("away", home_abbrev)]:
                 pitcher = game["teams"][side].get("probablePitcher")
@@ -67,6 +69,7 @@ def fetch_probable_starters(week_start, week_end):
                         "mlb_team": game["teams"][side]["team"].get("abbreviation", "?"),
                         "opponent": opponent,
                         "home": side == "home",
+                        "game_final": game_final,
                     })
     return by_date
 
@@ -224,6 +227,9 @@ def main():
         dates.append(d.strftime("%Y-%m-%d"))
         d += timedelta(days=1)
 
+    # Track actual completed GS per fantasy team
+    actual_gs = defaultdict(int)
+
     for date_str, starters in probable_by_date.items():
         for starter in starters:
             norm = normalize_name(starter["name"])
@@ -237,6 +243,8 @@ def main():
             }
             if fantasy_team:
                 fantasy_starts[fantasy_team][starter["name"]].append(start_info)
+                if starter.get("game_final"):
+                    actual_gs[fantasy_team] += 1
             elif norm in fa_stats:
                 streaming_starts[starter["name"]].append(start_info)
 
@@ -274,14 +282,21 @@ def main():
     # Default sort by pts_per_gs descending
     streaming_options.sort(key=lambda x: x["pts_per_gs"], reverse=True)
 
+    # Ensure all teams have an actual_gs entry (0 if no completed starts)
+    for fantasy_team in rosters:
+        if fantasy_team not in actual_gs:
+            actual_gs[fantasy_team] = 0
+
     output = {
         "metadata": {
             "week_start": week_start.strftime("%Y-%m-%d"),
             "week_end": week_end.strftime("%Y-%m-%d"),
             "last_updated": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
+            "start_limit": START_LIMIT,
         },
         "dates": dates,
         "team_ops_30d": team_ops,
+        "actual_gs": dict(actual_gs),
         "fantasy_teams": output_teams,
         "streaming_options": streaming_options,
     }
