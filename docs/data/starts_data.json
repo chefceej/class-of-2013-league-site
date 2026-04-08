@@ -2,7 +2,7 @@
   "metadata": {
     "week_start": "2026-04-06",
     "week_end": "2026-04-12",
-    "last_updated": "2026-04-08T04:51:48Z",
+    "last_updated": "2026-04-08T04:59:05Z",
     "start_limit": 8
   },
   "dates": [
@@ -16,335 +16,61 @@
   ],
   "team_ops_30d": {
     "LAD": 0.86,
-    "WSH": 0.804,
-    "HOU": 0.851,
-    "MIL": 0.782,
+    "Wsh": 0.804,
+    "Hou": 0.851,
+    "Mil": 0.782,
     "TB": 0.729,
-    "ATL": 0.745,
-    "MIA": 0.73,
+    "Atl": 0.743,
+    "Mia": 0.73,
     "NYM": 0.71,
-    "PIT": 0.728,
-    "BAL": 0.692,
+    "Pit": 0.728,
+    "Bal": 0.692,
     "KC": 0.703,
-    "COL": 0.661,
-    "TEX": 0.674,
-    "DET": 0.685,
+    "Col": 0.661,
+    "Tex": 0.674,
+    "Det": 0.685,
     "SF": 0.605,
-    "PHI": 0.681,
-    "TOR": 0.649,
+    "Phi": 0.681,
+    "Tor": 0.649,
     "NYY": 0.718,
-    "STL": 0.682,
-    "ATH": 0.657,
-    "BOS": 0.664,
-    "CHC": 0.674,
-    "AZ": 0.631,
-    "MIN": 0.659,
+    "StL": 0.682,
+    "Oak": 0.657,
+    "Bos": 0.664,
+    "ChC": 0.674,
+    "Ari": 0.631,
+    "Min": 0.659,
     "SD": 0.61,
-    "CWS": 0.61,
-    "CIN": 0.61,
-    "CLE": 0.622,
-    "LAA": 0.641,
-    "SEA": 0.607
-  },
-  "actual_gs": {
-    "CEEJ": 3,
-    "DECA": 6,
-    "STRN": 3,
-    "YOFF": 4,
-    "STEW": 3,
-    "BERN": 3,
-    "wOBA": 2,
-    "PEDS": 4,
-    "SCHN": 2,
-    "BKRF": 1,
-    "JB": 2,
-    "SW": 1
+    "ChW": 0.61,
+    "Cin": 0.61,
+    "LAA": 0.646,
+    "Cle": 0.622,
+    "Sea": 0.607
   },
   "fantasy_teams": {
-    "CEEJ": [
-      {
-        "name": "Chase Burns",
-        "mlb_team": "CIN",
-        "starts": [
-          {
-            "date": "2026-04-10",
-            "mlb_team": "CIN",
-            "opponent": "LAA",
-            "opponent_ops": 0.641,
-            "home": true
-          }
-        ]
-      },
-      {
-        "name": "Nick Pivetta",
-        "mlb_team": "SD",
-        "starts": [
-          {
-            "date": "2026-04-07",
-            "mlb_team": "SD",
-            "opponent": "PIT",
-            "opponent_ops": 0.728,
-            "home": false
-          }
-        ]
-      },
-      {
-        "name": "Randy V\u00e1squez",
-        "mlb_team": "SD",
-        "starts": [
-          {
-            "date": "2026-04-09",
-            "mlb_team": "SD",
-            "opponent": "COL",
-            "opponent_ops": 0.661,
-            "home": true
-          }
-        ]
-      },
-      {
-        "name": "Ryan Weathers",
-        "mlb_team": "NYY",
-        "starts": [
-          {
-            "date": "2026-04-09",
-            "mlb_team": "NYY",
-            "opponent": "ATH",
-            "opponent_ops": 0.657,
-            "home": true
-          }
-        ]
-      },
-      {
-        "name": "Sandy Alcantara",
-        "mlb_team": "MIA",
-        "starts": [
-          {
-            "date": "2026-04-07",
-            "mlb_team": "MIA",
-            "opponent": "CIN",
-            "opponent_ops": 0.61,
-            "home": true
-          }
-        ]
-      },
-      {
-        "name": "Shane McClanahan",
-        "mlb_team": "TB",
-        "starts": [
-          {
-            "date": "2026-04-06",
-            "mlb_team": "TB",
-            "opponent": "CHC",
-            "opponent_ops": 0.674,
-            "home": true
-          }
-        ]
-      }
-    ],
-    "DECA": [
-      {
-        "name": "Bailey Ober",
-        "mlb_team": "MIN",
-        "starts": [
-          {
-            "date": "2026-04-08",
-            "mlb_team": "MIN",
-            "opponent": "DET",
-            "opponent_ops": 0.685,
-            "home": true
-          }
-        ]
-      },
-      {
-        "name": "Cade Cavalli",
-        "mlb_team": "WSH",
-        "starts": [
-          {
-            "date": "2026-04-07",
-            "mlb_team": "WSH",
-            "opponent": "STL",
-            "opponent_ops": 0.682,
-            "home": true
-          }
-        ]
-      },
-      {
-        "name": "Jeffrey Springs",
-        "mlb_team": "ATH",
-        "starts": [
-          {
-            "date": "2026-04-09",
-            "mlb_team": "ATH",
-            "opponent": "NYY",
-            "opponent_ops": 0.718,
-            "home": false
-          }
-        ]
-      },
-      {
-        "name": "Joe Ryan",
-        "mlb_team": "MIN",
-        "starts": [
-          {
-            "date": "2026-04-06",
-            "mlb_team": "MIN",
-            "opponent": "DET",
-            "opponent_ops": 0.685,
-            "home": true
-          }
-        ]
-      },
-      {
-        "name": "Michael Wacha",
-        "mlb_team": "KC",
-        "starts": [
-          {
-            "date": "2026-04-06",
-            "mlb_team": "KC",
-            "opponent": "CLE",
-            "opponent_ops": 0.622,
-            "home": false
-          }
-        ]
-      },
-      {
-        "name": "Shane Smith",
-        "mlb_team": "CWS",
-        "starts": [
-          {
-            "date": "2026-04-07",
-            "mlb_team": "CWS",
-            "opponent": "BAL",
-            "opponent_ops": 0.692,
-            "home": true
-          },
-          {
-            "date": "2026-04-12",
-            "mlb_team": "CWS",
-            "opponent": "KC",
-            "opponent_ops": 0.703,
-            "home": false
-          }
-        ]
-      },
-      {
-        "name": "Tanner Bibee",
-        "mlb_team": "CLE",
-        "starts": [
-          {
-            "date": "2026-04-06",
-            "mlb_team": "CLE",
-            "opponent": "KC",
-            "opponent_ops": 0.703,
-            "home": true
-          }
-        ]
-      },
-      {
-        "name": "Zac Gallen",
-        "mlb_team": "AZ",
-        "starts": [
-          {
-            "date": "2026-04-07",
-            "mlb_team": "AZ",
-            "opponent": "NYM",
-            "opponent_ops": 0.71,
-            "home": false
-          }
-        ]
-      }
-    ],
-    "STRN": [
-      {
-        "name": "Bubba Chandler",
-        "mlb_team": "PIT",
-        "starts": [
-          {
-            "date": "2026-04-06",
-            "mlb_team": "PIT",
-            "opponent": "SD",
-            "opponent_ops": 0.61,
-            "home": true
-          }
-        ]
-      },
-      {
-        "name": "Clay Holmes",
-        "mlb_team": "NYM",
-        "starts": [
-          {
-            "date": "2026-04-10",
-            "mlb_team": "NYM",
-            "opponent": "ATH",
-            "opponent_ops": 0.657,
-            "home": true
-          }
-        ]
-      },
-      {
-        "name": "Jacob Misiorowski",
-        "mlb_team": "MIL",
-        "starts": [
-          {
-            "date": "2026-04-07",
-            "mlb_team": "MIL",
-            "opponent": "BOS",
-            "opponent_ops": 0.664,
-            "home": false
-          }
-        ]
-      },
-      {
-        "name": "Logan Gilbert",
-        "mlb_team": "SEA",
-        "starts": [
-          {
-            "date": "2026-04-06",
-            "mlb_team": "SEA",
-            "opponent": "TEX",
-            "opponent_ops": 0.674,
-            "home": false
-          }
-        ]
-      },
-      {
-        "name": "Reynaldo L\u00f3pez",
-        "mlb_team": "ATL",
-        "starts": [
-          {
-            "date": "2026-04-07",
-            "mlb_team": "ATL",
-            "opponent": "LAA",
-            "opponent_ops": 0.641,
-            "home": false
-          }
-        ]
-      },
-      {
-        "name": "Ryne Nelson",
-        "mlb_team": "AZ",
-        "starts": [
-          {
-            "date": "2026-04-08",
-            "mlb_team": "AZ",
-            "opponent": "NYM",
-            "opponent_ops": 0.71,
-            "home": false
-          }
-        ]
-      }
-    ],
     "YOFF": [
       {
+        "name": "Brandon Pfaadt",
+        "mlb_team": "Ari",
+        "starts": [
+          {
+            "date": "2026-04-11",
+            "mlb_team": "Ari",
+            "opponent": "Phi",
+            "home": false,
+            "opponent_ops": 0.681
+          }
+        ]
+      },
+      {
         "name": "Brandon Woodruff",
-        "mlb_team": "MIL",
+        "mlb_team": "Mil",
         "starts": [
           {
             "date": "2026-04-06",
-            "mlb_team": "MIL",
-            "opponent": "BOS",
-            "opponent_ops": 0.664,
-            "home": false
+            "mlb_team": "Mil",
+            "opponent": "Bos",
+            "home": false,
+            "opponent_ops": 0.664
           }
         ]
       },
@@ -355,22 +81,68 @@
           {
             "date": "2026-04-07",
             "mlb_team": "NYM",
-            "opponent": "AZ",
-            "opponent_ops": 0.631,
-            "home": true
+            "opponent": "Ari",
+            "home": true,
+            "opponent_ops": 0.631
+          },
+          {
+            "date": "2026-04-12",
+            "mlb_team": "NYM",
+            "opponent": "Oak",
+            "home": true,
+            "opponent_ops": 0.657
+          }
+        ]
+      },
+      {
+        "name": "Logan Webb",
+        "mlb_team": "SF",
+        "starts": [
+          {
+            "date": "2026-04-11",
+            "mlb_team": "SF",
+            "opponent": "Bal",
+            "home": false,
+            "opponent_ops": 0.692
+          }
+        ]
+      },
+      {
+        "name": "Luis Castillo",
+        "mlb_team": "Sea",
+        "starts": [
+          {
+            "date": "2026-04-12",
+            "mlb_team": "Sea",
+            "opponent": "Hou",
+            "home": true,
+            "opponent_ops": 0.851
           }
         ]
       },
       {
         "name": "Matthew Liberatore",
-        "mlb_team": "STL",
+        "mlb_team": "StL",
         "starts": [
           {
             "date": "2026-04-07",
-            "mlb_team": "STL",
-            "opponent": "WSH",
-            "opponent_ops": 0.804,
-            "home": false
+            "mlb_team": "StL",
+            "opponent": "Wsh",
+            "home": false,
+            "opponent_ops": 0.804
+          }
+        ]
+      },
+      {
+        "name": "Michael Soroka",
+        "mlb_team": "Ari",
+        "starts": [
+          {
+            "date": "2026-04-10",
+            "mlb_team": "Ari",
+            "opponent": "Phi",
+            "home": false,
+            "opponent_ops": 0.681
           }
         ]
       },
@@ -381,63 +153,850 @@
           {
             "date": "2026-04-07",
             "mlb_team": "LAD",
-            "opponent": "TOR",
-            "opponent_ops": 0.649,
-            "home": false
+            "opponent": "Tor",
+            "home": false,
+            "opponent_ops": 0.649
           }
         ]
       }
     ],
-    "STEW": [
+    "JB": [
       {
-        "name": "Casey Mize",
-        "mlb_team": "DET",
+        "name": "Braxton Ashcraft",
+        "mlb_team": "Pit",
+        "starts": [
+          {
+            "date": "2026-04-11",
+            "mlb_team": "Pit",
+            "opponent": "ChC",
+            "home": false,
+            "opponent_ops": 0.674
+          }
+        ]
+      },
+      {
+        "name": "Garrett Crochet",
+        "mlb_team": "Bos",
+        "starts": [
+          {
+            "date": "2026-04-07",
+            "mlb_team": "Bos",
+            "opponent": "Mil",
+            "home": true,
+            "opponent_ops": 0.782
+          }
+        ]
+      },
+      {
+        "name": "Jack Leiter",
+        "mlb_team": "Tex",
+        "starts": [
+          {
+            "date": "2026-04-12",
+            "mlb_team": "Tex",
+            "opponent": "LAD",
+            "home": false,
+            "opponent_ops": 0.86
+          }
+        ]
+      },
+      {
+        "name": "Jacob Lopez",
+        "mlb_team": "Oak",
+        "starts": [
+          {
+            "date": "2026-04-11",
+            "mlb_team": "Oak",
+            "opponent": "NYM",
+            "home": false,
+            "opponent_ops": 0.71
+          }
+        ]
+      },
+      {
+        "name": "Mick Abel",
+        "mlb_team": "Min",
+        "starts": [
+          {
+            "date": "2026-04-09",
+            "mlb_team": "Min",
+            "opponent": "Det",
+            "home": true,
+            "opponent_ops": 0.685
+          }
+        ]
+      },
+      {
+        "name": "Nolan McLean",
+        "mlb_team": "NYM",
+        "starts": [
+          {
+            "date": "2026-04-09",
+            "mlb_team": "NYM",
+            "opponent": "Ari",
+            "home": true,
+            "opponent_ops": 0.631
+          }
+        ]
+      },
+      {
+        "name": "Tarik Skubal",
+        "mlb_team": "Det",
+        "starts": [
+          {
+            "date": "2026-04-07",
+            "mlb_team": "Det",
+            "opponent": "Min",
+            "home": false,
+            "opponent_ops": 0.659
+          },
+          {
+            "date": "2026-04-12",
+            "mlb_team": "Det",
+            "opponent": "Mia",
+            "home": true,
+            "opponent_ops": 0.73
+          }
+        ]
+      }
+    ],
+    "STRN": [
+      {
+        "name": "Bubba Chandler",
+        "mlb_team": "Pit",
         "starts": [
           {
             "date": "2026-04-06",
-            "mlb_team": "DET",
-            "opponent": "MIN",
-            "opponent_ops": 0.659,
-            "home": false
+            "mlb_team": "Pit",
+            "opponent": "SD",
+            "home": true,
+            "opponent_ops": 0.61
+          },
+          {
+            "date": "2026-04-12",
+            "mlb_team": "Pit",
+            "opponent": "ChC",
+            "home": false,
+            "opponent_ops": 0.674
           }
         ]
       },
       {
-        "name": "George Kirby",
-        "mlb_team": "SEA",
+        "name": "Clay Holmes",
+        "mlb_team": "NYM",
+        "starts": [
+          {
+            "date": "2026-04-10",
+            "mlb_team": "NYM",
+            "opponent": "Oak",
+            "home": true,
+            "opponent_ops": 0.657
+          }
+        ]
+      },
+      {
+        "name": "Jacob Misiorowski",
+        "mlb_team": "Mil",
         "starts": [
           {
             "date": "2026-04-07",
-            "mlb_team": "SEA",
-            "opponent": "TEX",
-            "opponent_ops": 0.674,
-            "home": false
+            "mlb_team": "Mil",
+            "opponent": "Bos",
+            "home": false,
+            "opponent_ops": 0.664
           }
         ]
       },
       {
-        "name": "Kevin Gausman",
-        "mlb_team": "TOR",
+        "name": "Jesus Luzardo",
+        "mlb_team": "Phi",
+        "starts": [
+          {
+            "date": "2026-04-10",
+            "mlb_team": "Phi",
+            "opponent": "Ari",
+            "home": true,
+            "opponent_ops": 0.631
+          }
+        ]
+      },
+      {
+        "name": "Logan Gilbert",
+        "mlb_team": "Sea",
         "starts": [
           {
             "date": "2026-04-07",
-            "mlb_team": "TOR",
-            "opponent": "LAD",
-            "opponent_ops": 0.86,
-            "home": true
+            "mlb_team": "Sea",
+            "opponent": "Tex",
+            "home": false,
+            "opponent_ops": 0.674
+          },
+          {
+            "date": "2026-04-12",
+            "mlb_team": "Sea",
+            "opponent": "Hou",
+            "home": true,
+            "opponent_ops": 0.851
           }
         ]
       },
       {
-        "name": "Kyle Bradish",
-        "mlb_team": "BAL",
+        "name": "Reynaldo Lopez",
+        "mlb_team": "Atl",
         "starts": [
           {
             "date": "2026-04-08",
-            "mlb_team": "BAL",
-            "opponent": "CWS",
-            "opponent_ops": 0.61,
-            "home": false
+            "mlb_team": "Atl",
+            "opponent": "LAA",
+            "home": false,
+            "opponent_ops": 0.646
+          }
+        ]
+      },
+      {
+        "name": "Ryne Nelson",
+        "mlb_team": "Ari",
+        "starts": [
+          {
+            "date": "2026-04-08",
+            "mlb_team": "Ari",
+            "opponent": "NYM",
+            "home": false,
+            "opponent_ops": 0.71
+          }
+        ]
+      },
+      {
+        "name": "Tyler Glasnow",
+        "mlb_team": "LAD",
+        "starts": [
+          {
+            "date": "2026-04-11",
+            "mlb_team": "LAD",
+            "opponent": "Tex",
+            "home": true,
+            "opponent_ops": 0.674
+          }
+        ]
+      }
+    ],
+    "SW": [
+      {
+        "name": "Brandon Sproat",
+        "mlb_team": "Mil",
+        "starts": [
+          {
+            "date": "2026-04-11",
+            "mlb_team": "Mil",
+            "opponent": "Wsh",
+            "home": true,
+            "opponent_ops": 0.804
+          }
+        ]
+      },
+      {
+        "name": "Bryan Woo",
+        "mlb_team": "Sea",
+        "starts": [
+          {
+            "date": "2026-04-08",
+            "mlb_team": "Sea",
+            "opponent": "Tex",
+            "home": false,
+            "opponent_ops": 0.674
+          }
+        ]
+      },
+      {
+        "name": "Cole Ragans",
+        "mlb_team": "KC",
+        "starts": [
+          {
+            "date": "2026-04-08",
+            "mlb_team": "KC",
+            "opponent": "Cle",
+            "home": false,
+            "opponent_ops": 0.622
+          }
+        ]
+      },
+      {
+        "name": "Cristopher Sanchez",
+        "mlb_team": "Phi",
+        "starts": [
+          {
+            "date": "2026-04-08",
+            "mlb_team": "Phi",
+            "opponent": "SF",
+            "home": false,
+            "opponent_ops": 0.605
+          }
+        ]
+      },
+      {
+        "name": "Kris Bubic",
+        "mlb_team": "KC",
+        "starts": [
+          {
+            "date": "2026-04-10",
+            "mlb_team": "KC",
+            "opponent": "ChW",
+            "home": true,
+            "opponent_ops": 0.61
+          }
+        ]
+      },
+      {
+        "name": "Parker Messick",
+        "mlb_team": "Cle",
+        "starts": [
+          {
+            "date": "2026-04-11",
+            "mlb_team": "Cle",
+            "opponent": "Atl",
+            "home": false,
+            "opponent_ops": 0.743
+          }
+        ]
+      },
+      {
+        "name": "Shota Imanaga",
+        "mlb_team": "ChC",
+        "starts": [
+          {
+            "date": "2026-04-10",
+            "mlb_team": "ChC",
+            "opponent": "Pit",
+            "home": true,
+            "opponent_ops": 0.728
+          }
+        ]
+      },
+      {
+        "name": "Will Warren",
+        "mlb_team": "NYY",
+        "starts": [
+          {
+            "date": "2026-04-08",
+            "mlb_team": "NYY",
+            "opponent": "Oak",
+            "home": true,
+            "opponent_ops": 0.657
+          }
+        ]
+      }
+    ],
+    "SCHN": [
+      {
+        "name": "Bryce Elder",
+        "mlb_team": "Atl",
+        "starts": [
+          {
+            "date": "2026-04-10",
+            "mlb_team": "Atl",
+            "opponent": "Cle",
+            "home": true,
+            "opponent_ops": 0.622
+          }
+        ]
+      },
+      {
+        "name": "Eduardo Rodriguez",
+        "mlb_team": "Ari",
+        "starts": [
+          {
+            "date": "2026-04-09",
+            "mlb_team": "Ari",
+            "opponent": "NYM",
+            "home": false,
+            "opponent_ops": 0.71
+          }
+        ]
+      },
+      {
+        "name": "Framber Valdez",
+        "mlb_team": "Det",
+        "starts": [
+          {
+            "date": "2026-04-08",
+            "mlb_team": "Det",
+            "opponent": "Min",
+            "home": false,
+            "opponent_ops": 0.659
+          }
+        ]
+      },
+      {
+        "name": "Nathan Eovaldi",
+        "mlb_team": "Tex",
+        "starts": [
+          {
+            "date": "2026-04-08",
+            "mlb_team": "Tex",
+            "opponent": "Sea",
+            "home": true,
+            "opponent_ops": 0.607
+          }
+        ]
+      },
+      {
+        "name": "Trevor Rogers",
+        "mlb_team": "Bal",
+        "starts": [
+          {
+            "date": "2026-04-07",
+            "mlb_team": "Bal",
+            "opponent": "ChW",
+            "home": false,
+            "opponent_ops": 0.61
+          }
+        ]
+      }
+    ],
+    "DECA": [
+      {
+        "name": "Bailey Ober",
+        "mlb_team": "Min",
+        "starts": [
+          {
+            "date": "2026-04-08",
+            "mlb_team": "Min",
+            "opponent": "Det",
+            "home": true,
+            "opponent_ops": 0.685
+          }
+        ]
+      },
+      {
+        "name": "Cade Cavalli",
+        "mlb_team": "Wsh",
+        "starts": [
+          {
+            "date": "2026-04-07",
+            "mlb_team": "Wsh",
+            "opponent": "StL",
+            "home": true,
+            "opponent_ops": 0.682
+          }
+        ]
+      },
+      {
+        "name": "Jeffrey Springs",
+        "mlb_team": "Oak",
+        "starts": [
+          {
+            "date": "2026-04-09",
+            "mlb_team": "Oak",
+            "opponent": "NYY",
+            "home": false,
+            "opponent_ops": 0.718
+          }
+        ]
+      },
+      {
+        "name": "Joe Ryan",
+        "mlb_team": "Min",
+        "starts": [
+          {
+            "date": "2026-04-06",
+            "mlb_team": "Min",
+            "opponent": "Det",
+            "home": true,
+            "opponent_ops": 0.685
+          },
+          {
+            "date": "2026-04-11",
+            "mlb_team": "Min",
+            "opponent": "Tor",
+            "home": false,
+            "opponent_ops": 0.649
+          }
+        ]
+      },
+      {
+        "name": "Michael Wacha",
+        "mlb_team": "KC",
+        "starts": [
+          {
+            "date": "2026-04-06",
+            "mlb_team": "KC",
+            "opponent": "Cle",
+            "home": false,
+            "opponent_ops": 0.622
+          },
+          {
+            "date": "2026-04-11",
+            "mlb_team": "KC",
+            "opponent": "ChW",
+            "home": true,
+            "opponent_ops": 0.61
+          }
+        ]
+      },
+      {
+        "name": "Shane Smith",
+        "mlb_team": "ChW",
+        "starts": [
+          {
+            "date": "2026-04-07",
+            "mlb_team": "ChW",
+            "opponent": "Bal",
+            "home": true,
+            "opponent_ops": 0.692
+          },
+          {
+            "date": "2026-04-12",
+            "mlb_team": "ChW",
+            "opponent": "KC",
+            "home": false,
+            "opponent_ops": 0.703
+          }
+        ]
+      },
+      {
+        "name": "Tanner Bibee",
+        "mlb_team": "Cle",
+        "starts": [
+          {
+            "date": "2026-04-06",
+            "mlb_team": "Cle",
+            "opponent": "KC",
+            "home": true,
+            "opponent_ops": 0.703
+          },
+          {
+            "date": "2026-04-12",
+            "mlb_team": "Cle",
+            "opponent": "Atl",
+            "home": false,
+            "opponent_ops": 0.743
+          }
+        ]
+      },
+      {
+        "name": "Zac Gallen",
+        "mlb_team": "Ari",
+        "starts": [
+          {
+            "date": "2026-04-07",
+            "mlb_team": "Ari",
+            "opponent": "NYM",
+            "home": false,
+            "opponent_ops": 0.71
+          },
+          {
+            "date": "2026-04-12",
+            "mlb_team": "Ari",
+            "opponent": "Phi",
+            "home": false,
+            "opponent_ops": 0.681
+          }
+        ]
+      }
+    ],
+    "PEDS": [
+      {
+        "name": "Andrew Abbott",
+        "mlb_team": "Cin",
+        "starts": [
+          {
+            "date": "2026-04-07",
+            "mlb_team": "Cin",
+            "opponent": "Mia",
+            "home": false,
+            "opponent_ops": 0.73
+          },
+          {
+            "date": "2026-04-12",
+            "mlb_team": "Cin",
+            "opponent": "LAA",
+            "home": true,
+            "opponent_ops": 0.646
+          }
+        ]
+      },
+      {
+        "name": "Andrew Painter",
+        "mlb_team": "Phi",
+        "starts": [
+          {
+            "date": "2026-04-07",
+            "mlb_team": "Phi",
+            "opponent": "SF",
+            "home": false,
+            "opponent_ops": 0.605
+          },
+          {
+            "date": "2026-04-12",
+            "mlb_team": "Phi",
+            "opponent": "Ari",
+            "home": true,
+            "opponent_ops": 0.631
+          }
+        ]
+      },
+      {
+        "name": "Edward Cabrera",
+        "mlb_team": "ChC",
+        "starts": [
+          {
+            "date": "2026-04-11",
+            "mlb_team": "ChC",
+            "opponent": "Pit",
+            "home": true,
+            "opponent_ops": 0.728
+          }
+        ]
+      },
+      {
+        "name": "Grant Holmes",
+        "mlb_team": "Atl",
+        "starts": [
+          {
+            "date": "2026-04-08",
+            "mlb_team": "Atl",
+            "opponent": "LAA",
+            "home": false,
+            "opponent_ops": 0.646
+          }
+        ]
+      },
+      {
+        "name": "Mike Burrows",
+        "mlb_team": "Hou",
+        "starts": [
+          {
+            "date": "2026-04-08",
+            "mlb_team": "Hou",
+            "opponent": "Col",
+            "home": false,
+            "opponent_ops": 0.661
+          }
+        ]
+      },
+      {
+        "name": "Ranger Suarez",
+        "mlb_team": "Bos",
+        "starts": [
+          {
+            "date": "2026-04-11",
+            "mlb_team": "Bos",
+            "opponent": "StL",
+            "home": false,
+            "opponent_ops": 0.682
+          }
+        ]
+      },
+      {
+        "name": "Rhett Lowder",
+        "mlb_team": "Cin",
+        "starts": [
+          {
+            "date": "2026-04-09",
+            "mlb_team": "Cin",
+            "opponent": "Mia",
+            "home": false,
+            "opponent_ops": 0.73
+          }
+        ]
+      },
+      {
+        "name": "Robbie Ray",
+        "mlb_team": "SF",
+        "starts": [
+          {
+            "date": "2026-04-08",
+            "mlb_team": "SF",
+            "opponent": "Phi",
+            "home": true,
+            "opponent_ops": 0.681
+          }
+        ]
+      },
+      {
+        "name": "Sonny Gray",
+        "mlb_team": "Bos",
+        "starts": [
+          {
+            "date": "2026-04-08",
+            "mlb_team": "Bos",
+            "opponent": "Mil",
+            "home": true,
+            "opponent_ops": 0.782
+          }
+        ]
+      }
+    ],
+    "wOBA": [
+      {
+        "name": "Brady Singer",
+        "mlb_team": "Cin",
+        "starts": [
+          {
+            "date": "2026-04-08",
+            "mlb_team": "Cin",
+            "opponent": "Mia",
+            "home": false,
+            "opponent_ops": 0.73
+          }
+        ]
+      },
+      {
+        "name": "Chris Sale",
+        "mlb_team": "Atl",
+        "starts": [
+          {
+            "date": "2026-04-07",
+            "mlb_team": "Atl",
+            "opponent": "LAA",
+            "home": false,
+            "opponent_ops": 0.646
+          },
+          {
+            "date": "2026-04-12",
+            "mlb_team": "Atl",
+            "opponent": "Cle",
+            "home": true,
+            "opponent_ops": 0.622
+          }
+        ]
+      },
+      {
+        "name": "Dylan Cease",
+        "mlb_team": "Tor",
+        "starts": [
+          {
+            "date": "2026-04-08",
+            "mlb_team": "Tor",
+            "opponent": "LAD",
+            "home": true,
+            "opponent_ops": 0.86
+          }
+        ]
+      },
+      {
+        "name": "Jose Soriano",
+        "mlb_team": "LAA",
+        "starts": [
+          {
+            "date": "2026-04-07",
+            "mlb_team": "LAA",
+            "opponent": "Atl",
+            "home": true,
+            "opponent_ops": 0.743
+          },
+          {
+            "date": "2026-04-12",
+            "mlb_team": "LAA",
+            "opponent": "Cin",
+            "home": false,
+            "opponent_ops": 0.61
+          }
+        ]
+      },
+      {
+        "name": "Mitch Keller",
+        "mlb_team": "Pit",
+        "starts": [
+          {
+            "date": "2026-04-08",
+            "mlb_team": "Pit",
+            "opponent": "SD",
+            "home": true,
+            "opponent_ops": 0.61
+          }
+        ]
+      },
+      {
+        "name": "Yusei Kikuchi",
+        "mlb_team": "LAA",
+        "starts": [
+          {
+            "date": "2026-04-08",
+            "mlb_team": "LAA",
+            "opponent": "Atl",
+            "home": true,
+            "opponent_ops": 0.743
+          }
+        ]
+      }
+    ],
+    "BKRF": [
+      {
+        "name": "Aaron Nola",
+        "mlb_team": "Phi",
+        "starts": [
+          {
+            "date": "2026-04-08",
+            "mlb_team": "Phi",
+            "opponent": "SF",
+            "home": false,
+            "opponent_ops": 0.605
+          }
+        ]
+      },
+      {
+        "name": "Jack Flaherty",
+        "mlb_team": "Det",
+        "starts": [
+          {
+            "date": "2026-04-09",
+            "mlb_team": "Det",
+            "opponent": "Min",
+            "home": false,
+            "opponent_ops": 0.659
+          }
+        ]
+      },
+      {
+        "name": "Kodai Senga",
+        "mlb_team": "NYM",
+        "starts": [
+          {
+            "date": "2026-04-11",
+            "mlb_team": "NYM",
+            "opponent": "Oak",
+            "home": true,
+            "opponent_ops": 0.657
+          }
+        ]
+      },
+      {
+        "name": "MacKenzie Gore",
+        "mlb_team": "Tex",
+        "starts": [
+          {
+            "date": "2026-04-08",
+            "mlb_team": "Tex",
+            "opponent": "Sea",
+            "home": true,
+            "opponent_ops": 0.607
+          }
+        ]
+      },
+      {
+        "name": "Max Fried",
+        "mlb_team": "NYY",
+        "starts": [
+          {
+            "date": "2026-04-10",
+            "mlb_team": "NYY",
+            "opponent": "TB",
+            "home": false,
+            "opponent_ops": 0.729
+          }
+        ]
+      },
+      {
+        "name": "Paul Skenes",
+        "mlb_team": "Pit",
+        "starts": [
+          {
+            "date": "2026-04-07",
+            "mlb_team": "Pit",
+            "opponent": "SD",
+            "home": true,
+            "opponent_ops": 0.61
           }
         ]
       }
@@ -450,48 +1009,88 @@
           {
             "date": "2026-04-07",
             "mlb_team": "NYY",
-            "opponent": "ATH",
-            "opponent_ops": 0.657,
-            "home": true
+            "opponent": "Oak",
+            "home": true,
+            "opponent_ops": 0.657
+          },
+          {
+            "date": "2026-04-12",
+            "mlb_team": "NYY",
+            "opponent": "TB",
+            "home": false,
+            "opponent_ops": 0.729
           }
         ]
       },
       {
-        "name": "Eury P\u00e9rez",
-        "mlb_team": "MIA",
+        "name": "Connelly Early",
+        "mlb_team": "Bos",
+        "starts": [
+          {
+            "date": "2026-04-11",
+            "mlb_team": "Bos",
+            "opponent": "StL",
+            "home": false,
+            "opponent_ops": 0.682
+          }
+        ]
+      },
+      {
+        "name": "Eury Perez",
+        "mlb_team": "Mia",
         "starts": [
           {
             "date": "2026-04-08",
-            "mlb_team": "MIA",
-            "opponent": "CIN",
-            "opponent_ops": 0.61,
-            "home": true
+            "mlb_team": "Mia",
+            "opponent": "Cin",
+            "home": true,
+            "opponent_ops": 0.61
           }
         ]
       },
       {
         "name": "Gavin Williams",
-        "mlb_team": "CLE",
+        "mlb_team": "Cle",
         "starts": [
           {
             "date": "2026-04-07",
-            "mlb_team": "CLE",
+            "mlb_team": "Cle",
             "opponent": "KC",
-            "opponent_ops": 0.703,
-            "home": true
+            "home": true,
+            "opponent_ops": 0.703
           }
         ]
       },
       {
         "name": "Jacob deGrom",
-        "mlb_team": "TEX",
+        "mlb_team": "Tex",
         "starts": [
           {
-            "date": "2026-04-06",
-            "mlb_team": "TEX",
-            "opponent": "SEA",
-            "opponent_ops": 0.607,
-            "home": true
+            "date": "2026-04-07",
+            "mlb_team": "Tex",
+            "opponent": "Sea",
+            "home": true,
+            "opponent_ops": 0.607
+          },
+          {
+            "date": "2026-04-12",
+            "mlb_team": "Tex",
+            "opponent": "LAD",
+            "home": false,
+            "opponent_ops": 0.86
+          }
+        ]
+      },
+      {
+        "name": "Kyle Harrison",
+        "mlb_team": "Mil",
+        "starts": [
+          {
+            "date": "2026-04-12",
+            "mlb_team": "Mil",
+            "opponent": "Wsh",
+            "home": true,
+            "opponent_ops": 0.804
           }
         ]
       },
@@ -502,9 +1101,9 @@
           {
             "date": "2026-04-08",
             "mlb_team": "SD",
-            "opponent": "PIT",
-            "opponent_ops": 0.728,
-            "home": false
+            "opponent": "Pit",
+            "home": false,
+            "opponent_ops": 0.728
           }
         ]
       },
@@ -513,435 +1112,268 @@
         "mlb_team": "LAD",
         "starts": [
           {
+            "date": "2026-04-07",
+            "mlb_team": "LAD",
+            "opponent": "Tor",
+            "home": false,
+            "opponent_ops": 0.649
+          },
+          {
             "date": "2026-04-08",
             "mlb_team": "LAD",
-            "opponent": "TOR",
-            "opponent_ops": 0.649,
-            "home": false
-          }
-        ]
-      }
-    ],
-    "wOBA": [
-      {
-        "name": "Brady Singer",
-        "mlb_team": "CIN",
-        "starts": [
-          {
-            "date": "2026-04-08",
-            "mlb_team": "CIN",
-            "opponent": "MIA",
-            "opponent_ops": 0.73,
-            "home": false
+            "opponent": "Tor",
+            "home": false,
+            "opponent_ops": 0.649
           }
         ]
       },
       {
-        "name": "Chris Sale",
-        "mlb_team": "ATL",
-        "starts": [
-          {
-            "date": "2026-04-06",
-            "mlb_team": "ATL",
-            "opponent": "LAA",
-            "opponent_ops": 0.641,
-            "home": false
-          }
-        ]
-      },
-      {
-        "name": "Dylan Cease",
-        "mlb_team": "TOR",
-        "starts": [
-          {
-            "date": "2026-04-08",
-            "mlb_team": "TOR",
-            "opponent": "LAD",
-            "opponent_ops": 0.86,
-            "home": true
-          }
-        ]
-      },
-      {
-        "name": "Jos\u00e9 Soriano",
-        "mlb_team": "LAA",
-        "starts": [
-          {
-            "date": "2026-04-06",
-            "mlb_team": "LAA",
-            "opponent": "ATL",
-            "opponent_ops": 0.745,
-            "home": true
-          }
-        ]
-      },
-      {
-        "name": "Mitch Keller",
-        "mlb_team": "PIT",
-        "starts": [
-          {
-            "date": "2026-04-08",
-            "mlb_team": "PIT",
-            "opponent": "SD",
-            "opponent_ops": 0.61,
-            "home": true
-          }
-        ]
-      },
-      {
-        "name": "Yusei Kikuchi",
-        "mlb_team": "LAA",
-        "starts": [
-          {
-            "date": "2026-04-07",
-            "mlb_team": "LAA",
-            "opponent": "ATL",
-            "opponent_ops": 0.745,
-            "home": true
-          }
-        ]
-      }
-    ],
-    "PEDS": [
-      {
-        "name": "Andrew Abbott",
-        "mlb_team": "CIN",
-        "starts": [
-          {
-            "date": "2026-04-07",
-            "mlb_team": "CIN",
-            "opponent": "MIA",
-            "opponent_ops": 0.73,
-            "home": false
-          }
-        ]
-      },
-      {
-        "name": "Andrew Painter",
-        "mlb_team": "PHI",
-        "starts": [
-          {
-            "date": "2026-04-06",
-            "mlb_team": "PHI",
-            "opponent": "SF",
-            "opponent_ops": 0.605,
-            "home": false
-          }
-        ]
-      },
-      {
-        "name": "Grant Holmes",
-        "mlb_team": "ATL",
-        "starts": [
-          {
-            "date": "2026-04-08",
-            "mlb_team": "ATL",
-            "opponent": "LAA",
-            "opponent_ops": 0.641,
-            "home": false
-          }
-        ]
-      },
-      {
-        "name": "Mike Burrows",
-        "mlb_team": "HOU",
-        "starts": [
-          {
-            "date": "2026-04-07",
-            "mlb_team": "HOU",
-            "opponent": "COL",
-            "opponent_ops": 0.661,
-            "home": false
-          }
-        ]
-      },
-      {
-        "name": "Rhett Lowder",
-        "mlb_team": "CIN",
-        "starts": [
-          {
-            "date": "2026-04-09",
-            "mlb_team": "CIN",
-            "opponent": "MIA",
-            "opponent_ops": 0.73,
-            "home": false
-          }
-        ]
-      },
-      {
-        "name": "Robbie Ray",
-        "mlb_team": "SF",
-        "starts": [
-          {
-            "date": "2026-04-07",
-            "mlb_team": "SF",
-            "opponent": "PHI",
-            "opponent_ops": 0.681,
-            "home": true
-          }
-        ]
-      },
-      {
-        "name": "Sonny Gray",
-        "mlb_team": "BOS",
-        "starts": [
-          {
-            "date": "2026-04-08",
-            "mlb_team": "BOS",
-            "opponent": "MIL",
-            "opponent_ops": 0.782,
-            "home": true
-          }
-        ]
-      }
-    ],
-    "SCHN": [
-      {
-        "name": "Eduardo Rodriguez",
-        "mlb_team": "AZ",
-        "starts": [
-          {
-            "date": "2026-04-09",
-            "mlb_team": "AZ",
-            "opponent": "NYM",
-            "opponent_ops": 0.71,
-            "home": false
-          }
-        ]
-      },
-      {
-        "name": "Framber Valdez",
-        "mlb_team": "DET",
-        "starts": [
-          {
-            "date": "2026-04-08",
-            "mlb_team": "DET",
-            "opponent": "MIN",
-            "opponent_ops": 0.659,
-            "home": false
-          }
-        ]
-      },
-      {
-        "name": "Nathan Eovaldi",
-        "mlb_team": "TEX",
-        "starts": [
-          {
-            "date": "2026-04-07",
-            "mlb_team": "TEX",
-            "opponent": "SEA",
-            "opponent_ops": 0.607,
-            "home": true
-          }
-        ]
-      },
-      {
-        "name": "Trevor Rogers",
-        "mlb_team": "BAL",
-        "starts": [
-          {
-            "date": "2026-04-07",
-            "mlb_team": "BAL",
-            "opponent": "CWS",
-            "opponent_ops": 0.61,
-            "home": false
-          }
-        ]
-      }
-    ],
-    "BKRF": [
-      {
-        "name": "Aaron Nola",
-        "mlb_team": "PHI",
-        "starts": [
-          {
-            "date": "2026-04-08",
-            "mlb_team": "PHI",
-            "opponent": "SF",
-            "opponent_ops": 0.605,
-            "home": false
-          }
-        ]
-      },
-      {
-        "name": "Jack Flaherty",
-        "mlb_team": "DET",
-        "starts": [
-          {
-            "date": "2026-04-09",
-            "mlb_team": "DET",
-            "opponent": "MIN",
-            "opponent_ops": 0.659,
-            "home": false
-          }
-        ]
-      },
-      {
-        "name": "Kodai Senga",
-        "mlb_team": "NYM",
+        "name": "Tatsuya Imai",
+        "mlb_team": "Hou",
         "starts": [
           {
             "date": "2026-04-11",
-            "mlb_team": "NYM",
-            "opponent": "ATH",
-            "opponent_ops": 0.657,
-            "home": true
-          }
-        ]
-      },
-      {
-        "name": "MacKenzie Gore",
-        "mlb_team": "TEX",
-        "starts": [
-          {
-            "date": "2026-04-08",
-            "mlb_team": "TEX",
-            "opponent": "SEA",
-            "opponent_ops": 0.607,
-            "home": true
-          }
-        ]
-      },
-      {
-        "name": "Paul Skenes",
-        "mlb_team": "PIT",
-        "starts": [
-          {
-            "date": "2026-04-07",
-            "mlb_team": "PIT",
-            "opponent": "SD",
-            "opponent_ops": 0.61,
-            "home": true
+            "mlb_team": "Hou",
+            "opponent": "Sea",
+            "home": false,
+            "opponent_ops": 0.607
           }
         ]
       }
     ],
-    "JB": [
+    "CEEJ": [
       {
-        "name": "Garrett Crochet",
-        "mlb_team": "BOS",
+        "name": "Chase Burns",
+        "mlb_team": "Cin",
+        "starts": [
+          {
+            "date": "2026-04-10",
+            "mlb_team": "Cin",
+            "opponent": "LAA",
+            "home": true,
+            "opponent_ops": 0.646
+          }
+        ]
+      },
+      {
+        "name": "Nick Pivetta",
+        "mlb_team": "SD",
         "starts": [
           {
             "date": "2026-04-07",
-            "mlb_team": "BOS",
-            "opponent": "MIL",
-            "opponent_ops": 0.782,
-            "home": true
+            "mlb_team": "SD",
+            "opponent": "Pit",
+            "home": false,
+            "opponent_ops": 0.728
+          },
+          {
+            "date": "2026-04-12",
+            "mlb_team": "SD",
+            "opponent": "Col",
+            "home": true,
+            "opponent_ops": 0.661
           }
         ]
       },
       {
-        "name": "Mick Abel",
-        "mlb_team": "MIN",
+        "name": "Randy Vasquez",
+        "mlb_team": "SD",
         "starts": [
           {
-            "date": "2026-04-09",
-            "mlb_team": "MIN",
-            "opponent": "DET",
-            "opponent_ops": 0.685,
-            "home": true
+            "date": "2026-04-10",
+            "mlb_team": "SD",
+            "opponent": "Col",
+            "home": true,
+            "opponent_ops": 0.661
           }
         ]
       },
       {
-        "name": "Nolan McLean",
-        "mlb_team": "NYM",
+        "name": "Roki Sasaki",
+        "mlb_team": "LAD",
         "starts": [
           {
-            "date": "2026-04-09",
-            "mlb_team": "NYM",
-            "opponent": "AZ",
-            "opponent_ops": 0.631,
-            "home": true
+            "date": "2026-04-12",
+            "mlb_team": "LAD",
+            "opponent": "Tex",
+            "home": true,
+            "opponent_ops": 0.674
           }
         ]
       },
       {
-        "name": "Tarik Skubal",
-        "mlb_team": "DET",
-        "starts": [
-          {
-            "date": "2026-04-07",
-            "mlb_team": "DET",
-            "opponent": "MIN",
-            "opponent_ops": 0.659,
-            "home": false
-          }
-        ]
-      }
-    ],
-    "SW": [
-      {
-        "name": "Bryan Woo",
-        "mlb_team": "SEA",
-        "starts": [
-          {
-            "date": "2026-04-08",
-            "mlb_team": "SEA",
-            "opponent": "TEX",
-            "opponent_ops": 0.674,
-            "home": false
-          }
-        ]
-      },
-      {
-        "name": "Cole Ragans",
-        "mlb_team": "KC",
-        "starts": [
-          {
-            "date": "2026-04-08",
-            "mlb_team": "KC",
-            "opponent": "CLE",
-            "opponent_ops": 0.622,
-            "home": false
-          }
-        ]
-      },
-      {
-        "name": "Cristopher S\u00e1nchez",
-        "mlb_team": "PHI",
-        "starts": [
-          {
-            "date": "2026-04-07",
-            "mlb_team": "PHI",
-            "opponent": "SF",
-            "opponent_ops": 0.605,
-            "home": false
-          }
-        ]
-      },
-      {
-        "name": "Parker Messick",
-        "mlb_team": "CLE",
-        "starts": [
-          {
-            "date": "2026-04-11",
-            "mlb_team": "CLE",
-            "opponent": "ATL",
-            "opponent_ops": 0.745,
-            "home": false
-          }
-        ]
-      },
-      {
-        "name": "Will Warren",
+        "name": "Ryan Weathers",
         "mlb_team": "NYY",
         "starts": [
           {
-            "date": "2026-04-08",
+            "date": "2026-04-09",
             "mlb_team": "NYY",
-            "opponent": "ATH",
-            "opponent_ops": 0.657,
-            "home": true
+            "opponent": "Oak",
+            "home": true,
+            "opponent_ops": 0.657
+          }
+        ]
+      },
+      {
+        "name": "Sandy Alcantara",
+        "mlb_team": "Mia",
+        "starts": [
+          {
+            "date": "2026-04-07",
+            "mlb_team": "Mia",
+            "opponent": "Cin",
+            "home": true,
+            "opponent_ops": 0.61
+          },
+          {
+            "date": "2026-04-12",
+            "mlb_team": "Mia",
+            "opponent": "Det",
+            "home": false,
+            "opponent_ops": 0.685
+          }
+        ]
+      },
+      {
+        "name": "Shane Baz",
+        "mlb_team": "Bal",
+        "starts": [
+          {
+            "date": "2026-04-10",
+            "mlb_team": "Bal",
+            "opponent": "SF",
+            "home": true,
+            "opponent_ops": 0.605
+          }
+        ]
+      },
+      {
+        "name": "Shane McClanahan",
+        "mlb_team": "TB",
+        "starts": [
+          {
+            "date": "2026-04-06",
+            "mlb_team": "TB",
+            "opponent": "ChC",
+            "home": true,
+            "opponent_ops": 0.674
+          },
+          {
+            "date": "2026-04-12",
+            "mlb_team": "TB",
+            "opponent": "NYY",
+            "home": true,
+            "opponent_ops": 0.718
+          }
+        ]
+      }
+    ],
+    "STEW": [
+      {
+        "name": "Casey Mize",
+        "mlb_team": "Det",
+        "starts": [
+          {
+            "date": "2026-04-06",
+            "mlb_team": "Det",
+            "opponent": "Min",
+            "home": false,
+            "opponent_ops": 0.659
+          },
+          {
+            "date": "2026-04-11",
+            "mlb_team": "Det",
+            "opponent": "Mia",
+            "home": true,
+            "opponent_ops": 0.73
+          }
+        ]
+      },
+      {
+        "name": "Chad Patrick",
+        "mlb_team": "Mil",
+        "starts": [
+          {
+            "date": "2026-04-10",
+            "mlb_team": "Mil",
+            "opponent": "Wsh",
+            "home": true,
+            "opponent_ops": 0.804
+          }
+        ]
+      },
+      {
+        "name": "Emerson Hancock",
+        "mlb_team": "Sea",
+        "starts": [
+          {
+            "date": "2026-04-11",
+            "mlb_team": "Sea",
+            "opponent": "Hou",
+            "home": true,
+            "opponent_ops": 0.851
+          }
+        ]
+      },
+      {
+        "name": "George Kirby",
+        "mlb_team": "Sea",
+        "starts": [
+          {
+            "date": "2026-04-08",
+            "mlb_team": "Sea",
+            "opponent": "Tex",
+            "home": false,
+            "opponent_ops": 0.674
+          }
+        ]
+      },
+      {
+        "name": "Kevin Gausman",
+        "mlb_team": "Tor",
+        "starts": [
+          {
+            "date": "2026-04-07",
+            "mlb_team": "Tor",
+            "opponent": "LAD",
+            "home": true,
+            "opponent_ops": 0.86
+          }
+        ]
+      },
+      {
+        "name": "Kyle Bradish",
+        "mlb_team": "Bal",
+        "starts": [
+          {
+            "date": "2026-04-08",
+            "mlb_team": "Bal",
+            "opponent": "ChW",
+            "home": false,
+            "opponent_ops": 0.61
           }
         ]
       }
     ]
   },
+  "actual_gs": {
+    "SW": 0,
+    "BERN": 0,
+    "STRN": 0,
+    "BKRF": 0,
+    "DECA": 0,
+    "JB": 0,
+    "PEDS": 0,
+    "YOFF": 0,
+    "CEEJ": 0,
+    "wOBA": 0,
+    "STEW": 0,
+    "SCHN": 0
+  },
   "streaming_options": [
     {
       "name": "Sean Burke",
-      "mlb_team": "CWS",
+      "mlb_team": "ChW",
       "season_pts": 14.1,
       "gs": 1,
       "pts_per_gs": 14.1,
@@ -949,16 +1381,16 @@
       "starts": [
         {
           "date": "2026-04-08",
-          "mlb_team": "CWS",
-          "opponent": "BAL",
-          "opponent_ops": 0.692,
-          "home": true
+          "mlb_team": "ChW",
+          "opponent": "Bal",
+          "home": true,
+          "opponent_ops": 0.692
         }
       ]
     },
     {
       "name": "Javier Assad",
-      "mlb_team": "CHC",
+      "mlb_team": "ChC",
       "season_pts": 14.09,
       "gs": 1,
       "pts_per_gs": 14.09,
@@ -966,16 +1398,16 @@
       "starts": [
         {
           "date": "2026-04-07",
-          "mlb_team": "CHC",
+          "mlb_team": "ChC",
           "opponent": "TB",
-          "opponent_ops": 0.729,
-          "home": false
+          "home": false,
+          "opponent_ops": 0.729
         }
       ]
     },
     {
       "name": "Taj Bradley",
-      "mlb_team": "MIN",
+      "mlb_team": "Min",
       "season_pts": 37.5,
       "gs": 3,
       "pts_per_gs": 12.5,
@@ -983,16 +1415,23 @@
       "starts": [
         {
           "date": "2026-04-07",
-          "mlb_team": "MIN",
-          "opponent": "DET",
-          "opponent_ops": 0.685,
-          "home": true
+          "mlb_team": "Min",
+          "opponent": "Det",
+          "home": true,
+          "opponent_ops": 0.685
+        },
+        {
+          "date": "2026-04-12",
+          "mlb_team": "Min",
+          "opponent": "Tor",
+          "home": false,
+          "opponent_ops": 0.649
         }
       ]
     },
     {
       "name": "Brandon Young",
-      "mlb_team": "BAL",
+      "mlb_team": "Bal",
       "season_pts": 11.55,
       "gs": 1,
       "pts_per_gs": 11.55,
@@ -1000,16 +1439,33 @@
       "starts": [
         {
           "date": "2026-04-06",
-          "mlb_team": "BAL",
-          "opponent": "CWS",
-          "opponent_ops": 0.61,
-          "home": false
+          "mlb_team": "Bal",
+          "opponent": "ChW",
+          "home": false,
+          "opponent_ops": 0.61
+        }
+      ]
+    },
+    {
+      "name": "Seth Lugo",
+      "mlb_team": "KC",
+      "season_pts": 22.68,
+      "gs": 2,
+      "pts_per_gs": 11.34,
+      "pr30_pts": 22.68,
+      "starts": [
+        {
+          "date": "2026-04-09",
+          "mlb_team": "KC",
+          "opponent": "ChW",
+          "home": true,
+          "opponent_ops": 0.61
         }
       ]
     },
     {
       "name": "Erick Fedde",
-      "mlb_team": "CWS",
+      "mlb_team": "ChW",
       "season_pts": 10.91,
       "gs": 1,
       "pts_per_gs": 10.91,
@@ -1017,10 +1473,44 @@
       "starts": [
         {
           "date": "2026-04-11",
-          "mlb_team": "CWS",
+          "mlb_team": "ChW",
           "opponent": "KC",
-          "opponent_ops": 0.703,
-          "home": false
+          "home": false,
+          "opponent_ops": 0.703
+        }
+      ]
+    },
+    {
+      "name": "Tomoyuki Sugano",
+      "mlb_team": "Col",
+      "season_pts": 21.64,
+      "gs": 2,
+      "pts_per_gs": 10.82,
+      "pr30_pts": 21.64,
+      "starts": [
+        {
+          "date": "2026-04-11",
+          "mlb_team": "Col",
+          "opponent": "SD",
+          "home": false,
+          "opponent_ops": 0.61
+        }
+      ]
+    },
+    {
+      "name": "Nick Martinez",
+      "mlb_team": "TB",
+      "season_pts": 21.22,
+      "gs": 2,
+      "pts_per_gs": 10.61,
+      "pr30_pts": 21.22,
+      "starts": [
+        {
+          "date": "2026-04-11",
+          "mlb_team": "TB",
+          "opponent": "NYY",
+          "home": true,
+          "opponent_ops": 0.718
         }
       ]
     },
@@ -1035,15 +1525,22 @@
         {
           "date": "2026-04-07",
           "mlb_team": "KC",
-          "opponent": "CLE",
-          "opponent_ops": 0.622,
-          "home": false
+          "opponent": "Cle",
+          "home": false,
+          "opponent_ops": 0.622
+        },
+        {
+          "date": "2026-04-12",
+          "mlb_team": "KC",
+          "opponent": "ChW",
+          "home": true,
+          "opponent_ops": 0.61
         }
       ]
     },
     {
       "name": "Davis Martin",
-      "mlb_team": "CWS",
+      "mlb_team": "ChW",
       "season_pts": 20.41,
       "gs": 2,
       "pts_per_gs": 10.21,
@@ -1051,16 +1548,16 @@
       "starts": [
         {
           "date": "2026-04-10",
-          "mlb_team": "CWS",
+          "mlb_team": "ChW",
           "opponent": "KC",
-          "opponent_ops": 0.703,
-          "home": false
+          "home": false,
+          "opponent_ops": 0.703
         }
       ]
     },
     {
       "name": "Zack Littell",
-      "mlb_team": "WSH",
+      "mlb_team": "Wsh",
       "season_pts": 10.1,
       "gs": 1,
       "pts_per_gs": 10.1,
@@ -1068,10 +1565,17 @@
       "starts": [
         {
           "date": "2026-04-06",
-          "mlb_team": "WSH",
-          "opponent": "STL",
-          "opponent_ops": 0.682,
-          "home": true
+          "mlb_team": "Wsh",
+          "opponent": "StL",
+          "home": true,
+          "opponent_ops": 0.682
+        },
+        {
+          "date": "2026-04-12",
+          "mlb_team": "Wsh",
+          "opponent": "Mil",
+          "home": false,
+          "opponent_ops": 0.782
         }
       ]
     },
@@ -1086,15 +1590,15 @@
         {
           "date": "2026-04-08",
           "mlb_team": "TB",
-          "opponent": "CHC",
-          "opponent_ops": 0.674,
-          "home": true
+          "opponent": "ChC",
+          "home": true,
+          "opponent_ops": 0.674
         }
       ]
     },
     {
       "name": "Anthony Kay",
-      "mlb_team": "CWS",
+      "mlb_team": "ChW",
       "season_pts": 9.29,
       "gs": 1,
       "pts_per_gs": 9.29,
@@ -1102,16 +1606,33 @@
       "starts": [
         {
           "date": "2026-04-09",
-          "mlb_team": "CWS",
+          "mlb_team": "ChW",
           "opponent": "KC",
-          "opponent_ops": 0.703,
-          "home": false
+          "home": false,
+          "opponent_ops": 0.703
+        }
+      ]
+    },
+    {
+      "name": "Lance McCullers Jr.",
+      "mlb_team": "Hou",
+      "season_pts": 18.41,
+      "gs": 2,
+      "pts_per_gs": 9.21,
+      "pr30_pts": 18.41,
+      "starts": [
+        {
+          "date": "2026-04-12",
+          "mlb_team": "Hou",
+          "opponent": "Sea",
+          "home": false,
+          "opponent_ops": 0.607
         }
       ]
     },
     {
       "name": "Michael McGreevy",
-      "mlb_team": "STL",
+      "mlb_team": "StL",
       "season_pts": 17.64,
       "gs": 2,
       "pts_per_gs": 8.82,
@@ -1119,16 +1640,16 @@
       "starts": [
         {
           "date": "2026-04-08",
-          "mlb_team": "STL",
-          "opponent": "WSH",
-          "opponent_ops": 0.804,
-          "home": false
+          "mlb_team": "StL",
+          "opponent": "Wsh",
+          "home": false,
+          "opponent_ops": 0.804
         }
       ]
     },
     {
       "name": "Aaron Civale",
-      "mlb_team": "ATH",
+      "mlb_team": "Oak",
       "season_pts": 17.1,
       "gs": 2,
       "pts_per_gs": 8.55,
@@ -1136,33 +1657,81 @@
       "starts": [
         {
           "date": "2026-04-07",
-          "mlb_team": "ATH",
+          "mlb_team": "Oak",
           "opponent": "NYY",
-          "opponent_ops": 0.718,
-          "home": false
+          "home": false,
+          "opponent_ops": 0.718
+        },
+        {
+          "date": "2026-04-12",
+          "mlb_team": "Oak",
+          "opponent": "NYM",
+          "home": false,
+          "opponent_ops": 0.71
+        }
+      ]
+    },
+    {
+      "name": "Foster Griffin",
+      "mlb_team": "Wsh",
+      "season_pts": 16.6,
+      "gs": 2,
+      "pts_per_gs": 8.3,
+      "pr30_pts": 16.6,
+      "starts": [
+        {
+          "date": "2026-04-11",
+          "mlb_team": "Wsh",
+          "opponent": "Mil",
+          "home": false,
+          "opponent_ops": 0.782
+        }
+      ]
+    },
+    {
+      "name": "Simeon Woods Richardson",
+      "mlb_team": "Min",
+      "season_pts": 16.45,
+      "gs": 2,
+      "pts_per_gs": 8.22,
+      "pr30_pts": 16.45,
+      "starts": [
+        {
+          "date": "2026-04-10",
+          "mlb_team": "Min",
+          "opponent": "Tor",
+          "home": false,
+          "opponent_ops": 0.649
         }
       ]
     },
     {
       "name": "Kyle Freeland",
-      "mlb_team": "COL",
+      "mlb_team": "Col",
       "season_pts": 24.19,
       "gs": 3,
       "pts_per_gs": 8.06,
       "pr30_pts": 24.19,
       "starts": [
         {
-          "date": "2026-04-07",
-          "mlb_team": "COL",
-          "opponent": "HOU",
-          "opponent_ops": 0.851,
-          "home": true
+          "date": "2026-04-08",
+          "mlb_team": "Col",
+          "opponent": "Hou",
+          "home": true,
+          "opponent_ops": 0.851
+        },
+        {
+          "date": "2026-04-12",
+          "mlb_team": "Col",
+          "opponent": "SD",
+          "home": false,
+          "opponent_ops": 0.61
         }
       ]
     },
     {
       "name": "Andre Pallante",
-      "mlb_team": "STL",
+      "mlb_team": "StL",
       "season_pts": 16.1,
       "gs": 2,
       "pts_per_gs": 8.05,
@@ -1170,16 +1739,40 @@
       "starts": [
         {
           "date": "2026-04-06",
-          "mlb_team": "STL",
-          "opponent": "WSH",
-          "opponent_ops": 0.804,
-          "home": false
+          "mlb_team": "StL",
+          "opponent": "Wsh",
+          "home": false,
+          "opponent_ops": 0.804
+        },
+        {
+          "date": "2026-04-12",
+          "mlb_team": "StL",
+          "opponent": "Bos",
+          "home": true,
+          "opponent_ops": 0.664
+        }
+      ]
+    },
+    {
+      "name": "Landen Roupp",
+      "mlb_team": "SF",
+      "season_pts": 15.64,
+      "gs": 2,
+      "pts_per_gs": 7.82,
+      "pr30_pts": 15.64,
+      "starts": [
+        {
+          "date": "2026-04-10",
+          "mlb_team": "SF",
+          "opponent": "Bal",
+          "home": false,
+          "opponent_ops": 0.692
         }
       ]
     },
     {
       "name": "Janson Junk",
-      "mlb_team": "MIA",
+      "mlb_team": "Mia",
       "season_pts": 14.95,
       "gs": 2,
       "pts_per_gs": 7.47,
@@ -1187,23 +1780,23 @@
       "starts": [
         {
           "date": "2026-04-06",
-          "mlb_team": "MIA",
-          "opponent": "CIN",
-          "opponent_ops": 0.61,
-          "home": true
+          "mlb_team": "Mia",
+          "opponent": "Cin",
+          "home": true,
+          "opponent_ops": 0.61
         },
         {
           "date": "2026-04-11",
-          "mlb_team": "MIA",
-          "opponent": "DET",
-          "opponent_ops": 0.685,
-          "home": false
+          "mlb_team": "Mia",
+          "opponent": "Det",
+          "home": false,
+          "opponent_ops": 0.685
         }
       ]
     },
     {
       "name": "Jameson Taillon",
-      "mlb_team": "CHC",
+      "mlb_team": "ChC",
       "season_pts": 14.64,
       "gs": 2,
       "pts_per_gs": 7.32,
@@ -1211,16 +1804,23 @@
       "starts": [
         {
           "date": "2026-04-06",
-          "mlb_team": "CHC",
+          "mlb_team": "ChC",
           "opponent": "TB",
-          "opponent_ops": 0.729,
-          "home": false
+          "home": false,
+          "opponent_ops": 0.729
+        },
+        {
+          "date": "2026-04-12",
+          "mlb_team": "ChC",
+          "opponent": "Pit",
+          "home": true,
+          "opponent_ops": 0.728
         }
       ]
     },
     {
       "name": "Joey Cantillo",
-      "mlb_team": "CLE",
+      "mlb_team": "Cle",
       "season_pts": 13.79,
       "gs": 2,
       "pts_per_gs": 6.89,
@@ -1228,16 +1828,33 @@
       "starts": [
         {
           "date": "2026-04-08",
-          "mlb_team": "CLE",
+          "mlb_team": "Cle",
           "opponent": "KC",
-          "opponent_ops": 0.703,
-          "home": true
+          "home": true,
+          "opponent_ops": 0.703
+        }
+      ]
+    },
+    {
+      "name": "Carmen Mlodzinski",
+      "mlb_team": "Pit",
+      "season_pts": 12.29,
+      "gs": 2,
+      "pts_per_gs": 6.14,
+      "pr30_pts": 12.29,
+      "starts": [
+        {
+          "date": "2026-04-10",
+          "mlb_team": "Pit",
+          "opponent": "ChC",
+          "home": false,
+          "opponent_ops": 0.674
         }
       ]
     },
     {
       "name": "Brandon Williamson",
-      "mlb_team": "CIN",
+      "mlb_team": "Cin",
       "season_pts": 11.68,
       "gs": 2,
       "pts_per_gs": 5.84,
@@ -1245,23 +1862,23 @@
       "starts": [
         {
           "date": "2026-04-06",
-          "mlb_team": "CIN",
-          "opponent": "MIA",
-          "opponent_ops": 0.73,
-          "home": false
+          "mlb_team": "Cin",
+          "opponent": "Mia",
+          "home": false,
+          "opponent_ops": 0.73
         },
         {
           "date": "2026-04-11",
-          "mlb_team": "CIN",
+          "mlb_team": "Cin",
           "opponent": "LAA",
-          "opponent_ops": 0.641,
-          "home": true
+          "home": true,
+          "opponent_ops": 0.646
         }
       ]
     },
     {
       "name": "Max Scherzer",
-      "mlb_team": "TOR",
+      "mlb_team": "Tor",
       "season_pts": 11.48,
       "gs": 2,
       "pts_per_gs": 5.74,
@@ -1269,23 +1886,23 @@
       "starts": [
         {
           "date": "2026-04-06",
-          "mlb_team": "TOR",
+          "mlb_team": "Tor",
           "opponent": "LAD",
-          "opponent_ops": 0.86,
-          "home": true
+          "home": true,
+          "opponent_ops": 0.86
         },
         {
           "date": "2026-04-12",
-          "mlb_team": "TOR",
-          "opponent": "MIN",
-          "opponent_ops": 0.659,
-          "home": true
+          "mlb_team": "Tor",
+          "opponent": "Min",
+          "home": true,
+          "opponent_ops": 0.659
         }
       ]
     },
     {
       "name": "Max Meyer",
-      "mlb_team": "MIA",
+      "mlb_team": "Mia",
       "season_pts": 11.33,
       "gs": 2,
       "pts_per_gs": 5.67,
@@ -1293,10 +1910,27 @@
       "starts": [
         {
           "date": "2026-04-09",
-          "mlb_team": "MIA",
-          "opponent": "CIN",
-          "opponent_ops": 0.61,
-          "home": true
+          "mlb_team": "Mia",
+          "opponent": "Cin",
+          "home": true,
+          "opponent_ops": 0.61
+        }
+      ]
+    },
+    {
+      "name": "Jack Kochanowicz",
+      "mlb_team": "LAA",
+      "season_pts": 10.83,
+      "gs": 2,
+      "pts_per_gs": 5.42,
+      "pr30_pts": 10.83,
+      "starts": [
+        {
+          "date": "2026-04-10",
+          "mlb_team": "LAA",
+          "opponent": "Cin",
+          "home": false,
+          "opponent_ops": 0.61
         }
       ]
     },
@@ -1309,17 +1943,24 @@
       "pr30_pts": 9.68,
       "starts": [
         {
-          "date": "2026-04-06",
+          "date": "2026-04-07",
           "mlb_team": "SF",
-          "opponent": "PHI",
-          "opponent_ops": 0.681,
-          "home": true
+          "opponent": "Phi",
+          "home": true,
+          "opponent_ops": 0.681
+        },
+        {
+          "date": "2026-04-12",
+          "mlb_team": "SF",
+          "opponent": "Bal",
+          "home": false,
+          "opponent_ops": 0.692
         }
       ]
     },
     {
       "name": "Slade Cecconi",
-      "mlb_team": "CLE",
+      "mlb_team": "Cle",
       "season_pts": 9.37,
       "gs": 2,
       "pts_per_gs": 4.68,
@@ -1327,33 +1968,74 @@
       "starts": [
         {
           "date": "2026-04-10",
-          "mlb_team": "CLE",
-          "opponent": "ATL",
-          "opponent_ops": 0.745,
-          "home": false
+          "mlb_team": "Cle",
+          "opponent": "Atl",
+          "home": false,
+          "opponent_ops": 0.743
         }
       ]
     },
     {
       "name": "Ryan Feltner",
-      "mlb_team": "COL",
+      "mlb_team": "Col",
       "season_pts": 9.25,
       "gs": 2,
       "pts_per_gs": 4.62,
       "pr30_pts": 9.25,
       "starts": [
         {
-          "date": "2026-04-06",
-          "mlb_team": "COL",
-          "opponent": "HOU",
-          "opponent_ops": 0.851,
-          "home": true
+          "date": "2026-04-07",
+          "mlb_team": "Col",
+          "opponent": "Hou",
+          "home": true,
+          "opponent_ops": 0.851
+        },
+        {
+          "date": "2026-04-12",
+          "mlb_team": "Col",
+          "opponent": "SD",
+          "home": false,
+          "opponent_ops": 0.61
+        }
+      ]
+    },
+    {
+      "name": "Kumar Rocker",
+      "mlb_team": "Tex",
+      "season_pts": 4.55,
+      "gs": 1,
+      "pts_per_gs": 4.55,
+      "pr30_pts": 4.55,
+      "starts": [
+        {
+          "date": "2026-04-11",
+          "mlb_team": "Tex",
+          "opponent": "LAD",
+          "home": false,
+          "opponent_ops": 0.86
+        }
+      ]
+    },
+    {
+      "name": "Keider Montero",
+      "mlb_team": "Det",
+      "season_pts": 4.51,
+      "gs": 1,
+      "pts_per_gs": 4.51,
+      "pr30_pts": 4.51,
+      "starts": [
+        {
+          "date": "2026-04-10",
+          "mlb_team": "Det",
+          "opponent": "Mia",
+          "home": true,
+          "opponent_ops": 0.73
         }
       ]
     },
     {
       "name": "Eric Lauer",
-      "mlb_team": "TOR",
+      "mlb_team": "Tor",
       "season_pts": 8.44,
       "gs": 2,
       "pts_per_gs": 4.22,
@@ -1361,16 +2043,16 @@
       "starts": [
         {
           "date": "2026-04-11",
-          "mlb_team": "TOR",
-          "opponent": "MIN",
-          "opponent_ops": 0.659,
-          "home": true
+          "mlb_team": "Tor",
+          "opponent": "Min",
+          "home": true,
+          "opponent_ops": 0.659
         }
       ]
     },
     {
       "name": "Grant Taylor",
-      "mlb_team": "CWS",
+      "mlb_team": "ChW",
       "season_pts": 10.05,
       "gs": 3,
       "pts_per_gs": 3.35,
@@ -1378,10 +2060,10 @@
       "starts": [
         {
           "date": "2026-04-06",
-          "mlb_team": "CWS",
-          "opponent": "BAL",
-          "opponent_ops": 0.692,
-          "home": true
+          "mlb_team": "ChW",
+          "opponent": "Bal",
+          "home": true,
+          "opponent_ops": 0.692
         }
       ]
     },
@@ -1396,14 +2078,14 @@
         {
           "date": "2026-04-08",
           "mlb_team": "NYM",
-          "opponent": "AZ",
-          "opponent_ops": 0.631,
-          "home": true
+          "opponent": "Ari",
+          "home": true,
+          "opponent_ops": 0.631
         }
       ]
     },
     {
-      "name": "Germ\u00e1n M\u00e1rquez",
+      "name": "German Marquez",
       "mlb_team": "SD",
       "season_pts": 4.98,
       "gs": 2,
@@ -1413,15 +2095,22 @@
         {
           "date": "2026-04-06",
           "mlb_team": "SD",
-          "opponent": "PIT",
-          "opponent_ops": 0.728,
-          "home": false
+          "opponent": "Pit",
+          "home": false,
+          "opponent_ops": 0.728
+        },
+        {
+          "date": "2026-04-12",
+          "mlb_team": "SD",
+          "opponent": "Col",
+          "home": true,
+          "opponent_ops": 0.661
         }
       ]
     },
     {
       "name": "Luis Severino",
-      "mlb_team": "ATH",
+      "mlb_team": "Oak",
       "season_pts": 3.75,
       "gs": 2,
       "pts_per_gs": 1.88,
@@ -1429,10 +2118,27 @@
       "starts": [
         {
           "date": "2026-04-08",
-          "mlb_team": "ATH",
+          "mlb_team": "Oak",
           "opponent": "NYY",
-          "opponent_ops": 0.718,
-          "home": false
+          "home": false,
+          "opponent_ops": 0.718
+        }
+      ]
+    },
+    {
+      "name": "Jake Irvin",
+      "mlb_team": "Wsh",
+      "season_pts": 3.29,
+      "gs": 2,
+      "pts_per_gs": 1.65,
+      "pr30_pts": 3.29,
+      "starts": [
+        {
+          "date": "2026-04-10",
+          "mlb_team": "Wsh",
+          "opponent": "Mil",
+          "home": false,
+          "opponent_ops": 0.782
         }
       ]
     },
@@ -1447,15 +2153,15 @@
         {
           "date": "2026-04-08",
           "mlb_team": "SF",
-          "opponent": "PHI",
-          "opponent_ops": 0.681,
-          "home": true
+          "opponent": "Phi",
+          "home": true,
+          "opponent_ops": 0.681
         }
       ]
     },
     {
       "name": "Chris Paddack",
-      "mlb_team": "MIA",
+      "mlb_team": "Mia",
       "season_pts": 0.02,
       "gs": 1,
       "pts_per_gs": 0.02,
@@ -1463,16 +2169,16 @@
       "starts": [
         {
           "date": "2026-04-10",
-          "mlb_team": "MIA",
-          "opponent": "DET",
-          "opponent_ops": 0.685,
-          "home": false
+          "mlb_team": "Mia",
+          "opponent": "Det",
+          "home": false,
+          "opponent_ops": 0.685
         }
       ]
     },
     {
       "name": "Brayan Bello",
-      "mlb_team": "BOS",
+      "mlb_team": "Bos",
       "season_pts": 0.0,
       "gs": 0,
       "pts_per_gs": 0.0,
@@ -1480,16 +2186,40 @@
       "starts": [
         {
           "date": "2026-04-06",
-          "mlb_team": "BOS",
-          "opponent": "MIL",
-          "opponent_ops": 0.782,
-          "home": true
+          "mlb_team": "Bos",
+          "opponent": "Mil",
+          "home": true,
+          "opponent_ops": 0.782
+        },
+        {
+          "date": "2026-04-12",
+          "mlb_team": "Bos",
+          "opponent": "StL",
+          "home": false,
+          "opponent_ops": 0.682
+        }
+      ]
+    },
+    {
+      "name": "Chris Bassitt",
+      "mlb_team": "Bal",
+      "season_pts": 0.0,
+      "gs": 0,
+      "pts_per_gs": 0.0,
+      "pr30_pts": -16.37,
+      "starts": [
+        {
+          "date": "2026-04-11",
+          "mlb_team": "Bal",
+          "opponent": "SF",
+          "home": true,
+          "opponent_ops": 0.605
         }
       ]
     },
     {
       "name": "Colin Rea",
-      "mlb_team": "CHC",
+      "mlb_team": "ChC",
       "season_pts": 10.63,
       "gs": 0,
       "pts_per_gs": 0.0,
@@ -1497,16 +2227,16 @@
       "starts": [
         {
           "date": "2026-04-08",
-          "mlb_team": "CHC",
+          "mlb_team": "ChC",
           "opponent": "TB",
-          "opponent_ops": 0.729,
-          "home": false
+          "home": false,
+          "opponent_ops": 0.729
         }
       ]
     },
     {
       "name": "Cristian Javier",
-      "mlb_team": "HOU",
+      "mlb_team": "Hou",
       "season_pts": 0.0,
       "gs": 0,
       "pts_per_gs": 0.0,
@@ -1514,33 +2244,33 @@
       "starts": [
         {
           "date": "2026-04-08",
-          "mlb_team": "HOU",
-          "opponent": "COL",
-          "opponent_ops": 0.661,
-          "home": false
+          "mlb_team": "Hou",
+          "opponent": "Col",
+          "home": false,
+          "opponent_ops": 0.661
         }
       ]
     },
     {
       "name": "Dustin May",
-      "mlb_team": "STL",
+      "mlb_team": "StL",
       "season_pts": 0.0,
       "gs": 0,
       "pts_per_gs": 0.0,
       "pr30_pts": -18.06,
       "starts": [
         {
-          "date": "2026-04-10",
-          "mlb_team": "STL",
-          "opponent": "BOS",
-          "opponent_ops": 0.664,
-          "home": true
+          "date": "2026-04-11",
+          "mlb_team": "StL",
+          "opponent": "Bos",
+          "home": true,
+          "opponent_ops": 0.664
         }
       ]
     },
     {
       "name": "Michael Lorenzen",
-      "mlb_team": "COL",
+      "mlb_team": "Col",
       "season_pts": 0.0,
       "gs": 0,
       "pts_per_gs": 0.0,
@@ -1548,16 +2278,16 @@
       "starts": [
         {
           "date": "2026-04-08",
-          "mlb_team": "COL",
-          "opponent": "HOU",
-          "opponent_ops": 0.851,
-          "home": true
+          "mlb_team": "Col",
+          "opponent": "Hou",
+          "home": true,
+          "opponent_ops": 0.851
         }
       ]
     },
     {
       "name": "Miles Mikolas",
-      "mlb_team": "WSH",
+      "mlb_team": "Wsh",
       "season_pts": 0.0,
       "gs": 0,
       "pts_per_gs": 0.0,
@@ -1565,16 +2295,16 @@
       "starts": [
         {
           "date": "2026-04-08",
-          "mlb_team": "WSH",
-          "opponent": "STL",
-          "opponent_ops": 0.682,
-          "home": true
+          "mlb_team": "Wsh",
+          "opponent": "StL",
+          "home": true,
+          "opponent_ops": 0.682
         }
       ]
     },
     {
       "name": "Patrick Corbin",
-      "mlb_team": "TOR",
+      "mlb_team": "Tor",
       "season_pts": 0.0,
       "gs": 0,
       "pts_per_gs": 0.0,
@@ -1582,16 +2312,16 @@
       "starts": [
         {
           "date": "2026-04-10",
-          "mlb_team": "TOR",
-          "opponent": "MIN",
-          "opponent_ops": 0.659,
-          "home": true
+          "mlb_team": "Tor",
+          "opponent": "Min",
+          "home": true,
+          "opponent_ops": 0.659
         }
       ]
     },
     {
       "name": "Shane Drohan",
-      "mlb_team": "MIL",
+      "mlb_team": "Mil",
       "season_pts": 0.0,
       "gs": 0,
       "pts_per_gs": 0.0,
@@ -1599,10 +2329,44 @@
       "starts": [
         {
           "date": "2026-04-08",
-          "mlb_team": "MIL",
-          "opponent": "BOS",
-          "opponent_ops": 0.664,
-          "home": false
+          "mlb_team": "Mil",
+          "opponent": "Bos",
+          "home": false,
+          "opponent_ops": 0.664
+        }
+      ]
+    },
+    {
+      "name": "Taijuan Walker",
+      "mlb_team": "Phi",
+      "season_pts": 0.0,
+      "gs": 0,
+      "pts_per_gs": 0.0,
+      "pr30_pts": -7.67,
+      "starts": [
+        {
+          "date": "2026-04-11",
+          "mlb_team": "Phi",
+          "opponent": "Ari",
+          "home": true,
+          "opponent_ops": 0.631
+        }
+      ]
+    },
+    {
+      "name": "Walker Buehler",
+      "mlb_team": "SD",
+      "season_pts": 0.0,
+      "gs": 0,
+      "pts_per_gs": 0.0,
+      "pr30_pts": -3.1,
+      "starts": [
+        {
+          "date": "2026-04-11",
+          "mlb_team": "SD",
+          "opponent": "Col",
+          "home": true,
+          "opponent_ops": 0.661
         }
       ]
     }

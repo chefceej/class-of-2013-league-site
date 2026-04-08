@@ -22,6 +22,18 @@ SEASON_YEAR = 2026
 START_LIMIT = 8
 OUTPUT_PATH = os.path.join(os.path.dirname(__file__), "..", "docs", "data", "starts_data.json")
 MLB_API = "https://statsapi.mlb.com/api/v1"
+ESPN_SCHEDULE_URL = f"https://lm-api-reads.fantasy.espn.com/apis/v3/games/flb/seasons/{SEASON_YEAR}?view=proTeamSchedules_wl"
+
+# MLB Stats API abbreviation → ESPN PRO_TEAM_MAP abbreviation
+MLB_TO_ESPN_ABBREV = {
+    "ATH": "Oak", "ATL": "Atl", "AZ": "Ari", "BAL": "Bal", "BOS": "Bos",
+    "CHC": "ChC", "CIN": "Cin", "CLE": "Cle", "COL": "Col", "CWS": "ChW",
+    "DET": "Det", "HOU": "Hou", "KC": "KC", "LAA": "LAA", "LAD": "LAD",
+    "MIA": "Mia", "MIL": "Mil", "MIN": "Min", "NYM": "NYM", "NYY": "NYY",
+    "OAK": "Oak", "PHI": "Phi", "PIT": "Pit", "SD": "SD", "SEA": "Sea",
+    "SF": "SF", "STL": "StL", "TB": "TB", "TEX": "Tex", "TOR": "Tor",
+    "WSH": "Wsh",
+}
 
 
 def mlb_get(path):
@@ -32,83 +44,155 @@ def mlb_get(path):
 
 
 def current_week_dates():
-    """Return (start, end) as date objects for the current Mon–Sun fantasy week."""
+    """Return (start, end) as date objects for the current Mon-Sun fantasy week."""
     today = datetime.now(timezone.utc).date()
     start = today - timedelta(days=today.weekday())  # Monday
     end = start + timedelta(days=6)                  # Sunday
     return start, end
 
 
-def fetch_probable_starters(week_start, week_end):
+def fetch_espn_pro_schedule():
+    """Fetch the ESPN pro game schedule and return {game_id: {date, home_team_id, away_team_id}}."""
+    headers = {
+        "User-Agent": "Mozilla/5.0",
+        "Cookie": f"espn_s2={ESPN_S2}; SWID={SWID}",
+    }
+    req = urllib.request.Request(ESPN_SCHEDULE_URL, headers=headers)
+    with urllib.request.urlopen(req, timeout=15) as r:
+        data = json.loads(r.read())
+
+    game_lookup = {}
+    for pt in data.get("settings", {}).get("proTeams", []):
+        for sp, games in pt.get("proGamesByScoringPeriod", {}).items():
+            for game in games:
+                gid = game["id"]
+                if gid not in game_lookup:
+                    dt = datetime.fromtimestamp(game["date"] / 1000, tz=timezone.utc)
+                    game_lookup[gid] = {
+                        "date": dt.strftime("%Y-%m-%d"),
+                        "home_team_id": game["homeProTeamId"],
+                        "away_team_id": game["awayProTeamId"],
+                    }
+    return game_lookup
+
+
+def fetch_espn_starters(league, game_lookup, week_start, week_end):
     """
-    Returns {date_str: [{pitcher_name, mlb_team_abbrev, opponent_abbrev, home: bool, game_final: bool}]}
-    using MLB Stats API probable pitchers. game_final indicates if the game has completed.
+    Use ESPN's starterStatusByProGame from rosters to get probable/starting pitchers.
+
+    Returns:
+      rostered: {fantasy_team_abbrev: {pitcher_name: [start_info, ...]}}
+      fa_starters: {pitcher_name: [start_info, ...]}  (free agents with starts)
+      fa_player_info: {pitcher_name: {mlb_team, pro_team_id}}
     """
     start_str = week_start.strftime("%Y-%m-%d")
     end_str = week_end.strftime("%Y-%m-%d")
-    data = mlb_get(
-        f"/schedule?sportId=1&startDate={start_str}&endDate={end_str}"
-        f"&hydrate=probablePitcher,team&gameType=R"
-    )
 
-    by_date = defaultdict(list)
-    for date_entry in data.get("dates", []):
-        date_str = date_entry["date"]
-        for game in date_entry.get("games", []):
-            home = game["teams"]["home"]
-            away = game["teams"]["away"]
-            home_abbrev = home["team"].get("abbreviation", "?")
-            away_abbrev = away["team"].get("abbreviation", "?")
-            game_final = game.get("status", {}).get("abstractGameState") == "Final"
+    # Get rostered players with starterStatusByProGame
+    data = league.espn_request.league_get(params={"view": "mRoster"})
+    team_map = {t.team_id: t.team_abbrev for t in league.teams}
 
-            for side, opponent in [("home", away_abbrev), ("away", home_abbrev)]:
-                pitcher = game["teams"][side].get("probablePitcher")
-                if pitcher:
-                    by_date[date_str].append({
-                        "name": pitcher["fullName"],
-                        "mlb_team": game["teams"][side]["team"].get("abbreviation", "?"),
-                        "opponent": opponent,
-                        "home": side == "home",
-                        "game_final": game_final,
-                    })
-    return by_date
+    rostered = defaultdict(lambda: defaultdict(list))
+    pitcher_slot_ids = {13, 14, 15}  # P, SP, RP
 
+    for team_data in data.get("teams", []):
+        abbrev = team_map.get(team_data.get("id"), "?")
+        for entry in team_data.get("roster", {}).get("entries", []):
+            player = entry.get("playerPoolEntry", {}).get("player", {})
+            eligible = set(player.get("eligibleSlots", []))
+            if not eligible & pitcher_slot_ids:
+                continue
 
-def fetch_mlb_teams():
-    """Returns {team_id: abbreviation} for all active MLB teams."""
-    data = mlb_get(f"/teams?sportId=1&season={SEASON_YEAR}")
-    return {
-        t["id"]: t.get("abbreviation", "?")
-        for t in data.get("teams", [])
+            name = player.get("fullName", "")
+            pro_team_id = player.get("proTeamId", 0)
+            mlb_team = PRO_TEAM_MAP.get(pro_team_id, "?")
+            starter_map = player.get("starterStatusByProGame", {})
+
+            for gid_str, status in starter_map.items():
+                if status not in ("PROBABLE", "STARTING"):
+                    continue
+                game = game_lookup.get(int(gid_str))
+                if not game:
+                    continue
+                if not (start_str <= game["date"] <= end_str):
+                    continue
+
+                if game["home_team_id"] == pro_team_id:
+                    opp_id = game["away_team_id"]
+                    home = True
+                else:
+                    opp_id = game["home_team_id"]
+                    home = False
+
+                rostered[abbrev][name].append({
+                    "date": game["date"],
+                    "mlb_team": mlb_team,
+                    "opponent": PRO_TEAM_MAP.get(opp_id, "?"),
+                    "home": home,
+                })
+
+    # Get free agent pitchers with starts
+    fa_params = {
+        "view": "kona_player_info",
+        "scoringPeriodId": league.current_week,
     }
+    fa_filters = {
+        "players": {
+            "filterStatus": {"value": ["FREEAGENT", "WAIVERS"]},
+            "filterSlotIds": {"value": [14]},  # SP lineup slot
+            "limit": 200,
+            "sortPercOwned": {"sortPriority": 1, "sortAsc": False},
+        }
+    }
+    fa_headers = {"x-fantasy-filter": json.dumps(fa_filters)}
+    fa_data = league.espn_request.league_get(params=fa_params, headers=fa_headers)
 
+    fa_starters = defaultdict(list)
+    fa_player_info = {}
 
-def fetch_team_ops_30d(week_end, team_id_map):
-    """Returns {mlb_team_abbrev: ops_float} for the 30 days ending on week_end."""
-    end_str = week_end.strftime("%Y-%m-%d")
-    start_str = (week_end - timedelta(days=30)).strftime("%Y-%m-%d")
-    try:
-        data = mlb_get(
-            f"/teams/stats?season={SEASON_YEAR}&stats=byDateRange"
-            f"&startDate={start_str}&endDate={end_str}&group=hitting&gameType=R&sportId=1"
-        )
-        ops_map = {}
-        for entry in data.get("stats", [{}])[0].get("splits", []):
-            team_id = entry.get("team", {}).get("id")
-            abbrev = team_id_map.get(team_id, "?")
-            ops = entry.get("stat", {}).get("ops")
-            if abbrev != "?" and ops is not None:
-                ops_map[abbrev] = round(float(ops), 3)
-        return ops_map
-    except Exception as e:
-        print(f"  Warning: could not fetch team OPS — {e}")
-        return {}
+    for fa_entry in fa_data.get("players", []):
+        player = fa_entry.get("player", {})
+        name = player.get("fullName", "")
+        if not name:
+            continue
+        pro_team_id = player.get("proTeamId", 0)
+        mlb_team = PRO_TEAM_MAP.get(pro_team_id, "?")
+        starter_map = player.get("starterStatusByProGame", {})
 
+        for gid_str, status in starter_map.items():
+            if status not in ("PROBABLE", "STARTING"):
+                continue
+            game = game_lookup.get(int(gid_str))
+            if not game:
+                continue
+            if not (start_str <= game["date"] <= end_str):
+                continue
+
+            if game["home_team_id"] == pro_team_id:
+                opp_id = game["away_team_id"]
+                home = True
+            else:
+                opp_id = game["home_team_id"]
+                home = False
+
+            fa_starters[name].append({
+                "date": game["date"],
+                "mlb_team": mlb_team,
+                "opponent": PRO_TEAM_MAP.get(opp_id, "?"),
+                "home": home,
+            })
+            fa_player_info[name] = {"mlb_team": mlb_team, "pro_team_id": pro_team_id}
+
+        # Store info even if no starts (for stats lookup)
+        if name not in fa_player_info:
+            fa_player_info[name] = {"mlb_team": mlb_team, "pro_team_id": pro_team_id}
+
+    return rostered, fa_starters, fa_player_info
 
 
 def fetch_free_agent_stats(league):
     """
-    Returns {normalized_name: {name, mlb_team, season_pts, gs, pts_per_gs, pr30_pts}}
+    Returns {player_name: {name, mlb_team, season_pts, gs, pts_per_gs, pr30_pts}}
     for free agent / waiver starting pitchers, using the raw ESPN API.
     """
     params = {
@@ -134,7 +218,6 @@ def fetch_free_agent_stats(league):
             continue
         mlb_team = PRO_TEAM_MAP.get(player.get("proTeamId"), "?")
 
-        # Extract stats from raw stat entries (current season only)
         season_pts = 0.0
         season_gs = 0
         pr30_pts = None
@@ -154,7 +237,7 @@ def fetch_free_agent_stats(league):
 
         pts_per_gs = round(season_pts / season_gs, 2) if season_gs > 0 else 0.0
 
-        fa_stats[normalize_name(name)] = {
+        fa_stats[name] = {
             "name": name,
             "mlb_team": mlb_team,
             "season_pts": round(season_pts, 2),
@@ -165,24 +248,80 @@ def fetch_free_agent_stats(league):
     return fa_stats
 
 
-def normalize_name(name):
-    """Lowercase, strip accents roughly, for fuzzy matching."""
-    replacements = {"á": "a", "é": "e", "í": "i", "ó": "o", "ú": "u",
-                    "ñ": "n", "ü": "u", "ä": "a", "ö": "o"}
-    n = name.lower()
-    for src, dst in replacements.items():
-        n = n.replace(src, dst)
-    return n
+def fetch_mlb_teams():
+    """Returns {team_id: abbreviation} for all active MLB teams."""
+    data = mlb_get(f"/teams?sportId=1&season={SEASON_YEAR}")
+    return {
+        t["id"]: t.get("abbreviation", "?")
+        for t in data.get("teams", [])
+    }
+
+
+def fetch_team_ops_30d(week_end, team_id_map):
+    """Returns {espn_team_abbrev: ops_float} for the 30 days ending on week_end."""
+    end_str = week_end.strftime("%Y-%m-%d")
+    start_str = (week_end - timedelta(days=30)).strftime("%Y-%m-%d")
+    try:
+        data = mlb_get(
+            f"/teams/stats?season={SEASON_YEAR}&stats=byDateRange"
+            f"&startDate={start_str}&endDate={end_str}&group=hitting&gameType=R&sportId=1"
+        )
+        ops_map = {}
+        for entry in data.get("stats", [{}])[0].get("splits", []):
+            team_id = entry.get("team", {}).get("id")
+            mlb_abbrev = team_id_map.get(team_id, "?")
+            espn_abbrev = MLB_TO_ESPN_ABBREV.get(mlb_abbrev)
+            ops = entry.get("stat", {}).get("ops")
+            if espn_abbrev and ops is not None:
+                ops_map[espn_abbrev] = round(float(ops), 3)
+        return ops_map
+    except Exception as e:
+        print(f"  Warning: could not fetch team OPS — {e}")
+        return {}
+
+
+def fetch_actual_gs(league):
+    """Fetch actual GS (games started) per fantasy team for the current matchup period."""
+    filters = {
+        "schedule": {
+            "filterMatchupPeriodIds": {"value": [league.current_week]}
+        }
+    }
+    headers = {"x-fantasy-filter": json.dumps(filters)}
+    data = league.espn_request.league_get(
+        params={"view": ["mMatchupScore", "mScoreboard"]},
+        headers=headers,
+    )
+
+    team_map = {t.team_id: t.team_abbrev for t in league.teams}
+    team_gs = {}
+
+    for matchup in data.get("schedule", []):
+        for side in ("home", "away"):
+            team_data = matchup.get(side)
+            if not team_data:
+                continue
+            abbrev = team_map.get(team_data.get("teamId"), "?")
+            gs = 0
+            roster = team_data.get("rosterForMatchupPeriod", {})
+            for entry in roster.get("entries", []):
+                player = entry.get("playerPoolEntry", {}).get("player", {})
+                for s in player.get("stats", []):
+                    if s.get("statSourceId") == 0:  # actual stats
+                        gs += int(float(s.get("stats", {}).get("33", 0)))
+                        break
+            team_gs[abbrev] = gs
+
+    return team_gs
 
 
 def main():
     week_start, week_end = current_week_dates()
     print(f"Week: {week_start} → {week_end}")
 
-    print("Fetching probable starters from MLB Stats API...")
-    probable_by_date = fetch_probable_starters(week_start, week_end)
-    total_games = sum(len(v) for v in probable_by_date.values())
-    print(f"  Found {total_games} probable pitcher slots across {len(probable_by_date)} days")
+    print("Fetching ESPN pro game schedule...")
+    game_lookup = fetch_espn_pro_schedule()
+    print(f"  Got {len(game_lookup)} games in schedule")
 
     print("Fetching MLB team info...")
     team_id_map = fetch_mlb_teams()
@@ -192,65 +331,45 @@ def main():
     team_ops = fetch_team_ops_30d(week_end, team_id_map)
     print(f"  Got OPS for {len(team_ops)} MLB teams")
 
-    print("Fetching ESPN rosters...")
+    print("Fetching ESPN rosters + probable starters...")
     league = League(league_id=LEAGUE_ID, year=SEASON_YEAR, espn_s2=ESPN_S2, swid=SWID)
-    rosters = {}
-    for team in league.teams:
-        pitchers = []
-        for player in team.roster:
-            if player.eligibleSlots and any(
-                pos in ["SP", "RP", "P"] for pos in player.eligibleSlots
-            ):
-                pitchers.append(player.name)
-        rosters[team.team_abbrev] = pitchers
-    print(f"  Got rosters for {len(rosters)} fantasy teams")
+    rostered_starts, fa_starters, fa_player_info = fetch_espn_starters(
+        league, game_lookup, week_start, week_end
+    )
+    rostered_count = sum(
+        sum(len(starts) for starts in pitchers.values())
+        for pitchers in rostered_starts.values()
+    )
+    print(f"  Found {rostered_count} rostered starts, {sum(len(s) for s in fa_starters.values())} FA starts")
+
+    print("Fetching actual games started from ESPN...")
+    actual_gs = fetch_actual_gs(league)
+    print(f"  Got actual GS for {len(actual_gs)} teams: {actual_gs}")
 
     print("Fetching free agent pitcher stats...")
     fa_stats = fetch_free_agent_stats(league)
     print(f"  Got stats for {len(fa_stats)} free agent pitchers")
 
-    # Build a lookup: normalized pitcher name → fantasy team
-    name_to_fantasy_team = {}
-    for fantasy_team, pitchers in rosters.items():
-        for name in pitchers:
-            name_to_fantasy_team[normalize_name(name)] = fantasy_team
-
-    # Build per-fantasy-team pitcher start schedule
-    # fantasy_starts[fantasy_team][pitcher_name] = [{date, opponent, opponent_ops, home}]
-    fantasy_starts = defaultdict(lambda: defaultdict(list))
-    # Also track unrostered starters for streaming options
-    streaming_starts = defaultdict(list)  # pitcher_name -> [start_info]
-
+    # Build dates list
     dates = []
     d = week_start
     while d <= week_end:
         dates.append(d.strftime("%Y-%m-%d"))
         d += timedelta(days=1)
 
-    # Track actual completed GS per fantasy team
-    actual_gs = defaultdict(int)
+    # Add opponent OPS to start info
+    for abbrev, pitchers in rostered_starts.items():
+        for name, starts in pitchers.items():
+            for s in starts:
+                s["opponent_ops"] = team_ops.get(s["opponent"])
 
-    for date_str, starters in probable_by_date.items():
-        for starter in starters:
-            norm = normalize_name(starter["name"])
-            fantasy_team = name_to_fantasy_team.get(norm)
-            start_info = {
-                "date": date_str,
-                "mlb_team": starter["mlb_team"],
-                "opponent": starter["opponent"],
-                "opponent_ops": team_ops.get(starter["opponent"]),
-                "home": starter["home"],
-            }
-            if fantasy_team:
-                fantasy_starts[fantasy_team][starter["name"]].append(start_info)
-                if starter.get("game_final"):
-                    actual_gs[fantasy_team] += 1
-            elif norm in fa_stats:
-                streaming_starts[starter["name"]].append(start_info)
+    for name, starts in fa_starters.items():
+        for s in starts:
+            s["opponent_ops"] = team_ops.get(s["opponent"])
 
     # Structure rostered output
     output_teams = {}
-    for fantasy_team, pitcher_map in fantasy_starts.items():
+    for fantasy_team, pitcher_map in rostered_starts.items():
         output_teams[fantasy_team] = [
             {
                 "name": name,
@@ -260,16 +379,16 @@ def main():
             for name, starts in sorted(pitcher_map.items())
         ]
 
-    # Also include teams with no starts this week
-    for fantasy_team in rosters:
-        if fantasy_team not in output_teams:
-            output_teams[fantasy_team] = []
+    # Include teams with no starts this week
+    all_team_abbrevs = {t.team_abbrev for t in league.teams}
+    for abbrev in all_team_abbrevs:
+        if abbrev not in output_teams:
+            output_teams[abbrev] = []
 
-    # Build streaming options
+    # Build streaming options (FA pitchers with starts + stats)
     streaming_options = []
-    for pitcher_name, starts in sorted(streaming_starts.items()):
-        norm = normalize_name(pitcher_name)
-        stats = fa_stats.get(norm, {})
+    for pitcher_name, starts in sorted(fa_starters.items()):
+        stats = fa_stats.get(pitcher_name, {})
         streaming_options.append({
             "name": pitcher_name,
             "mlb_team": starts[0]["mlb_team"] if starts else stats.get("mlb_team", "?"),
@@ -279,13 +398,7 @@ def main():
             "pr30_pts": stats.get("pr30_pts"),
             "starts": sorted(starts, key=lambda s: s["date"]),
         })
-    # Default sort by pts_per_gs descending
     streaming_options.sort(key=lambda x: x["pts_per_gs"], reverse=True)
-
-    # Ensure all teams have an actual_gs entry (0 if no completed starts)
-    for fantasy_team in rosters:
-        if fantasy_team not in actual_gs:
-            actual_gs[fantasy_team] = 0
 
     output = {
         "metadata": {
@@ -296,8 +409,8 @@ def main():
         },
         "dates": dates,
         "team_ops_30d": team_ops,
-        "actual_gs": dict(actual_gs),
         "fantasy_teams": output_teams,
+        "actual_gs": actual_gs,
         "streaming_options": streaming_options,
     }
 
