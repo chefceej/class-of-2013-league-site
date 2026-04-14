@@ -2,7 +2,8 @@ name: Update League Data
 
 on:
   schedule:
-    - cron: '0 7 * * *'   # 7 AM UTC daily
+    - cron: '0 7 * * *'   # 7 AM UTC daily (2 AM Central)
+    - cron: '0 4 * * *'   # 4 AM UTC daily (11 PM Central)
   workflow_dispatch:        # manual trigger
 
 permissions:

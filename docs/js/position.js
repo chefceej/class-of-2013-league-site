@@ -9,6 +9,8 @@ const state = {
   selectedTeams: new Set(),
   showTeamTotals: true,
   showLeagueTotal: false,
+  sortCol: "total",  // "total", week index, or "team"
+  sortDir: -1,       // -1 = descending, 1 = ascending
 };
 
 function getWeekIndices() {
@@ -70,13 +72,43 @@ function render() {
     }
   }
 
+  // Compute team totals for sorting
+  function teamColVal(team, col) {
+    if (col === "team") return 0; // alphabetical handled separately
+    const pos = POSITION_ORDER.filter(p => state.selectedPositions.has(p));
+    if (col === "total") {
+      let sum = 0;
+      for (const w of weeks) for (const p of pos) sum += (byWeek[w]?.[team]?.[p] || 0);
+      return sum;
+    }
+    // col is a week index
+    let sum = 0;
+    for (const p of pos) sum += (byWeek[col]?.[team]?.[p] || 0);
+    return sum;
+  }
+
+  const sortedTeams = [...teams].sort((a, b) => {
+    if (state.sortCol === "team") {
+      return state.sortDir * a.localeCompare(b);
+    }
+    const diff = teamColVal(a, state.sortCol) - teamColVal(b, state.sortCol);
+    return diff !== 0 ? state.sortDir * diff : a.localeCompare(b);
+  });
+
   // ── Header ──
   headEl.innerHTML = "";
   const tr = document.createElement("tr");
 
   const teamTh = document.createElement("th");
   teamTh.textContent = "Team";
-  teamTh.className = "sticky-col team-col";
+  teamTh.className = "sticky-col team-col sortable-col" + (state.sortCol === "team" ? " sort-active" : "");
+  if (state.sortCol === "team") teamTh.innerHTML += ` <span class="sort-arrow">${state.sortDir === 1 ? "▲" : "▼"}</span>`;
+  teamTh.style.cursor = "pointer";
+  teamTh.addEventListener("click", () => {
+    if (state.sortCol === "team") state.sortDir *= -1;
+    else { state.sortCol = "team"; state.sortDir = 1; }
+    render();
+  });
   tr.appendChild(teamTh);
 
   const posTh = document.createElement("th");
@@ -86,20 +118,35 @@ function render() {
 
   for (const w of weeks) {
     const th = document.createElement("th");
-    th.textContent = `MW ${w + 1}`;
+    const active = state.sortCol === w;
+    th.className = "sortable-col" + (active ? " sort-active" : "");
+    th.innerHTML = `MW ${w + 1}` + (active ? ` <span class="sort-arrow">${state.sortDir === -1 ? "▼" : "▲"}</span>` : "");
+    th.style.cursor = "pointer";
+    th.addEventListener("click", () => {
+      if (state.sortCol === w) state.sortDir *= -1;
+      else { state.sortCol = w; state.sortDir = -1; }
+      render();
+    });
     tr.appendChild(th);
   }
 
   const totalTh = document.createElement("th");
-  totalTh.textContent = "Total";
-  totalTh.className = "total-col";
+  const totalActive = state.sortCol === "total";
+  totalTh.className = "total-col sortable-col" + (totalActive ? " sort-active" : "");
+  totalTh.innerHTML = "Total" + (totalActive ? ` <span class="sort-arrow">${state.sortDir === -1 ? "▼" : "▲"}</span>` : "");
+  totalTh.style.cursor = "pointer";
+  totalTh.addEventListener("click", () => {
+    if (state.sortCol === "total") state.sortDir *= -1;
+    else { state.sortCol = "total"; state.sortDir = -1; }
+    render();
+  });
   tr.appendChild(totalTh);
   headEl.appendChild(tr);
 
   // ── Body ──
   bodyEl.innerHTML = "";
 
-  for (const team of teams) {
+  for (const team of sortedTeams) {
     const rowCount = positions.length + (state.showTeamTotals ? 1 : 0);
 
     for (let pi = 0; pi < positions.length; pi++) {
