@@ -329,9 +329,105 @@ tr.pitcher-off .starts-check-col {
 }
 
 @media (max-width: 600px) {
-  .starts-name-col,
+  /* Shrink sticky columns */
+  .starts-check-col {
+    width: 1.8rem;
+    min-width: 1.8rem;
+    padding: 0.3rem 0.15rem !important;
+  }
+
+  .starts-name-col {
+    left: 1.8rem;
+    min-width: 4.8rem;
+    width: 4.8rem;
+    padding: 0.3rem 0.25rem !important;
+  }
+
   .stream-name-col {
-    min-width: 8rem;
-    width: 8rem;
+    min-width: 4.8rem;
+    width: 4.8rem;
+    padding: 0.3rem 0.25rem !important;
+  }
+
+  .stream-check-col {
+    width: 1.8rem;
+    min-width: 1.8rem;
+    padding: 0.3rem 0.15rem !important;
+  }
+
+  /* Smaller pitcher name — show last name only via ellipsis */
+  .pitcher-name {
+    font-size: 0.72rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 4.3rem;
+  }
+
+  .pitcher-team {
+    font-size: 0.62rem;
+  }
+
+  /* Compact start cells — keep OPS visible but smaller */
+  .start-cell {
+    padding: 0.2rem 0.2rem !important;
+    border-radius: 4px;
+  }
+
+  .opp-name {
+    font-size: 0.68rem;
+  }
+
+  .opp-ops {
+    font-size: 0.58rem;
+    margin-top: 0;
+  }
+
+  /* Compact day headers */
+  .day-name {
+    font-size: 0.62rem;
+  }
+
+  .day-date {
+    font-size: 0.58rem;
+  }
+
+  /* Tighter table spacing */
+  #starts-table,
+  #streaming-table {
+    border-spacing: 2px 2px;
+  }
+
+  /* Compact stats columns in streaming table */
+  .stream-stat-col {
+    padding: 0.25rem 0.3rem !important;
+    font-size: 0.72rem;
+  }
+
+  /* Smaller GS summary */
+  .gs-table th {
+    font-size: 0.62rem;
+    padding: 0.2rem 0.25rem;
+  }
+
+  .gs-table td {
+    font-size: 0.78rem;
+    padding: 0.25rem 0.25rem;
+  }
+
+  /* Compact controls */
+  .starts-controls {
+    gap: 1rem;
+  }
+
+  .start-counter {
+    font-size: 1.1rem;
+  }
+
+  /* Smaller checkboxes on mobile */
+  .starts-check-col input[type="checkbox"],
+  .stream-check-col input[type="checkbox"] {
+    width: 14px;
+    height: 14px;
   }
 }

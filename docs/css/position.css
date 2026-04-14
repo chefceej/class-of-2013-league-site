@@ -178,6 +178,24 @@ tbody tr:hover .pos-col {
   background: #1e2535;
 }
 
+/* ── Sortable columns ── */
+.sortable-col {
+  cursor: pointer;
+}
+
+.sortable-col:hover {
+  color: #e2e8f0;
+}
+
+.sort-active {
+  color: #3b82f6 !important;
+}
+
+.sort-arrow {
+  font-size: 0.65rem;
+  color: #3b82f6;
+}
+
 @media (max-width: 600px) {
   .pivot-controls {
     gap: 1.25rem;

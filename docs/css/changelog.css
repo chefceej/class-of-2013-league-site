@@ -1,0 +1,87 @@
+/* ── Changelog ── */
+.changelog {
+  max-width: 720px;
+  margin: 0 auto;
+}
+
+.version {
+  margin-bottom: 2.5rem;
+  padding-bottom: 2rem;
+  border-bottom: 1px solid #1e2535;
+}
+
+.version:last-child {
+  border-bottom: none;
+}
+
+.version-header {
+  display: flex;
+  align-items: baseline;
+  gap: 1rem;
+  margin-bottom: 0.75rem;
+}
+
+.version-header h2 {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #f1f5f9;
+  letter-spacing: -0.01em;
+  text-transform: none;
+}
+
+.version-header time {
+  font-size: 0.82rem;
+  color: #64748b;
+}
+
+.version ul {
+  list-style: none;
+  padding: 0;
+}
+
+.version li {
+  position: relative;
+  padding: 0.3rem 0 0.3rem 1.6rem;
+  font-size: 0.9rem;
+  color: #cbd5e1;
+  line-height: 1.5;
+}
+
+.version li::before {
+  position: absolute;
+  left: 0;
+  font-size: 0.7rem;
+  font-weight: 700;
+  padding: 0.05rem 0.35rem;
+  border-radius: 3px;
+  top: 0.35rem;
+}
+
+.version li.feat::before {
+  content: "NEW";
+  background: hsla(142, 50%, 25%, 0.9);
+  color: #4ade80;
+}
+
+.version li.improve::before {
+  content: "UPD";
+  background: hsla(217, 50%, 25%, 0.9);
+  color: #60a5fa;
+}
+
+.version li.fix::before {
+  content: "FIX";
+  background: hsla(35, 50%, 25%, 0.9);
+  color: #fbbf24;
+}
+
+@media (max-width: 600px) {
+  .version-header {
+    flex-direction: column;
+    gap: 0.2rem;
+  }
+
+  .version li {
+    font-size: 0.85rem;
+  }
+}

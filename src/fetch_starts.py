@@ -298,15 +298,25 @@ def find_current_matchup_period(league):
             if str(current_sp) in pbsp or current_sp in pbsp:
                 return matchup["matchupPeriodId"]
 
-    # Fallback: find the highest matchup period that has any scoring data
-    max_mp = 0
+    # Current scoring period not found — likely start of a new matchup week
+    # before any games have been played. Find the lowest matchup period
+    # that has no scoring data yet (i.e. the new week).
+    periods_with_data = set()
+    all_periods = set()
     for matchup in data.get("schedule", []):
+        all_periods.add(matchup["matchupPeriodId"])
         for side in ("home", "away"):
             if side not in matchup:
                 continue
             if matchup[side].get("pointsByScoringPeriod"):
-                max_mp = max(max_mp, matchup["matchupPeriodId"])
-    return max_mp or 1
+                periods_with_data.add(matchup["matchupPeriodId"])
+
+    periods_without_data = all_periods - periods_with_data
+    if periods_without_data:
+        return min(periods_without_data)
+
+    # All periods have data — return the highest
+    return max(all_periods) if all_periods else 1
 
 
 def fetch_actual_gs(league, matchup_period):

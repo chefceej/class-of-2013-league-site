@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Changelog — 2026 Fantasy Baseball</title>
+  <link rel="stylesheet" href="css/styles.css" />
+  <link rel="stylesheet" href="css/changelog.css" />
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>2026 Fantasy Baseball</h1>
+      <p class="subtitle">Changelog</p>
+      <nav class="header-nav">
+        <a href="index.html" class="nav-link">Standings</a>
+        <a href="position.html" class="nav-link">Position Scores</a>
+        <a href="starts.html" class="nav-link">Start Planner</a>
+        <a href="changelog.html" class="nav-link active">Changelog</a>
+        <a href="admin.html" class="nav-link">Admin</a>
+      </nav>
+    </header>
+
+    <section class="changelog">
+
+      <article class="version">
+        <div class="version-header">
+          <h2>v2.3.0</h2>
+          <time>April 14, 2026</time>
+        </div>
+        <ul>
+          <li class="feat">Changelog page with full version history</li>
+          <li class="feat">Position Scores table now sortable by clicking any column header</li>
+          <li class="feat">Evening data sync at 11 PM Central (in addition to morning sync)</li>
+          <li class="improve">Chart tooltip now sorted highest-to-lowest when hovering</li>
+          <li class="improve">Smaller dots on playoff position chart for cleaner line visibility</li>
+          <li class="improve">Start planner mobile layout: tighter cells, OPS still visible</li>
+          <li class="fix">Start planner GS counts no longer a day behind on Mondays</li>
+        </ul>
+      </article>
+
+      <article class="version">
+        <div class="version-header">
+          <h2>v2.2.0</h2>
+          <time>April 7–8, 2026</time>
+        </div>
+        <ul>
+          <li class="fix">Chart x-axis now shows all 19 weeks (not just played weeks)</li>
+          <li class="fix">Actual GS counts use correct matchup period instead of scoring period</li>
+          <li class="fix">Position scores total column gets its own heatmap scale</li>
+          <li class="fix">Restored ESPN starterStatusByProGame for reliable starter detection</li>
+          <li class="fix">Week config reset to standard 1:1 ESPN week mapping</li>
+        </ul>
+      </article>
+
+      <article class="version">
+        <div class="version-header">
+          <h2>v2.1.0</h2>
+          <time>April 6, 2026</time>
+        </div>
+        <ul>
+          <li class="feat">Switched to ESPN API for probable starters (from MLB Stats API)</li>
+          <li class="fix">MLB-to-ESPN team abbreviation mapping for accurate OPS lookup</li>
+          <li class="fix">Password gate scoped to streaming section only (not entire page)</li>
+        </ul>
+      </article>
+
+      <article class="version">
+        <div class="version-header">
+          <h2>v2.0.0</h2>
+          <time>April 2–3, 2026</time>
+        </div>
+        <ul>
+          <li class="feat">Pitcher Start Planner page</li>
+          <li class="feat">Per-start toggling with OPS color coding (green/yellow/red)</li>
+          <li class="feat">GS summary bar showing all teams' starts vs. limit</li>
+          <li class="feat">Start selection counter with at-limit/over-limit warnings</li>
+          <li class="feat">Streaming options table with password gate</li>
+          <li class="feat">Streaming pitcher stats: season points, pts/GS, PR30</li>
+          <li class="fix">Derive current matchup week from scored data, not ESPN's day counter</li>
+        </ul>
+      </article>
+
+      <article class="version">
+        <div class="version-header">
+          <h2>v1.4.0</h2>
+          <time>March 27, 2026</time>
+        </div>
+        <ul>
+          <li class="feat">Updated to 2026 season</li>
+        </ul>
+      </article>
+
+      <article class="version">
+        <div class="version-header">
+          <h2>v1.3.0</h2>
+          <time>March 12, 2026</time>
+        </div>
+        <ul>
+          <li class="feat">Position Scores pivot page with per-position, per-team, per-week breakdown</li>
+          <li class="feat">Week range selector, position/team filters, team subtotals &amp; league total</li>
+          <li class="feat">Heatmap coloring on score cells</li>
+        </ul>
+      </article>
+
+      <article class="version">
+        <div class="version-header">
+          <h2>v1.2.0</h2>
+          <time>March 3, 2026</time>
+        </div>
+        <ul>
+          <li class="feat">Top 10 scorers per week via ESPN rosterForMatchupPeriod API</li>
+          <li class="feat">Week navigator (prev/next) for top scorers table</li>
+          <li class="fix">Chart mobile aspect ratio fix</li>
+          <li class="fix">Mobile layout: chart height, standings &amp; top scorers scroll wrappers</li>
+        </ul>
+      </article>
+
+      <article class="version">
+        <div class="version-header">
+          <h2>v1.1.0</h2>
+          <time>March 2, 2026</time>
+        </div>
+        <ul>
+          <li class="feat">Matchup-week mapping system with admin config page</li>
+          <li class="feat">Weekly Ranking Points table with click-to-sort and heatmap</li>
+          <li class="feat">Weekly Actual Points table with click-to-sort and heatmap</li>
+          <li class="feat">Admin page for editing week_config.json</li>
+          <li class="fix">CI: pull --rebase before push to handle concurrent workflow runs</li>
+        </ul>
+      </article>
+
+      <article class="version">
+        <div class="version-header">
+          <h2>v1.0.0</h2>
+          <time>March 2, 2026</time>
+        </div>
+        <ul>
+          <li class="feat">Initial launch</li>
+          <li class="feat">Playoff position chart (cumulative ranking points normalized to 6th place)</li>
+          <li class="feat">Current standings table with ranking points &amp; total scored</li>
+          <li class="feat">Daily auto-update via GitHub Actions</li>
+          <li class="feat">Dark theme, responsive design</li>
+        </ul>
+      </article>
+
+    </section>
+
+    <footer>
+      <p>Data from ESPN Fantasy Baseball &middot; Updated daily via GitHub Actions</p>
+    </footer>
+  </div>
+</body>
+</html>

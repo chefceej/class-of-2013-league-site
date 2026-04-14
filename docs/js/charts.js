@@ -190,8 +190,8 @@ function buildWeeklyTable(headEl, bodyEl, teams, currentWeek, dataKey, colorFn) 
     borderColor: color(i),
     backgroundColor: color(i) + "22",
     borderWidth: 2,
-    pointRadius: 3,
-    pointHoverRadius: 6,
+    pointRadius: 1.5,
+    pointHoverRadius: 4,
     tension: 0.3,
     spanGaps: false,
   }));
@@ -234,6 +234,7 @@ function buildWeeklyTable(headEl, bodyEl, teams, currentWeek, dataKey, colorFn) 
           bodyColor: "#94a3b8",
           borderColor: "#334155",
           borderWidth: 1,
+          itemSort: (a, b) => b.parsed.y - a.parsed.y,
           callbacks: {
             label: (ctx) => {
               if (ctx.dataset.label === "6th Place (0)") return null;
