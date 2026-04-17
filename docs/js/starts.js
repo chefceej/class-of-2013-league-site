@@ -10,6 +10,31 @@ let state = {
   streamSortAsc: false,
 };
 
+/* ── Selection persistence (localStorage, scoped to week) ── */
+
+const SELECTIONS_KEY = "startPlanner_v1";
+
+function loadStoredSelections(weekStart) {
+  try {
+    const raw = localStorage.getItem(SELECTIONS_KEY);
+    if (!raw) return null;
+    const parsed = JSON.parse(raw);
+    if (parsed.weekStart !== weekStart) return null;
+    return parsed;
+  } catch {
+    return null;
+  }
+}
+
+function saveSelections() {
+  const weekStart = state.data?.metadata?.week_start;
+  if (!weekStart || !state.team) return;
+  const stored = loadStoredSelections(weekStart) || { weekStart, byTeam: {}, streams: [] };
+  stored.byTeam[state.team] = [...state.checked];
+  stored.streams = [...state.streamChecked];
+  try { localStorage.setItem(SELECTIONS_KEY, JSON.stringify(stored)); } catch {}
+}
+
 /* ── Streaming password gate (inline) ── */
 
 function initStreamGate() {
@@ -104,6 +129,8 @@ function getSelectedStreamPitchers() {
 function render() {
   if (!state.data || !state.team) return;
 
+  saveSelections();
+
   const pitchers = state.data.fantasy_teams[state.team] || [];
   const streamPitchers = getSelectedStreamPitchers();
   const dates = state.data.dates;
@@ -114,12 +141,12 @@ function render() {
   const tr = document.createElement("tr");
 
   const cbTh = document.createElement("th");
-  cbTh.className = "sticky-col starts-check-col";
+  cbTh.className = "starts-check-col";
   tr.appendChild(cbTh);
 
   const nameTh = document.createElement("th");
   nameTh.textContent = "Pitcher";
-  nameTh.className = "sticky-col2 starts-name-col";
+  nameTh.className = "starts-name-col";
   tr.appendChild(nameTh);
 
   for (const date of dates) {
@@ -181,7 +208,7 @@ function buildRosteredRow(pitcher, dates, teamOps) {
   if (noneChecked && pitcher.starts.length > 0) row.classList.add("pitcher-off");
 
   const cbTd = document.createElement("td");
-  cbTd.className = "sticky-col starts-check-col";
+  cbTd.className = "starts-check-col";
   const cb = document.createElement("input");
   cb.type = "checkbox";
   cb.checked = allChecked;
@@ -197,7 +224,7 @@ function buildRosteredRow(pitcher, dates, teamOps) {
   row.appendChild(cbTd);
 
   const nameTd = document.createElement("td");
-  nameTd.className = "sticky-col2 starts-name-col";
+  nameTd.className = "starts-name-col";
   nameTd.innerHTML = `<span class="pitcher-name">${pitcher.name}</span><span class="pitcher-team">${pitcher.mlb_team}</span>`;
   row.appendChild(nameTd);
 
@@ -239,7 +266,7 @@ function buildStreamSelectedRow(pitcher, dates, teamOps) {
 
   // Checkbox to deselect
   const cbTd = document.createElement("td");
-  cbTd.className = "sticky-col starts-check-col";
+  cbTd.className = "starts-check-col";
   const cb = document.createElement("input");
   cb.type = "checkbox";
   cb.checked = true;
@@ -254,7 +281,7 @@ function buildStreamSelectedRow(pitcher, dates, teamOps) {
   row.appendChild(cbTd);
 
   const nameTd = document.createElement("td");
-  nameTd.className = "sticky-col2 starts-name-col";
+  nameTd.className = "starts-name-col";
   nameTd.innerHTML = `<span class="pitcher-name">${pitcher.name}</span><span class="pitcher-team stream-tag">${pitcher.mlb_team} · FA</span>`;
   row.appendChild(nameTd);
 
@@ -299,6 +326,13 @@ function initTeamSelect(data) {
 
 function resetChecked() {
   state.checked.clear();
+  const weekStart = state.data?.metadata?.week_start;
+  const stored = weekStart ? loadStoredSelections(weekStart) : null;
+  const savedKeys = stored?.byTeam?.[state.team];
+  if (savedKeys) {
+    for (const k of savedKeys) state.checked.add(k);
+    return;
+  }
   const pitchers = state.data?.fantasy_teams?.[state.team] || [];
   for (const p of pitchers) {
     for (const s of p.starts) {
@@ -503,6 +537,11 @@ function loadData() {
     .then(r => r.json())
     .then(data => {
       state.data = data;
+
+      const stored = loadStoredSelections(data.metadata?.week_start);
+      if (stored?.streams) {
+        for (const k of stored.streams) state.streamChecked.add(k);
+      }
 
       const lu = document.getElementById("last-updated");
       if (data.metadata?.last_updated) {

@@ -173,6 +173,42 @@ def fetch_top_players(req, espn_periods, espn_period_sp_map, team_abbrev_map, to
     return players[:top_n]
 
 
+def fetch_gs_per_week(req, espn_periods, espn_period_sp_map, team_ids):
+    """
+    Returns {team_id: gs_total} summed across ESPN periods in a matchup week.
+    GS stat id = 33, statSourceId 0 = actual stats.
+    """
+    gs_totals = defaultdict(int)
+    for espn_period in espn_periods:
+        sp = espn_period_sp_map.get(espn_period)
+        if sp is None:
+            continue
+        filters = {"schedule": {"filterMatchupPeriodIds": {"value": [espn_period]}}}
+        headers = {"x-fantasy-filter": json.dumps(filters)}
+        data = req.league_get(
+            params={"view": ["mMatchupScore", "mScoreboard"], "scoringPeriodId": sp},
+            headers=headers,
+        )
+        for matchup in data.get("schedule", []):
+            if matchup.get("matchupPeriodId") != espn_period:
+                continue
+            for side in ("home", "away"):
+                side_data = matchup.get(side)
+                if not side_data:
+                    continue
+                team_id = side_data.get("teamId")
+                if team_id not in team_ids:
+                    continue
+                roster = side_data.get("rosterForMatchupPeriod", {})
+                for entry in roster.get("entries", []):
+                    player = entry.get("playerPoolEntry", {}).get("player", {})
+                    for s in player.get("stats", []):
+                        if s.get("statSourceId") == 0:
+                            gs_totals[team_id] += int(float(s.get("stats", {}).get("33", 0)))
+                            break
+    return dict(gs_totals)
+
+
 # Bench and IL lineup slot IDs (excluded from position scoring)
 BENCH_IL_SLOTS = {16, 17}
 
@@ -249,6 +285,7 @@ def main():
             "ranking_points_by_week": [None] * total_matchup_weeks,
             "cumulative_points_by_week": [None] * total_matchup_weeks,
             "normalized_by_week": [None] * total_matchup_weeks,
+            "gs_by_week": [None] * total_matchup_weeks,
         }
 
     team_abbrev_map = {tid: tdata["team_abbrev"] for tid, tdata in team_data.items()}
@@ -312,12 +349,16 @@ def main():
     espn_period_sp_map, all_sps_map = build_espn_period_scoring_map(req)
     top_players_by_week = []
     position_scores_by_week = []
+    team_id_set = set(team_data.keys())
     for mw in range(1, current_matchup_week + 1):
         espn_periods = matchup_to_espn[mw]
         top = fetch_top_players(req, espn_periods, espn_period_sp_map, team_abbrev_map)
         pos_scores = fetch_position_scores(req, espn_periods, all_sps_map, team_abbrev_map)
+        gs_totals = fetch_gs_per_week(req, espn_periods, espn_period_sp_map, team_id_set)
         top_players_by_week.append(top)
         position_scores_by_week.append(pos_scores)
+        for tid, gs in gs_totals.items():
+            team_data[tid]["gs_by_week"][mw - 1] = gs
         print(f"  MW {mw}: {top[0]['name']} ({top[0]['score']}) leads" if top else f"  MW {mw}: no data")
 
     output = {

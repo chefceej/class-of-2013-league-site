@@ -42,7 +42,13 @@ function actualPointsColor(val, min, max) {
   return `hsla(${Math.round(t * 120)}, 55%, 22%, 0.8)`;
 }
 
-function buildWeeklyTable(headEl, bodyEl, teams, currentWeek, dataKey, colorFn) {
+function gsColor(val, min, max) {
+  const t = max === min ? 0.5 : (val - min) / (max - min);
+  return `hsla(${Math.round(210 + t * 30)}, 55%, ${Math.round(18 + t * 12)}%, 0.85)`;
+}
+
+function buildWeeklyTable(headEl, bodyEl, teams, currentWeek, dataKey, colorFn, formatFn) {
+  const fmt = formatFn || ((v) => v.toFixed(1));
   // Compute global min/max across all weekly values
   let globalMin = Infinity, globalMax = -Infinity;
   teams.forEach(team => {
@@ -120,7 +126,7 @@ function buildWeeklyTable(headEl, bodyEl, teams, currentWeek, dataKey, colorFn) 
         const val = team[dataKey][w - 1];
         const td = document.createElement("td");
         if (val != null) {
-          td.textContent = val.toFixed(1);
+          td.textContent = fmt(val);
           td.style.background = colorFn(val, globalMin, globalMax);
         } else {
           td.textContent = "—";
@@ -130,7 +136,7 @@ function buildWeeklyTable(headEl, bodyEl, teams, currentWeek, dataKey, colorFn) 
 
       const total = computeTotal(team);
       const totalTd = document.createElement("td");
-      totalTd.textContent = total.toFixed(1);
+      totalTd.textContent = fmt(total);
       totalTd.className = "total-col";
       tr.appendChild(totalTd);
 
@@ -310,4 +316,11 @@ function buildWeeklyTable(headEl, bodyEl, teams, currentWeek, dataKey, colorFn) 
     document.getElementById("actual-points-body"),
     teams, currentMatchupWeek, "scores_by_week", actualPointsColor
   );
+  if (teams.some(t => t.gs_by_week?.some(v => v != null))) {
+    buildWeeklyTable(
+      document.getElementById("gs-head"),
+      document.getElementById("gs-body"),
+      teams, currentMatchupWeek, "gs_by_week", gsColor, (v) => String(Math.round(v))
+    );
+  }
 })();
