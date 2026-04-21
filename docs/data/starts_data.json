@@ -2,7 +2,7 @@
   "metadata": {
     "week_start": "2026-04-20",
     "week_end": "2026-04-26",
-    "last_updated": "2026-04-21T05:14:13Z",
+    "last_updated": "2026-04-21T08:51:17Z",
     "start_limit": 8
   },
   "dates": [
@@ -1104,13 +1104,6 @@
         "mlb_team": "LAD",
         "starts": [
           {
-            "date": "2026-04-21",
-            "mlb_team": "LAD",
-            "opponent": "Col",
-            "home": false,
-            "opponent_ops": 0.7
-          },
-          {
             "date": "2026-04-23",
             "mlb_team": "LAD",
             "opponent": "SF",
@@ -1374,6 +1367,30 @@
           "opponent": "Phi",
           "home": true,
           "opponent_ops": 0.652
+        }
+      ]
+    },
+    {
+      "name": "Justin Wrobleski",
+      "mlb_team": "LAD",
+      "season_pts": 42.44,
+      "gs": 3,
+      "pts_per_gs": 14.15,
+      "pr30_pts": 42.44,
+      "starts": [
+        {
+          "date": "2026-04-21",
+          "mlb_team": "LAD",
+          "opponent": "Col",
+          "home": false,
+          "opponent_ops": 0.7
+        },
+        {
+          "date": "2026-04-26",
+          "mlb_team": "LAD",
+          "opponent": "ChC",
+          "home": true,
+          "opponent_ops": 0.745
         }
       ]
     },
