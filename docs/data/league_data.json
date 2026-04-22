@@ -5,7 +5,7 @@
     "num_teams": 12,
     "total_weeks": 19,
     "playoff_cutoff": 6,
-    "last_updated": "2026-04-21T08:51:15Z",
+    "last_updated": "2026-04-22T05:12:33Z",
     "current_week": 19,
     "total_matchup_weeks": 19,
     "current_matchup_week": 4,
@@ -126,7 +126,7 @@
         13,
         8,
         8,
-        0,
+        3,
         null,
         null,
         null,
@@ -239,7 +239,7 @@
         13,
         7,
         7,
-        0,
+        1,
         null,
         null,
         null,
@@ -352,7 +352,7 @@
         12,
         8,
         8,
-        0,
+        2,
         null,
         null,
         null,
@@ -465,7 +465,7 @@
         12,
         8,
         8,
-        0,
+        3,
         null,
         null,
         null,
@@ -917,7 +917,7 @@
         13,
         8,
         8,
-        1,
+        2,
         null,
         null,
         null,
@@ -1143,7 +1143,7 @@
         13,
         8,
         8,
-        0,
+        1,
         null,
         null,
         null,
@@ -1256,7 +1256,7 @@
         14,
         8,
         8,
-        0,
+        3,
         null,
         null,
         null,
@@ -1846,10 +1846,52 @@
     ],
     [
       {
+        "name": "Randy Vasquez",
+        "mlb_team": "SD",
+        "fantasy_team": "CEEJ",
+        "score": 17.67
+      },
+      {
         "name": "Seth Lugo",
         "mlb_team": "KC",
         "fantasy_team": "SCHN",
         "score": 17.17
+      },
+      {
+        "name": "Shota Imanaga",
+        "mlb_team": "ChC",
+        "fantasy_team": "SW",
+        "score": 13.67
+      },
+      {
+        "name": "Sal Stewart",
+        "mlb_team": "Cin",
+        "fantasy_team": "BKRF",
+        "score": 12.75
+      },
+      {
+        "name": "Elly De La Cruz",
+        "mlb_team": "Cin",
+        "fantasy_team": "YOFF",
+        "score": 12.25
+      },
+      {
+        "name": "Nolan McLean",
+        "mlb_team": "NYM",
+        "fantasy_team": "JB",
+        "score": 11.9
+      },
+      {
+        "name": "Max Muncy",
+        "mlb_team": "LAD",
+        "fantasy_team": "JB",
+        "score": 11.5
+      },
+      {
+        "name": "Chase Burns",
+        "mlb_team": "Cin",
+        "fantasy_team": "CEEJ",
+        "score": 11.09
       },
       {
         "name": "Dylan Cease",
@@ -1858,52 +1900,10 @@
         "score": 11.05
       },
       {
-        "name": "Max Muncy",
-        "mlb_team": "LAD",
-        "fantasy_team": "JB",
-        "score": 11.0
-      },
-      {
-        "name": "Bryce Elder",
-        "mlb_team": "Atl",
-        "fantasy_team": "SCHN",
-        "score": 10.4
-      },
-      {
         "name": "Isaac Paredes",
         "mlb_team": "Hou",
         "fantasy_team": "wOBA",
-        "score": 8.0
-      },
-      {
-        "name": "Kyle Bradish",
-        "mlb_team": "Bal",
-        "fantasy_team": "STEW",
-        "score": 7.32
-      },
-      {
-        "name": "Christian Walker",
-        "mlb_team": "Hou",
-        "fantasy_team": "DECA",
-        "score": 7.25
-      },
-      {
-        "name": "Sal Stewart",
-        "mlb_team": "Cin",
-        "fantasy_team": "BKRF",
-        "score": 6.75
-      },
-      {
-        "name": "Vladimir Guerrero Jr.",
-        "mlb_team": "Tor",
-        "fantasy_team": "STEW",
-        "score": 6.25
-      },
-      {
-        "name": "Louis Varland",
-        "mlb_team": "Tor",
-        "fantasy_team": "STRN",
-        "score": 6.08
+        "score": 10.5
       }
     ]
   ],
@@ -2386,7 +2386,7 @@
         "2B": 2.0,
         "UTIL": 5.75,
         "C": 5.5,
-        "1B": 0.0
+        "1B": -0.25
       },
       "wOBA": {
         "1B": 1.25,
