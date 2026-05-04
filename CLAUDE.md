@@ -64,6 +64,20 @@ Dependencies for `main.py`: `espn_api`, `gspread`, `oauth2client`.
 3. Run `python src/fetch_data.py` locally to generate initial JSON, commit it
 4. Trigger workflow manually in Actions tab to verify
 
+## Changelog Maintenance (REQUIRED before commit/push)
+
+Whenever a session makes user-visible changes (UI, new features, bug fixes, behavior changes), update `docs/changelog.html` **before** the final commit. Internal-only refactors, dep bumps, or data refreshes do not need entries.
+
+**Versioning rule — consolidate by session:**
+- All changes from a single conversation/session go into ONE version entry.
+- If the most recent `<article class="version">` was authored in the same session, **append** new `<li>` items to it instead of creating a new version block. (Today's date in the `<time>` tag is the signal — if it's today and you wrote it, append.)
+- If the most recent entry is from a previous session/day, create a new `<article class="version">` at the top with bumped semver:
+  - **MAJOR** (`v3.0.0`) — breaking redesign or removed page
+  - **MINOR** (`v2.5.0`) — new feature/page (most common)
+  - **PATCH** (`v2.4.1`) — fix-only or small tweak session
+
+**Tag classes:** `feat` (NEW), `improve` (UPD), `fix` (FIX) — pick the one that best matches the change. Keep each `<li>` to one short sentence focused on user impact, not implementation.
+
 ## ESPN Cookie Maintenance
 
 `espn_s2` and `swid` expire periodically. When expired, Actions will fail or produce empty JSON.

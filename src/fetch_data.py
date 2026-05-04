@@ -121,13 +121,13 @@ def fetch_top_players(req, espn_periods, espn_period_sp_map, team_abbrev_map, to
     Fetches top N active players by fantasy score across all ESPN matchup periods
     that make up one custom matchup week. Sums scores across periods for merged weeks.
 
-    Returns top_players list.
+    Returns dict {all: [...], pitchers: [...], hitters: [...]} each top_n by score.
 
     espn_periods: list of ESPN matchup period IDs (e.g. [1, 2] for a merged week)
     espn_period_sp_map: {espn_period_id: scoring_period_id}
     team_abbrev_map: {team_id: team_abbrev}
     """
-    player_totals = {}  # player_id -> {name, mlb_team, fantasy_team, score}
+    player_totals = {}  # player_id -> {name, mlb_team, fantasy_team, score, is_pitcher}
 
     for espn_period in espn_periods:
         sp = espn_period_sp_map.get(espn_period)
@@ -154,6 +154,11 @@ def fetch_top_players(req, espn_periods, espn_period_sp_map, team_abbrev_map, to
                     p = pool["player"]
                     pid = p["id"]
                     score = pool["appliedStatTotal"]
+                    # Pitcher if eligible for SP (slot 13) or RP (slot 15) and NOT a position player
+                    eligible = set(p.get("eligibleSlots", []))
+                    pitcher_slots = {13, 14, 15}
+                    hitter_slots = {0, 1, 2, 3, 4, 5, 6, 7, 12}  # C/1B/2B/SS/3B/OF/UTIL
+                    is_pitcher = bool(eligible & pitcher_slots) and not (eligible & hitter_slots)
 
                     if pid in player_totals:
                         player_totals[pid]["score"] += score
@@ -163,6 +168,7 @@ def fetch_top_players(req, espn_periods, espn_period_sp_map, team_abbrev_map, to
                             "mlb_team": PRO_TEAM_MAP.get(p["proTeamId"], "?"),
                             "fantasy_team": fantasy_team,
                             "score": score,
+                            "is_pitcher": is_pitcher,
                         }
 
     players = list(player_totals.values())
@@ -170,7 +176,14 @@ def fetch_top_players(req, espn_periods, espn_period_sp_map, team_abbrev_map, to
     for p in players:
         p["score"] = round(p["score"], 2)
 
-    return players[:top_n]
+    def strip(plist):
+        return [{k: v for k, v in p.items() if k != "is_pitcher"} for p in plist]
+
+    return {
+        "all": strip(players[:top_n]),
+        "pitchers": strip([p for p in players if p["is_pitcher"]][:top_n]),
+        "hitters": strip([p for p in players if not p["is_pitcher"]][:top_n]),
+    }
 
 
 def fetch_gs_per_week(req, espn_periods, espn_period_sp_map, team_ids):
@@ -359,7 +372,8 @@ def main():
         position_scores_by_week.append(pos_scores)
         for tid, gs in gs_totals.items():
             team_data[tid]["gs_by_week"][mw - 1] = gs
-        print(f"  MW {mw}: {top[0]['name']} ({top[0]['score']}) leads" if top else f"  MW {mw}: no data")
+        leader = top["all"][0] if top["all"] else None
+        print(f"  MW {mw}: {leader['name']} ({leader['score']}) leads" if leader else f"  MW {mw}: no data")
 
     output = {
         "metadata": {

@@ -34,6 +34,13 @@
           <span class="control-label">Selected Starts</span>
           <span id="start-counter" class="start-counter">0 / 8</span>
         </div>
+        <div class="ops-mode-wrap">
+          <span class="control-label">Opponent OPS</span>
+          <div id="ops-mode-toggle" class="ops-mode-toggle">
+            <button class="ops-toggle-btn active" data-mode="30d" title="Trailing 30-day team OPS">30d</button>
+            <button class="ops-toggle-btn" data-mode="split" title="Trailing 45-day OPS, split by home/away and pitcher handedness">Hardcore</button>
+          </div>
+        </div>
       </div>
 
       <div class="wide-table-wrapper">
@@ -43,8 +50,15 @@
         </table>
       </div>
 
-      <p class="ops-legend">
+      <p id="ops-legend-standard" class="ops-legend">
         Opponent OPS (last 30 days):
+        <span class="ops-chip ops-easy">≤ .680</span>
+        <span class="ops-chip ops-ok">.681–.740</span>
+        <span class="ops-chip ops-tough">&gt; .740</span>
+        <span class="ops-chip ops-none">No data</span>
+      </p>
+      <p id="ops-legend-split" class="ops-legend" style="display:none;">
+        Opponent OPS (45d, split by home/away &amp; vs pitcher handedness):
         <span class="ops-chip ops-easy">≤ .680</span>
         <span class="ops-chip ops-ok">.681–.740</span>
         <span class="ops-chip ops-tough">&gt; .740</span>

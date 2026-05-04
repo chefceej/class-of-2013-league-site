@@ -76,9 +76,26 @@ def fetch_espn_pro_schedule():
     return game_lookup
 
 
-def fetch_espn_starters(league, game_lookup, week_start, week_end):
+def extract_daily_points(player, today_sp, today_date):
+    """Returns {date_str (YYYY-MM-DD): appliedTotal} from a player's daily stats."""
+    out = {}
+    for s in player.get("stats", []):
+        if s.get("statSourceId") != 0:        # actual (not projected)
+            continue
+        if s.get("statSplitTypeId") != 5:     # 5 = single day
+            continue
+        sp = s.get("scoringPeriodId")
+        if sp is None:
+            continue
+        d = today_date + timedelta(days=sp - today_sp)
+        out[d.strftime("%Y-%m-%d")] = round(s.get("appliedTotal", 0.0), 1)
+    return out
+
+
+def fetch_espn_starters(league, game_lookup, week_start, week_end, today_date):
     """
     Use ESPN's starterStatusByProGame from rosters to get probable/starting pitchers.
+    Also attaches `points` to past starts (game already played).
 
     Returns:
       rostered: {fantasy_team_abbrev: {pitcher_name: [start_info, ...]}}
@@ -87,6 +104,8 @@ def fetch_espn_starters(league, game_lookup, week_start, week_end):
     """
     start_str = week_start.strftime("%Y-%m-%d")
     end_str = week_end.strftime("%Y-%m-%d")
+    today_str = today_date.strftime("%Y-%m-%d")
+    today_sp = league.current_week
 
     # Get rostered players with starterStatusByProGame
     data = league.espn_request.league_get(params={"view": "mRoster"})
@@ -107,6 +126,7 @@ def fetch_espn_starters(league, game_lookup, week_start, week_end):
             pro_team_id = player.get("proTeamId", 0)
             mlb_team = PRO_TEAM_MAP.get(pro_team_id, "?")
             starter_map = player.get("starterStatusByProGame", {})
+            daily_pts = extract_daily_points(player, today_sp, today_date)
 
             for gid_str, status in starter_map.items():
                 if status not in ("PROBABLE", "STARTING"):
@@ -124,12 +144,16 @@ def fetch_espn_starters(league, game_lookup, week_start, week_end):
                     opp_id = game["home_team_id"]
                     home = False
 
-                rostered[abbrev][name].append({
+                start_entry = {
                     "date": game["date"],
                     "mlb_team": mlb_team,
                     "opponent": PRO_TEAM_MAP.get(opp_id, "?"),
                     "home": home,
-                })
+                }
+                # Attach actual points if game is past
+                if game["date"] < today_str and game["date"] in daily_pts:
+                    start_entry["points"] = daily_pts[game["date"]]
+                rostered[abbrev][name].append(start_entry)
 
     # Get free agent pitchers with starts
     fa_params = {
@@ -158,6 +182,7 @@ def fetch_espn_starters(league, game_lookup, week_start, week_end):
         pro_team_id = player.get("proTeamId", 0)
         mlb_team = PRO_TEAM_MAP.get(pro_team_id, "?")
         starter_map = player.get("starterStatusByProGame", {})
+        daily_pts = extract_daily_points(player, today_sp, today_date)
 
         for gid_str, status in starter_map.items():
             if status not in ("PROBABLE", "STARTING"):
@@ -175,12 +200,15 @@ def fetch_espn_starters(league, game_lookup, week_start, week_end):
                 opp_id = game["home_team_id"]
                 home = False
 
-            fa_starters[name].append({
+            start_entry = {
                 "date": game["date"],
                 "mlb_team": mlb_team,
                 "opponent": PRO_TEAM_MAP.get(opp_id, "?"),
                 "home": home,
-            })
+            }
+            if game["date"] < today_str and game["date"] in daily_pts:
+                start_entry["points"] = daily_pts[game["date"]]
+            fa_starters[name].append(start_entry)
             fa_player_info[name] = {"mlb_team": mlb_team, "pro_team_id": pro_team_id}
 
         # Store info even if no starts (for stats lookup)
@@ -257,10 +285,10 @@ def fetch_mlb_teams():
     }
 
 
-def fetch_team_ops_30d(week_end, team_id_map):
-    """Returns {espn_team_abbrev: ops_float} for the 30 days ending on week_end."""
+def fetch_team_ops_date_range(week_end, team_id_map, days):
+    """Returns {espn_team_abbrev: ops_float} for the trailing N days ending on week_end."""
     end_str = week_end.strftime("%Y-%m-%d")
-    start_str = (week_end - timedelta(days=30)).strftime("%Y-%m-%d")
+    start_str = (week_end - timedelta(days=days)).strftime("%Y-%m-%d")
     try:
         data = mlb_get(
             f"/teams/stats?season={SEASON_YEAR}&stats=byDateRange"
@@ -276,8 +304,93 @@ def fetch_team_ops_30d(week_end, team_id_map):
                 ops_map[espn_abbrev] = round(float(ops), 3)
         return ops_map
     except Exception as e:
-        print(f"  Warning: could not fetch team OPS — {e}")
+        print(f"  Warning: could not fetch trailing-{days}d team OPS — {e}")
         return {}
+
+
+def fetch_team_ops_30d(week_end, team_id_map):
+    return fetch_team_ops_date_range(week_end, team_id_map, 30)
+
+
+def fetch_team_split_factors(team_id_map):
+    """
+    Fetch season-long h/a/vl/vr OPS and overall season OPS per team.
+    Returns {espn_team_abbrev: {h, a, vl, vr, overall}} where each value is OPS float.
+    """
+    factors = defaultdict(dict)
+    # Splits: home, away, vs LHP, vs RHP
+    try:
+        data = mlb_get(
+            f"/teams/stats?stats=statSplits&group=hitting&season={SEASON_YEAR}"
+            f"&sportId=1&sitCodes=h,a,vl,vr&limit=200"
+        )
+        for entry in data.get("stats", [{}])[0].get("splits", []):
+            team_id = entry.get("team", {}).get("id")
+            mlb_abbrev = team_id_map.get(team_id, "?")
+            espn_abbrev = MLB_TO_ESPN_ABBREV.get(mlb_abbrev)
+            if not espn_abbrev:
+                continue
+            code = entry.get("split", {}).get("code")
+            ops = entry.get("stat", {}).get("ops")
+            if code and ops is not None:
+                factors[espn_abbrev][code] = float(ops)
+    except Exception as e:
+        print(f"  Warning: could not fetch team split OPS — {e}")
+    # Season overall OPS
+    try:
+        data = mlb_get(
+            f"/teams/stats?stats=season&group=hitting&season={SEASON_YEAR}&sportId=1&limit=50"
+        )
+        for entry in data.get("stats", [{}])[0].get("splits", []):
+            team_id = entry.get("team", {}).get("id")
+            mlb_abbrev = team_id_map.get(team_id, "?")
+            espn_abbrev = MLB_TO_ESPN_ABBREV.get(mlb_abbrev)
+            ops = entry.get("stat", {}).get("ops")
+            if espn_abbrev and ops is not None:
+                factors[espn_abbrev]["overall"] = float(ops)
+    except Exception as e:
+        print(f"  Warning: could not fetch season overall OPS — {e}")
+    return dict(factors)
+
+
+def fetch_pitcher_hands():
+    """Returns {pitcher_full_name: 'L'|'R'} for all MLB pitchers this season."""
+    try:
+        data = mlb_get(f"/sports/1/players?season={SEASON_YEAR}")
+        hands = {}
+        for p in data.get("people", []):
+            if p.get("primaryPosition", {}).get("type") != "Pitcher":
+                continue
+            name = p.get("fullName", "").strip()
+            hand = p.get("pitchHand", {}).get("code")
+            if name and hand:
+                hands[name] = hand
+        return hands
+    except Exception as e:
+        print(f"  Warning: could not fetch pitcher handedness — {e}")
+        return {}
+
+
+def compute_split_ops(opponent, opponent_is_home, pitcher_hand, ops_45d, factors):
+    """
+    Compute split-adjusted OPS using multiplicative model:
+      split_ops = trailing_45d × (vs_hand_OPS / overall_OPS) × (location_OPS / overall_OPS)
+    Returns float OPS or None if data missing.
+    """
+    base = ops_45d.get(opponent)
+    f = factors.get(opponent)
+    if base is None or not f:
+        return None
+    overall = f.get("overall")
+    if not overall:
+        return None
+    hand_code = "vl" if pitcher_hand == "L" else "vr" if pitcher_hand == "R" else None
+    loc_code = "h" if opponent_is_home else "a"
+    hand_ops = f.get(hand_code)
+    loc_ops = f.get(loc_code)
+    if hand_ops is None or loc_ops is None:
+        return base  # fall back to plain 45d
+    return round(base * (hand_ops / overall) * (loc_ops / overall), 3)
 
 
 def find_current_matchup_period(league):
@@ -379,6 +492,7 @@ def fetch_actual_gs(league, matchup_period):
 
 def main():
     week_start, week_end = current_week_dates()
+    today_date = datetime.now(timezone.utc).date()
     print(f"Week: {week_start} → {week_end}")
 
     print("Fetching ESPN pro game schedule...")
@@ -393,10 +507,22 @@ def main():
     team_ops = fetch_team_ops_30d(week_end, team_id_map)
     print(f"  Got OPS for {len(team_ops)} MLB teams")
 
+    print("Fetching team OPS (last 45 days) for split mode...")
+    team_ops_45d = fetch_team_ops_date_range(week_end, team_id_map, 45)
+    print(f"  Got 45d OPS for {len(team_ops_45d)} MLB teams")
+
+    print("Fetching season split factors (h/a/vL/vR/overall)...")
+    split_factors = fetch_team_split_factors(team_id_map)
+    print(f"  Got split factors for {len(split_factors)} MLB teams")
+
+    print("Fetching MLB pitcher handedness...")
+    pitcher_hands = fetch_pitcher_hands()
+    print(f"  Got handedness for {len(pitcher_hands)} pitchers")
+
     print("Fetching ESPN rosters + probable starters...")
     league = League(league_id=LEAGUE_ID, year=SEASON_YEAR, espn_s2=ESPN_S2, swid=SWID)
     rostered_starts, fa_starters, fa_player_info = fetch_espn_starters(
-        league, game_lookup, week_start, week_end
+        league, game_lookup, week_start, week_end, today_date
     )
     rostered_count = sum(
         sum(len(starts) for starts in pitchers.values())
@@ -421,15 +547,26 @@ def main():
         dates.append(d.strftime("%Y-%m-%d"))
         d += timedelta(days=1)
 
-    # Add opponent OPS to start info
-    for abbrev, pitchers in rostered_starts.items():
-        for name, starts in pitchers.items():
-            for s in starts:
-                s["opponent_ops"] = team_ops.get(s["opponent"])
-
-    for name, starts in fa_starters.items():
+    # Add opponent OPS (30d standard + split-adjusted) to start info
+    def annotate(name, starts):
+        hand = pitcher_hands.get(name)
         for s in starts:
             s["opponent_ops"] = team_ops.get(s["opponent"])
+            opp_is_home = not s["home"]
+            split = compute_split_ops(
+                s["opponent"], opp_is_home, hand, team_ops_45d, split_factors
+            )
+            if split is not None:
+                s["opponent_ops_split"] = split
+            if hand:
+                s["pitcher_hand"] = hand
+
+    for abbrev, pitchers in rostered_starts.items():
+        for name, starts in pitchers.items():
+            annotate(name, starts)
+
+    for name, starts in fa_starters.items():
+        annotate(name, starts)
 
     # Structure rostered output
     output_teams = {}

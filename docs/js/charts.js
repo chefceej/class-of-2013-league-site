@@ -1,18 +1,36 @@
-function buildTopScorersTable(topPlayersByWeek, currentMatchupWeek) {
+function buildTopScorersTable(weeklyData, currentMatchupWeek) {
   let displayWeek = currentMatchupWeek - 1; // 0-indexed, default to latest week
+  let activeTab = "all";
 
   const label = document.getElementById("week-nav-label");
   const tbody = document.getElementById("top-scorers-body");
   const prevBtn = document.getElementById("prev-week-btn");
   const nextBtn = document.getElementById("next-week-btn");
+  const tabsEl = document.getElementById("top-scorers-tabs");
+
+  function getPlayers() {
+    const week = weeklyData[displayWeek];
+    if (!week) return [];
+    // Backwards-compat: if week is a flat array, use it for "all" and return empty for filtered tabs
+    if (Array.isArray(week)) {
+      return activeTab === "all" ? week : [];
+    }
+    return week[activeTab] || [];
+  }
 
   function render() {
     label.textContent = `Week ${displayWeek + 1} of ${currentMatchupWeek}`;
     prevBtn.disabled = displayWeek === 0;
     nextBtn.disabled = displayWeek === currentMatchupWeek - 1;
 
-    const players = topPlayersByWeek[displayWeek] || [];
+    const players = getPlayers();
     tbody.innerHTML = "";
+    if (players.length === 0) {
+      const tr = document.createElement("tr");
+      tr.innerHTML = `<td colspan="5" style="text-align:center;color:#64748b;padding:1.5rem">No data</td>`;
+      tbody.appendChild(tr);
+      return;
+    }
     players.forEach((p, i) => {
       const tr = document.createElement("tr");
       tr.innerHTML = `
@@ -28,6 +46,17 @@ function buildTopScorersTable(topPlayersByWeek, currentMatchupWeek) {
 
   prevBtn.addEventListener("click", () => { if (displayWeek > 0) { displayWeek--; render(); } });
   nextBtn.addEventListener("click", () => { if (displayWeek < currentMatchupWeek - 1) { displayWeek++; render(); } });
+
+  if (tabsEl) {
+    tabsEl.querySelectorAll(".tab-btn").forEach(btn => {
+      btn.addEventListener("click", () => {
+        tabsEl.querySelectorAll(".tab-btn").forEach(b => b.classList.remove("active"));
+        btn.classList.add("active");
+        activeTab = btn.dataset.tab;
+        render();
+      });
+    });
+  }
 
   render();
 }
