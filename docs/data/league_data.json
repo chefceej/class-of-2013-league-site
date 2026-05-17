@@ -5,7 +5,7 @@
     "num_teams": 12,
     "total_weeks": 19,
     "playoff_cutoff": 6,
-    "last_updated": "2026-05-16T08:46:25Z",
+    "last_updated": "2026-05-17T06:01:09Z",
     "current_week": 19,
     "total_matchup_weeks": 19,
     "current_matchup_week": 7,
@@ -129,7 +129,7 @@
         8,
         8,
         8,
-        4,
+        6,
         null,
         null,
         null,
@@ -355,7 +355,7 @@
         8,
         8,
         8,
-        6,
+        7,
         null,
         null,
         null,
@@ -468,7 +468,7 @@
         8,
         8,
         8,
-        7,
+        8,
         null,
         null,
         null,
@@ -581,7 +581,7 @@
         8,
         7,
         8,
-        4,
+        5,
         null,
         null,
         null,
@@ -694,7 +694,7 @@
         9,
         8,
         9,
-        6,
+        7,
         null,
         null,
         null,
@@ -807,7 +807,7 @@
         8,
         8,
         8,
-        6,
+        8,
         null,
         null,
         null,
@@ -920,7 +920,7 @@
         8,
         8,
         8,
-        5,
+        7,
         null,
         null,
         null,
@@ -1033,7 +1033,7 @@
         8,
         7,
         8,
-        4,
+        6,
         null,
         null,
         null,
@@ -1146,7 +1146,7 @@
         8,
         8,
         8,
-        5,
+        6,
         null,
         null,
         null,
@@ -1259,7 +1259,7 @@
         8,
         7,
         8,
-        5,
+        7,
         null,
         null,
         null,
@@ -1372,7 +1372,7 @@
         8,
         7,
         8,
-        5,
+        6,
         null,
         null,
         null,
@@ -2789,67 +2789,73 @@
     {
       "all": [
         {
+          "name": "Shohei Ohtani",
+          "mlb_team": "LAD",
+          "fantasy_team": "BERN",
+          "score": 35.42
+        },
+        {
+          "name": "Cristopher Sanchez",
+          "mlb_team": "Phi",
+          "fantasy_team": "SW",
+          "score": 31.29
+        },
+        {
           "name": "Bailey Ober",
           "mlb_team": "Min",
           "fantasy_team": "DECA",
           "score": 30.29
-        },
-        {
-          "name": "Shohei Ohtani",
-          "mlb_team": "LAD",
-          "fantasy_team": "BERN",
-          "score": 25.42
-        },
-        {
-          "name": "JJ Bleday",
-          "mlb_team": "Cin",
-          "fantasy_team": "BERN",
-          "score": 24.25
-        },
-        {
-          "name": "Paul Skenes",
-          "mlb_team": "Pit",
-          "fantasy_team": "BKRF",
-          "score": 22.98
-        },
-        {
-          "name": "Daylen Lile",
-          "mlb_team": "Wsh",
-          "fantasy_team": "DECA",
-          "score": 22.0
         },
         {
           "name": "Randy Arozarena",
           "mlb_team": "Sea",
           "fantasy_team": "CEEJ",
-          "score": 21.75
+          "score": 24.0
+        },
+        {
+          "name": "JJ Bleday",
+          "mlb_team": "Cin",
+          "fantasy_team": "BERN",
+          "score": 24.0
+        },
+        {
+          "name": "Daylen Lile",
+          "mlb_team": "Wsh",
+          "fantasy_team": "DECA",
+          "score": 23.75
         },
         {
           "name": "Nick Kurtz",
           "mlb_team": "Oak",
           "fantasy_team": "JB",
-          "score": 21.75
+          "score": 23.0
         },
         {
-          "name": "Jacob Misiorowski",
-          "mlb_team": "Mil",
-          "fantasy_team": "STRN",
-          "score": 19.17
-        },
-        {
-          "name": "Spencer Arrighetti",
-          "mlb_team": "Hou",
-          "fantasy_team": "PEDS",
-          "score": 17.94
+          "name": "Paul Skenes",
+          "mlb_team": "Pit",
+          "fantasy_team": "BKRF",
+          "score": 22.98
         },
         {
           "name": "Kyle Schwarber",
           "mlb_team": "Phi",
           "fantasy_team": "wOBA",
-          "score": 17.5
+          "score": 20.5
+        },
+        {
+          "name": "Corbin Carroll",
+          "mlb_team": "Ari",
+          "fantasy_team": "BKRF",
+          "score": 20.25
         }
       ],
       "pitchers": [
+        {
+          "name": "Cristopher Sanchez",
+          "mlb_team": "Phi",
+          "fantasy_team": "SW",
+          "score": 31.29
+        },
         {
           "name": "Bailey Ober",
           "mlb_team": "Min",
@@ -2867,6 +2873,12 @@
           "mlb_team": "Mil",
           "fantasy_team": "STRN",
           "score": 19.17
+        },
+        {
+          "name": "Cade Smith",
+          "mlb_team": "Cle",
+          "fantasy_team": "PEDS",
+          "score": 18.2
         },
         {
           "name": "Spencer Arrighetti",
@@ -2897,18 +2909,6 @@
           "mlb_team": "Tor",
           "fantasy_team": "wOBA",
           "score": 15.17
-        },
-        {
-          "name": "Zack Wheeler",
-          "mlb_team": "Phi",
-          "fantasy_team": "STRN",
-          "score": 14.44
-        },
-        {
-          "name": "Sonny Gray",
-          "mlb_team": "Bos",
-          "fantasy_team": "PEDS",
-          "score": 14.36
         }
       ],
       "hitters": [
@@ -2916,61 +2916,61 @@
           "name": "Shohei Ohtani",
           "mlb_team": "LAD",
           "fantasy_team": "BERN",
-          "score": 25.42
-        },
-        {
-          "name": "JJ Bleday",
-          "mlb_team": "Cin",
-          "fantasy_team": "BERN",
-          "score": 24.25
-        },
-        {
-          "name": "Daylen Lile",
-          "mlb_team": "Wsh",
-          "fantasy_team": "DECA",
-          "score": 22.0
+          "score": 35.42
         },
         {
           "name": "Randy Arozarena",
           "mlb_team": "Sea",
           "fantasy_team": "CEEJ",
-          "score": 21.75
+          "score": 24.0
+        },
+        {
+          "name": "JJ Bleday",
+          "mlb_team": "Cin",
+          "fantasy_team": "BERN",
+          "score": 24.0
+        },
+        {
+          "name": "Daylen Lile",
+          "mlb_team": "Wsh",
+          "fantasy_team": "DECA",
+          "score": 23.75
         },
         {
           "name": "Nick Kurtz",
           "mlb_team": "Oak",
           "fantasy_team": "JB",
-          "score": 21.75
+          "score": 23.0
         },
         {
           "name": "Kyle Schwarber",
           "mlb_team": "Phi",
           "fantasy_team": "wOBA",
-          "score": 17.5
-        },
-        {
-          "name": "Jonathan Aranda",
-          "mlb_team": "TB",
-          "fantasy_team": "JB",
-          "score": 17.0
+          "score": 20.5
         },
         {
           "name": "Corbin Carroll",
           "mlb_team": "Ari",
           "fantasy_team": "BKRF",
-          "score": 16.5
+          "score": 20.25
         },
         {
-          "name": "Bobby Witt Jr.",
-          "mlb_team": "KC",
-          "fantasy_team": "SCHN",
-          "score": 16.0
+          "name": "Juan Soto",
+          "mlb_team": "NYM",
+          "fantasy_team": "SW",
+          "score": 18.5
         },
         {
           "name": "Teoscar Hernandez",
           "mlb_team": "LAD",
           "fantasy_team": "JB",
-          "score": 15.25
+          "score": 18.5
+        },
+        {
+          "name": "Jonathan Aranda",
+          "mlb_team": "TB",
+          "fantasy_team": "JB",
+          "score": 18.5
         }
       ]
     }
