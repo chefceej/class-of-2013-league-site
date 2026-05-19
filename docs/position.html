@@ -26,6 +26,22 @@
       <div class="pivot-controls">
 
         <div class="pivot-control-group">
+          <label class="control-label">View</label>
+          <div id="view-toggle" class="pivot-toggle">
+            <button class="pivot-toggle-btn active" data-value="byTeam">By Team</button>
+            <button class="pivot-toggle-btn" data-value="byPosition">By Position</button>
+          </div>
+        </div>
+
+        <div class="pivot-control-group">
+          <label class="control-label">Time</label>
+          <div id="time-toggle" class="pivot-toggle">
+            <button class="pivot-toggle-btn active" data-value="byWeek">By Week</button>
+            <button class="pivot-toggle-btn" data-value="total">Season Total</button>
+          </div>
+        </div>
+
+        <div class="pivot-control-group">
           <label class="control-label">Weeks</label>
           <label class="checkbox-label all-weeks-label">
             <input type="checkbox" id="all-weeks-cb" checked />

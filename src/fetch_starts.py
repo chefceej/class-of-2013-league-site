@@ -2,6 +2,7 @@ import os
 import json
 import urllib.request
 from datetime import datetime, timedelta, timezone
+from zoneinfo import ZoneInfo
 from collections import defaultdict
 
 # espn_api patch
@@ -25,6 +26,8 @@ MLB_API = "https://statsapi.mlb.com/api/v1"
 ESPN_SCHEDULE_URL = f"https://lm-api-reads.fantasy.espn.com/apis/v3/games/flb/seasons/{SEASON_YEAR}?view=proTeamSchedules_wl"
 
 # MLB Stats API abbreviation → ESPN PRO_TEAM_MAP abbreviation
+ET = ZoneInfo("America/New_York")
+
 MLB_TO_ESPN_ABBREV = {
     "ATH": "Oak", "ATL": "Atl", "AZ": "Ari", "BAL": "Bal", "BOS": "Bos",
     "CHC": "ChC", "CIN": "Cin", "CLE": "Cle", "COL": "Col", "CWS": "ChW",
@@ -45,7 +48,7 @@ def mlb_get(path):
 
 def current_week_dates():
     """Return (start, end) as date objects for the current Mon-Sun fantasy week."""
-    today = datetime.now(timezone.utc).date()
+    today = datetime.now(ET).date()
     start = today - timedelta(days=today.weekday())  # Monday
     end = start + timedelta(days=6)                  # Sunday
     return start, end
@@ -67,7 +70,7 @@ def fetch_espn_pro_schedule():
             for game in games:
                 gid = game["id"]
                 if gid not in game_lookup:
-                    dt = datetime.fromtimestamp(game["date"] / 1000, tz=timezone.utc)
+                    dt = datetime.fromtimestamp(game["date"] / 1000, tz=timezone.utc).astimezone(ET)
                     game_lookup[gid] = {
                         "date": dt.strftime("%Y-%m-%d"),
                         "home_team_id": game["homeProTeamId"],
@@ -492,7 +495,7 @@ def fetch_actual_gs(league, matchup_period):
 
 def main():
     week_start, week_end = current_week_dates()
-    today_date = datetime.now(timezone.utc).date()
+    today_date = datetime.now(ET).date()
     print(f"Week: {week_start} → {week_end}")
 
     print("Fetching ESPN pro game schedule...")

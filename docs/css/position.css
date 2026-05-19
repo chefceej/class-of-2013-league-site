@@ -1,3 +1,32 @@
+/* ── Toggle buttons (View / Time) ── */
+.pivot-toggle {
+  display: inline-flex;
+  background: #0f1117;
+  border: 1px solid #334155;
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.pivot-toggle-btn {
+  background: transparent;
+  border: none;
+  color: #94a3b8;
+  font-size: 0.82rem;
+  font-weight: 600;
+  padding: 0.4rem 0.85rem;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+}
+
+.pivot-toggle-btn:hover {
+  color: #e2e8f0;
+}
+
+.pivot-toggle-btn.active {
+  background: #3b82f6;
+  color: #fff;
+}
+
 /* ── Controls ── */
 .pivot-controls {
   display: flex;

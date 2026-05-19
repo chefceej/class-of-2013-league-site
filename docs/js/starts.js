@@ -423,7 +423,7 @@ function renderStreamingTable() {
 
   for (const col of [
     { key: "pts_per_gs", label: "Pts/GS" },
-    { key: "season_pts", label: "Season" },
+    { key: "season_pts", label: "SZN" },
     { key: "pr30_pts", label: "PR30" },
   ]) {
     const th = document.createElement("th");
@@ -477,6 +477,19 @@ function renderStreamingTable() {
     const row = document.createElement("tr");
 
     const included = state.streamIncluded.has(pitcher.name);
+    if (included) row.classList.add("stream-included");
+
+    function toggleInclude() {
+      if (state.streamIncluded.has(pitcher.name)) {
+        state.streamIncluded.delete(pitcher.name);
+        for (const s of pitcher.starts) state.streamChecked.delete(startKey(pitcher.name, s.date));
+      } else {
+        state.streamIncluded.add(pitcher.name);
+        for (const s of pitcher.starts) state.streamChecked.add(startKey(pitcher.name, s.date));
+      }
+      render();
+      renderStreamingTable();
+    }
 
     const cbTd = document.createElement("td");
     cbTd.className = "stream-check-col";
@@ -484,23 +497,14 @@ function renderStreamingTable() {
     cb.type = "checkbox";
     cb.checked = included;
     cb.title = "Include in planner";
-    cb.addEventListener("change", () => {
-      if (cb.checked) {
-        state.streamIncluded.add(pitcher.name);
-        for (const s of pitcher.starts) state.streamChecked.add(startKey(pitcher.name, s.date));
-      } else {
-        state.streamIncluded.delete(pitcher.name);
-        for (const s of pitcher.starts) state.streamChecked.delete(startKey(pitcher.name, s.date));
-      }
-      render();
-      renderStreamingTable();
-    });
+    cb.addEventListener("change", toggleInclude);
     cbTd.appendChild(cb);
     row.appendChild(cbTd);
 
     const nameTd = document.createElement("td");
     nameTd.className = "stream-name-col";
     nameTd.innerHTML = `<span class="pitcher-name">${pitcher.name}</span><span class="pitcher-team">${pitcher.mlb_team}</span>`;
+    nameTd.addEventListener("click", toggleInclude);
     row.appendChild(nameTd);
 
     for (const key of ["pts_per_gs", "season_pts", "pr30_pts"]) {
