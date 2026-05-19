@@ -423,15 +423,15 @@ function renderPositionByWeek(headEl, bodyEl, teams, positions, weeks) {
 /* ── View 4: By Position + Total (Position rows × Team columns) ── */
 
 function renderPositionTotal(headEl, bodyEl, teams, positions, weeks) {
-  const allVals = [];
-  for (const pos of positions)
-    for (const team of teams)
-      allVals.push(getAgg(team, pos, weeks));
-  const [gMin, gMax] = computeMinMax(allVals);
+  // Per-row (per-position) min/max for heatmap
+  const rowMinMax = {};
+  for (const pos of positions) {
+    const vals = teams.map(t => getAgg(t, pos, weeks));
+    rowMinMax[pos] = computeMinMax(vals);
+  }
 
   function posSortVal(pos, col) {
     if (col === "pos") return 0;
-    if (col === "total") return teams.reduce((s, t) => s + getAgg(t, pos, weeks), 0);
     return getAgg(col, pos, weeks); // col is a team name
   }
 
@@ -448,57 +448,27 @@ function renderPositionTotal(headEl, bodyEl, teams, positions, weeks) {
   for (const team of teams) {
     tr.appendChild(makeSortTh(team, team));
   }
-  tr.appendChild(makeSortTh("Total", "total", "total-col"));
   headEl.appendChild(tr);
 
   // Body
   bodyEl.innerHTML = "";
   for (const pos of sortedPositions) {
+    const [rMin, rMax] = rowMinMax[pos];
     const row = document.createElement("tr");
     const posTd = document.createElement("td");
     posTd.textContent = pos;
     posTd.className = "sticky-col team-col";
     row.appendChild(posTd);
 
-    let posTotal = 0;
     for (const team of teams) {
       const v = getAgg(team, pos, weeks);
-      posTotal += v;
       const td = document.createElement("td");
       td.textContent = v > 0 ? v.toFixed(1) : "—";
-      if (v > 0) td.style.background = cellColor(v, gMin, gMax);
+      if (v > 0) td.style.background = cellColor(v, rMin, rMax);
       row.appendChild(td);
     }
 
-    const totalTd = document.createElement("td");
-    totalTd.textContent = posTotal > 0 ? posTotal.toFixed(1) : "—";
-    totalTd.className = "total-col";
-    row.appendChild(totalTd);
     bodyEl.appendChild(row);
-  }
-
-  // League total row
-  if (state.showLeagueTotal) {
-    const lr = document.createElement("tr");
-    lr.className = "league-total-row";
-    const ltTd = document.createElement("td");
-    ltTd.textContent = "Total";
-    ltTd.className = "sticky-col team-col team-cell";
-    lr.appendChild(ltTd);
-
-    let gt = 0;
-    for (const team of teams) {
-      const v = positions.reduce((s, p) => s + getAgg(team, p, weeks), 0);
-      gt += v;
-      const td = document.createElement("td");
-      td.textContent = v.toFixed(1);
-      lr.appendChild(td);
-    }
-    const gtTd = document.createElement("td");
-    gtTd.textContent = gt.toFixed(1);
-    gtTd.className = "total-col";
-    lr.appendChild(gtTd);
-    bodyEl.appendChild(lr);
   }
 }
 

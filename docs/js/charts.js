@@ -76,18 +76,28 @@ function gsColor(val, min, max) {
   return `hsla(${Math.round(210 + t * 30)}, 55%, ${Math.round(18 + t * 12)}%, 0.85)`;
 }
 
-function buildWeeklyTable(headEl, bodyEl, teams, currentWeek, dataKey, colorFn, formatFn) {
+function buildWeeklyTable(headEl, bodyEl, teams, currentWeek, dataKey, colorFn, formatFn, opts) {
   const fmt = formatFn || ((v) => v.toFixed(1));
-  // Compute global min/max across all weekly values
+  const perColumn = opts?.perColumn || false;
+
+  // Per-column min/max (used when perColumn is true)
+  const weekMin = {}, weekMax = {};
+  // Global min/max (fallback)
   let globalMin = Infinity, globalMax = -Infinity;
-  teams.forEach(team => {
-    team[dataKey].slice(0, currentWeek).forEach(v => {
+  for (let w = 1; w <= currentWeek; w++) {
+    let wMin = Infinity, wMax = -Infinity;
+    teams.forEach(team => {
+      const v = team[dataKey][w - 1];
       if (v != null) {
+        if (v < wMin) wMin = v;
+        if (v > wMax) wMax = v;
         if (v < globalMin) globalMin = v;
         if (v > globalMax) globalMax = v;
       }
     });
-  });
+    weekMin[w] = wMin;
+    weekMax[w] = wMax;
+  }
 
   // Build header row
   const headerRow = document.createElement("tr");
@@ -156,7 +166,9 @@ function buildWeeklyTable(headEl, bodyEl, teams, currentWeek, dataKey, colorFn, 
         const td = document.createElement("td");
         if (val != null) {
           td.textContent = fmt(val);
-          td.style.background = colorFn(val, globalMin, globalMax);
+          const lo = perColumn ? weekMin[w] : globalMin;
+          const hi = perColumn ? weekMax[w] : globalMax;
+          td.style.background = colorFn(val, lo, hi);
         } else {
           td.textContent = "—";
         }
@@ -343,7 +355,8 @@ function buildWeeklyTable(headEl, bodyEl, teams, currentWeek, dataKey, colorFn, 
   buildWeeklyTable(
     document.getElementById("actual-points-head"),
     document.getElementById("actual-points-body"),
-    teams, currentMatchupWeek, "scores_by_week", actualPointsColor
+    teams, currentMatchupWeek, "scores_by_week", actualPointsColor,
+    null, { perColumn: true }
   );
   if (teams.some(t => t.gs_by_week?.some(v => v != null))) {
     buildWeeklyTable(
