@@ -5,7 +5,7 @@
     "num_teams": 12,
     "total_weeks": 19,
     "playoff_cutoff": 6,
-    "last_updated": "2026-05-23T09:00:31Z",
+    "last_updated": "2026-05-24T06:22:12Z",
     "current_week": 19,
     "total_matchup_weeks": 19,
     "current_matchup_week": 8,
@@ -130,7 +130,7 @@
         8,
         8,
         8,
-        6,
+        7,
         null,
         null,
         null,
@@ -356,7 +356,7 @@
         8,
         8,
         8,
-        5,
+        7,
         null,
         null,
         null,
@@ -582,7 +582,7 @@
         7,
         8,
         8,
-        5,
+        6,
         null,
         null,
         null,
@@ -1034,7 +1034,7 @@
         7,
         8,
         8,
-        4,
+        7,
         null,
         null,
         null,
@@ -1260,7 +1260,7 @@
         7,
         8,
         8,
-        5,
+        7,
         null,
         null,
         null,
@@ -1373,7 +1373,7 @@
         7,
         8,
         8,
-        7,
+        8,
         null,
         null,
         null,
@@ -2977,10 +2977,16 @@
     {
       "all": [
         {
+          "name": "Shohei Ohtani",
+          "mlb_team": "LAD",
+          "fantasy_team": "BERN",
+          "score": 25.8
+        },
+        {
           "name": "Juan Soto",
           "mlb_team": "NYM",
           "fantasy_team": "SW",
-          "score": 23.75
+          "score": 24.75
         },
         {
           "name": "Gavin Williams",
@@ -2989,10 +2995,10 @@
           "score": 22.98
         },
         {
-          "name": "Shohei Ohtani",
-          "mlb_team": "LAD",
-          "fantasy_team": "BERN",
-          "score": 22.8
+          "name": "Nick Kurtz",
+          "mlb_team": "Oak",
+          "fantasy_team": "JB",
+          "score": 22.5
         },
         {
           "name": "Kyle Harrison",
@@ -3001,40 +3007,34 @@
           "score": 21.17
         },
         {
-          "name": "Nick Kurtz",
-          "mlb_team": "Oak",
-          "fantasy_team": "JB",
-          "score": 21.0
-        },
-        {
-          "name": "CJ Abrams",
-          "mlb_team": "Wsh",
+          "name": "Freddie Freeman",
+          "mlb_team": "LAD",
           "fantasy_team": "PEDS",
-          "score": 20.0
-        },
-        {
-          "name": "Bo Bichette",
-          "mlb_team": "NYM",
-          "fantasy_team": "SW",
-          "score": 18.75
-        },
-        {
-          "name": "Cristopher Sanchez",
-          "mlb_team": "Phi",
-          "fantasy_team": "SW",
-          "score": 18.48
+          "score": 20.75
         },
         {
           "name": "James Wood",
           "mlb_team": "Wsh",
           "fantasy_team": "YOFF",
-          "score": 17.25
+          "score": 20.0
         },
         {
-          "name": "Chris Sale",
-          "mlb_team": "Atl",
-          "fantasy_team": "wOBA",
-          "score": 17.17
+          "name": "CJ Abrams",
+          "mlb_team": "Wsh",
+          "fantasy_team": "PEDS",
+          "score": 19.5
+        },
+        {
+          "name": "Mike Trout",
+          "mlb_team": "LAA",
+          "fantasy_team": "CEEJ",
+          "score": 19.25
+        },
+        {
+          "name": "Zach Neto",
+          "mlb_team": "LAA",
+          "fantasy_team": "SW",
+          "score": 19.0
         }
       ],
       "pitchers": [
@@ -3049,6 +3049,12 @@
           "mlb_team": "Mil",
           "fantasy_team": "BERN",
           "score": 21.17
+        },
+        {
+          "name": "Max Meyer",
+          "mlb_team": "Mia",
+          "fantasy_team": "BKRF",
+          "score": 18.67
         },
         {
           "name": "Cristopher Sanchez",
@@ -3087,78 +3093,72 @@
           "score": 16.36
         },
         {
-          "name": "Chase Burns",
-          "mlb_team": "Cin",
-          "fantasy_team": "CEEJ",
-          "score": 15.86
-        },
-        {
-          "name": "Cade Smith",
-          "mlb_team": "Cle",
-          "fantasy_team": "PEDS",
-          "score": 15.43
+          "name": "Zack Wheeler",
+          "mlb_team": "Phi",
+          "fantasy_team": "STRN",
+          "score": 16.36
         }
       ],
       "hitters": [
         {
-          "name": "Juan Soto",
-          "mlb_team": "NYM",
-          "fantasy_team": "SW",
-          "score": 23.75
-        },
-        {
           "name": "Shohei Ohtani",
           "mlb_team": "LAD",
           "fantasy_team": "BERN",
-          "score": 22.8
+          "score": 25.8
+        },
+        {
+          "name": "Juan Soto",
+          "mlb_team": "NYM",
+          "fantasy_team": "SW",
+          "score": 24.75
         },
         {
           "name": "Nick Kurtz",
           "mlb_team": "Oak",
           "fantasy_team": "JB",
-          "score": 21.0
+          "score": 22.5
         },
         {
-          "name": "CJ Abrams",
-          "mlb_team": "Wsh",
+          "name": "Freddie Freeman",
+          "mlb_team": "LAD",
           "fantasy_team": "PEDS",
-          "score": 20.0
-        },
-        {
-          "name": "Bo Bichette",
-          "mlb_team": "NYM",
-          "fantasy_team": "SW",
-          "score": 18.75
+          "score": 20.75
         },
         {
           "name": "James Wood",
           "mlb_team": "Wsh",
           "fantasy_team": "YOFF",
-          "score": 17.25
+          "score": 20.0
         },
         {
-          "name": "Pete Alonso",
-          "mlb_team": "Bal",
-          "fantasy_team": "STEW",
-          "score": 16.75
-        },
-        {
-          "name": "William Contreras",
-          "mlb_team": "Mil",
+          "name": "CJ Abrams",
+          "mlb_team": "Wsh",
           "fantasy_team": "PEDS",
-          "score": 16.25
+          "score": 19.5
         },
         {
-          "name": "Yandy Diaz",
-          "mlb_team": "TB",
-          "fantasy_team": "wOBA",
-          "score": 16.0
+          "name": "Mike Trout",
+          "mlb_team": "LAA",
+          "fantasy_team": "CEEJ",
+          "score": 19.25
         },
         {
-          "name": "Michael Harris II",
-          "mlb_team": "Atl",
-          "fantasy_team": "PEDS",
-          "score": 16.0
+          "name": "Zach Neto",
+          "mlb_team": "LAA",
+          "fantasy_team": "SW",
+          "score": 19.0
+        },
+        {
+          "name": "Bo Bichette",
+          "mlb_team": "NYM",
+          "fantasy_team": "SW",
+          "score": 18.5
+        },
+        {
+          "name": "George Springer",
+          "mlb_team": "Tor",
+          "fantasy_team": "YOFF",
+          "score": 18.25
         }
       ]
     }
