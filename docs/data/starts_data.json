@@ -2,7 +2,7 @@
   "metadata": {
     "week_start": "2026-05-25",
     "week_end": "2026-05-31",
-    "last_updated": "2026-05-30T06:01:02Z",
+    "last_updated": "2026-05-30T09:12:39Z",
     "start_limit": 8
   },
   "dates": [
@@ -72,6 +72,7 @@
             "mlb_team": "NYM",
             "opponent": "Mia",
             "home": true,
+            "points": 5.3,
             "opponent_ops": 0.685,
             "opponent_ops_split": 0.659,
             "pitcher_hand": "R"
@@ -87,6 +88,7 @@
             "mlb_team": "SF",
             "opponent": "Col",
             "home": false,
+            "points": 7.0,
             "opponent_ops": 0.647,
             "opponent_ops_split": 0.754,
             "pitcher_hand": "R"
@@ -316,7 +318,7 @@
             "mlb_team": "Atl",
             "opponent": "Cin",
             "home": false,
-            "points": 0.0,
+            "points": 3.3,
             "opponent_ops": 0.72,
             "opponent_ops_split": 0.744,
             "pitcher_hand": "R"
@@ -417,6 +419,7 @@
             "mlb_team": "Phi",
             "opponent": "LAD",
             "home": false,
+            "points": 3.9,
             "opponent_ops": 0.77,
             "opponent_ops_split": 0.734,
             "pitcher_hand": "R"
@@ -523,7 +526,7 @@
             "mlb_team": "ChC",
             "opponent": "StL",
             "home": false,
-            "points": 0.0,
+            "points": -1.7,
             "opponent_ops": 0.679,
             "opponent_ops_split": 0.706,
             "pitcher_hand": "L"
@@ -649,7 +652,7 @@
             "mlb_team": "Bal",
             "opponent": "Tor",
             "home": true,
-            "points": 0.0,
+            "points": 3.9,
             "opponent_ops": 0.69,
             "opponent_ops_split": 0.62,
             "pitcher_hand": "L"
@@ -790,6 +793,7 @@
             "mlb_team": "Ari",
             "opponent": "Sea",
             "home": false,
+            "points": -1.9,
             "opponent_ops": 0.71,
             "opponent_ops_split": 0.782,
             "pitcher_hand": "R"
@@ -852,6 +856,7 @@
             "mlb_team": "NYY",
             "opponent": "Oak",
             "home": false,
+            "points": 11.4,
             "opponent_ops": 0.716,
             "opponent_ops_split": 0.739
           }
@@ -950,6 +955,7 @@
             "mlb_team": "KC",
             "opponent": "Tex",
             "home": false,
+            "points": 1.6,
             "opponent_ops": 0.687,
             "opponent_ops_split": 0.649,
             "pitcher_hand": "R"
@@ -1050,7 +1056,7 @@
             "mlb_team": "LAA",
             "opponent": "TB",
             "home": false,
-            "points": 0.0,
+            "points": 9.9,
             "opponent_ops": 0.753,
             "opponent_ops_split": 0.722
           }
@@ -1127,7 +1133,7 @@
             "mlb_team": "Tex",
             "opponent": "KC",
             "home": true,
-            "points": 0.0,
+            "points": 14.1,
             "opponent_ops": 0.642,
             "opponent_ops_split": 0.615,
             "pitcher_hand": "L"
@@ -1143,6 +1149,7 @@
             "mlb_team": "Mia",
             "opponent": "NYM",
             "home": false,
+            "points": 2.4,
             "opponent_ops": 0.657,
             "opponent_ops_split": 0.669,
             "pitcher_hand": "R"
@@ -1305,14 +1312,6 @@
             "home": true,
             "opponent_ops": 0.647,
             "opponent_ops_split": 0.692
-          },
-          {
-            "date": "2026-05-29",
-            "mlb_team": "LAD",
-            "opponent": "Phi",
-            "home": true,
-            "opponent_ops": 0.674,
-            "opponent_ops_split": 0.67
           }
         ]
       },
@@ -1325,7 +1324,7 @@
             "mlb_team": "Det",
             "opponent": "ChW",
             "home": false,
-            "points": 0.0,
+            "points": 11.2,
             "opponent_ops": 0.761,
             "opponent_ops_split": 0.793,
             "pitcher_hand": "R"
@@ -1373,7 +1372,7 @@
             "mlb_team": "Pit",
             "opponent": "Min",
             "home": true,
-            "points": 0.0,
+            "points": -1.5,
             "opponent_ops": 0.689,
             "opponent_ops_split": 0.669,
             "pitcher_hand": "R"
@@ -1389,6 +1388,7 @@
             "mlb_team": "LAD",
             "opponent": "Phi",
             "home": true,
+            "points": 19.2,
             "opponent_ops": 0.674,
             "opponent_ops_split": 0.594,
             "pitcher_hand": "L"
@@ -1559,6 +1559,7 @@
             "mlb_team": "Sea",
             "opponent": "Ari",
             "home": true,
+            "points": 2.8,
             "opponent_ops": 0.71,
             "opponent_ops_split": 0.686,
             "pitcher_hand": "R"
@@ -1628,6 +1629,7 @@
             "mlb_team": "TB",
             "opponent": "LAA",
             "home": true,
+            "points": 11.7,
             "opponent_ops": 0.646,
             "opponent_ops_split": 0.725,
             "pitcher_hand": "R"
@@ -1643,7 +1645,7 @@
             "mlb_team": "Min",
             "opponent": "Pit",
             "home": false,
-            "points": 0.0,
+            "points": 0.7,
             "opponent_ops": 0.749,
             "opponent_ops_split": 0.8,
             "pitcher_hand": "R"
@@ -1688,7 +1690,7 @@
       "season_pts": 69.96,
       "gs": 3,
       "pts_per_gs": 23.32,
-      "pr30_pts": 35.04,
+      "pr30_pts": 30.19,
       "starts": [
         {
           "date": "2026-05-26",
@@ -1944,25 +1946,6 @@
       ]
     },
     {
-      "name": "Griffin Jax",
-      "mlb_team": "TB",
-      "season_pts": 41.3,
-      "gs": 6,
-      "pts_per_gs": 6.88,
-      "pr30_pts": 32.62,
-      "starts": [
-        {
-          "date": "2026-05-26",
-          "mlb_team": "TB",
-          "opponent": "Bal",
-          "home": false,
-          "opponent_ops": 0.695,
-          "opponent_ops_split": 0.756,
-          "pitcher_hand": "R"
-        }
-      ]
-    },
-    {
       "name": "Keider Montero",
       "mlb_team": "Det",
       "season_pts": 65.55,
@@ -2029,6 +2012,25 @@
       ]
     },
     {
+      "name": "Griffin Jax",
+      "mlb_team": "TB",
+      "season_pts": 38.8,
+      "gs": 6,
+      "pts_per_gs": 6.47,
+      "pr30_pts": 30.12,
+      "starts": [
+        {
+          "date": "2026-05-26",
+          "mlb_team": "TB",
+          "opponent": "Bal",
+          "home": false,
+          "opponent_ops": 0.695,
+          "opponent_ops_split": 0.756,
+          "pitcher_hand": "R"
+        }
+      ]
+    },
+    {
       "name": "Joey Cantillo",
       "mlb_team": "Cle",
       "season_pts": 74.98,
@@ -2081,7 +2083,7 @@
       "season_pts": 42.98,
       "gs": 7,
       "pts_per_gs": 6.14,
-      "pr30_pts": 23.87,
+      "pr30_pts": 21.06,
       "starts": [
         {
           "date": "2026-05-27",
@@ -2166,7 +2168,7 @@
       "season_pts": 63.48,
       "gs": 11,
       "pts_per_gs": 5.77,
-      "pr30_pts": 37.96,
+      "pr30_pts": 24.6,
       "starts": [
         {
           "date": "2026-05-29",
@@ -2204,7 +2206,7 @@
       "season_pts": 68.26,
       "gs": 12,
       "pts_per_gs": 5.69,
-      "pr30_pts": 42.38,
+      "pr30_pts": 26.21,
       "starts": [
         {
           "date": "2026-05-29",
@@ -2223,7 +2225,7 @@
       "season_pts": 61.25,
       "gs": 11,
       "pts_per_gs": 5.57,
-      "pr30_pts": 24.92,
+      "pr30_pts": 14.1,
       "starts": [
         {
           "date": "2026-05-27",
@@ -2289,7 +2291,7 @@
       "season_pts": 37.2,
       "gs": 7,
       "pts_per_gs": 5.31,
-      "pr30_pts": 18.1,
+      "pr30_pts": 26.13,
       "starts": [
         {
           "date": "2026-05-26",
@@ -2393,7 +2395,7 @@
       "season_pts": 51.37,
       "gs": 11,
       "pts_per_gs": 4.67,
-      "pr30_pts": 21.46,
+      "pr30_pts": 9.29,
       "starts": [
         {
           "date": "2026-05-27",
@@ -2535,7 +2537,7 @@
       "season_pts": 31.18,
       "gs": 8,
       "pts_per_gs": 3.9,
-      "pr30_pts": 20.09,
+      "pr30_pts": 20.58,
       "starts": [
         {
           "date": "2026-05-30",
@@ -2573,7 +2575,7 @@
       "season_pts": 24.29,
       "gs": 7,
       "pts_per_gs": 3.47,
-      "pr30_pts": 15.93,
+      "pr30_pts": 10.42,
       "starts": [
         {
           "date": "2026-05-26",
