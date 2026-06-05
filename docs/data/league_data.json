@@ -5,7 +5,7 @@
     "num_teams": 12,
     "total_weeks": 19,
     "playoff_cutoff": 6,
-    "last_updated": "2026-06-04T10:36:46Z",
+    "last_updated": "2026-06-05T06:49:26Z",
     "current_week": 19,
     "total_matchup_weeks": 19,
     "current_matchup_week": 10,
@@ -358,7 +358,7 @@
         8,
         8,
         8,
-        1,
+        2,
         null,
         null,
         null,
@@ -471,7 +471,7 @@
         8,
         8,
         8,
-        3,
+        4,
         null,
         null,
         null,
@@ -584,7 +584,7 @@
         8,
         8,
         8,
-        2,
+        4,
         null,
         null,
         null,
@@ -810,7 +810,7 @@
         8,
         8,
         8,
-        2,
+        3,
         null,
         null,
         null,
@@ -923,7 +923,7 @@
         8,
         8,
         8,
-        2,
+        3,
         null,
         null,
         null,
@@ -1036,7 +1036,7 @@
         8,
         8,
         8,
-        4,
+        5,
         null,
         null,
         null,
@@ -1262,7 +1262,7 @@
         8,
         8,
         8,
-        2,
+        3,
         null,
         null,
         null,
@@ -3359,6 +3359,12 @@
           "score": 26.61
         },
         {
+          "name": "Jackson Chourio",
+          "mlb_team": "Mil",
+          "fantasy_team": "SCHN",
+          "score": 23.5
+        },
+        {
           "name": "Dillon Dingler",
           "mlb_team": "Det",
           "fantasy_team": "wOBA",
@@ -3369,6 +3375,12 @@
           "mlb_team": "SF",
           "fantasy_team": "YOFF",
           "score": 18.17
+        },
+        {
+          "name": "Christian Yelich",
+          "mlb_team": "Mil",
+          "fantasy_team": "CEEJ",
+          "score": 17.25
         },
         {
           "name": "Cristopher Sanchez",
@@ -3383,34 +3395,22 @@
           "score": 16.67
         },
         {
+          "name": "Brice Turang",
+          "mlb_team": "Mil",
+          "fantasy_team": "YOFF",
+          "score": 16.0
+        },
+        {
+          "name": "Jose Ramirez",
+          "mlb_team": "Cle",
+          "fantasy_team": "YOFF",
+          "score": 15.75
+        },
+        {
           "name": "Miguel Vargas",
           "mlb_team": "ChW",
           "fantasy_team": "BERN",
           "score": 15.75
-        },
-        {
-          "name": "Kyle Harrison",
-          "mlb_team": "Mil",
-          "fantasy_team": "BERN",
-          "score": 15.09
-        },
-        {
-          "name": "Hunter Goodman",
-          "mlb_team": "Col",
-          "fantasy_team": "DECA",
-          "score": 14.75
-        },
-        {
-          "name": "Riley Greene",
-          "mlb_team": "Det",
-          "fantasy_team": "BERN",
-          "score": 14.5
-        },
-        {
-          "name": "Jacob deGrom",
-          "mlb_team": "Tex",
-          "fantasy_team": "BERN",
-          "score": 14.05
         }
       ],
       "pitchers": [
@@ -3439,10 +3439,22 @@
           "score": 15.09
         },
         {
+          "name": "Zack Wheeler",
+          "mlb_team": "Phi",
+          "fantasy_team": "STRN",
+          "score": 14.67
+        },
+        {
           "name": "Jacob deGrom",
           "mlb_team": "Tex",
           "fantasy_team": "BERN",
           "score": 14.05
+        },
+        {
+          "name": "J.T. Ginn",
+          "mlb_team": "Oak",
+          "fantasy_team": "BKRF",
+          "score": 13.86
         },
         {
           "name": "Payton Tolle",
@@ -3451,28 +3463,16 @@
           "score": 12.86
         },
         {
-          "name": "Emerson Hancock",
-          "mlb_team": "Sea",
-          "fantasy_team": "STEW",
-          "score": 12.36
-        },
-        {
-          "name": "Jhoan Duran",
-          "mlb_team": "Phi",
-          "fantasy_team": "DECA",
-          "score": 12.12
-        },
-        {
-          "name": "Freddy Peralta",
-          "mlb_team": "NYM",
-          "fantasy_team": "YOFF",
-          "score": 11.86
-        },
-        {
-          "name": "Chase Burns",
-          "mlb_team": "Cin",
+          "name": "Justin Wrobleski",
+          "mlb_team": "LAD",
           "fantasy_team": "CEEJ",
-          "score": 11.86
+          "score": 12.86
+        },
+        {
+          "name": "Carlos Rodon",
+          "mlb_team": "NYY",
+          "fantasy_team": "PEDS",
+          "score": 12.86
         }
       ],
       "hitters": [
@@ -3483,10 +3483,34 @@
           "score": 26.61
         },
         {
+          "name": "Jackson Chourio",
+          "mlb_team": "Mil",
+          "fantasy_team": "SCHN",
+          "score": 23.5
+        },
+        {
           "name": "Dillon Dingler",
           "mlb_team": "Det",
           "fantasy_team": "wOBA",
           "score": 19.5
+        },
+        {
+          "name": "Christian Yelich",
+          "mlb_team": "Mil",
+          "fantasy_team": "CEEJ",
+          "score": 17.25
+        },
+        {
+          "name": "Brice Turang",
+          "mlb_team": "Mil",
+          "fantasy_team": "YOFF",
+          "score": 16.0
+        },
+        {
+          "name": "Jose Ramirez",
+          "mlb_team": "Cle",
+          "fantasy_team": "YOFF",
+          "score": 15.75
         },
         {
           "name": "Miguel Vargas",
@@ -3495,46 +3519,22 @@
           "score": 15.75
         },
         {
+          "name": "Oneil Cruz",
+          "mlb_team": "Pit",
+          "fantasy_team": "BKRF",
+          "score": 14.75
+        },
+        {
           "name": "Hunter Goodman",
           "mlb_team": "Col",
           "fantasy_team": "DECA",
           "score": 14.75
         },
         {
-          "name": "Riley Greene",
-          "mlb_team": "Det",
-          "fantasy_team": "BERN",
-          "score": 14.5
-        },
-        {
-          "name": "Christian Yelich",
-          "mlb_team": "Mil",
-          "fantasy_team": "CEEJ",
-          "score": 13.75
-        },
-        {
-          "name": "Jose Ramirez",
-          "mlb_team": "Cle",
-          "fantasy_team": "YOFF",
-          "score": 13.5
-        },
-        {
-          "name": "Brice Turang",
-          "mlb_team": "Mil",
-          "fantasy_team": "YOFF",
-          "score": 12.75
-        },
-        {
-          "name": "Jackson Chourio",
-          "mlb_team": "Mil",
+          "name": "Bobby Witt Jr.",
+          "mlb_team": "KC",
           "fantasy_team": "SCHN",
-          "score": 12.75
-        },
-        {
-          "name": "Yordan Alvarez",
-          "mlb_team": "Hou",
-          "fantasy_team": "BKRF",
-          "score": 12.0
+          "score": 14.5
         }
       ]
     }
