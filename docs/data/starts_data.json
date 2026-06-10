@@ -2,7 +2,7 @@
   "metadata": {
     "week_start": "2026-06-08",
     "week_end": "2026-06-14",
-    "last_updated": "2026-06-10T06:49:30Z",
+    "last_updated": "2026-06-10T10:53:23Z",
     "start_limit": 8
   },
   "dates": [
@@ -57,6 +57,7 @@
             "mlb_team": "StL",
             "opponent": "NYM",
             "home": false,
+            "points": 15.4,
             "opponent_ops": 0.687,
             "opponent_ops_split": 0.693,
             "pitcher_hand": "R"
@@ -72,6 +73,7 @@
             "mlb_team": "NYM",
             "opponent": "StL",
             "home": true,
+            "points": -1.6,
             "opponent_ops": 0.704,
             "opponent_ops_split": 0.688,
             "pitcher_hand": "R"
@@ -289,6 +291,7 @@
             "mlb_team": "Atl",
             "opponent": "ChW",
             "home": false,
+            "points": -0.0,
             "opponent_ops": 0.777,
             "opponent_ops_split": 0.782,
             "pitcher_hand": "R"
@@ -357,7 +360,7 @@
             "mlb_team": "Sea",
             "opponent": "Bal",
             "home": false,
-            "points": 0.0,
+            "points": 11.9,
             "opponent_ops": 0.76,
             "opponent_ops_split": 0.757,
             "pitcher_hand": "R"
@@ -388,7 +391,7 @@
             "mlb_team": "Phi",
             "opponent": "Tor",
             "home": false,
-            "points": 0.0,
+            "points": 10.9,
             "opponent_ops": 0.719,
             "opponent_ops_split": 0.744,
             "pitcher_hand": "R"
@@ -574,6 +577,7 @@
             "mlb_team": "Tex",
             "opponent": "KC",
             "home": false,
+            "points": 2.1,
             "opponent_ops": 0.66,
             "opponent_ops_split": 0.726,
             "pitcher_hand": "R"
@@ -628,7 +632,7 @@
             "mlb_team": "Bal",
             "opponent": "Sea",
             "home": true,
-            "points": 0.0,
+            "points": 5.1,
             "opponent_ops": 0.738,
             "opponent_ops_split": 0.624,
             "pitcher_hand": "L"
@@ -768,6 +772,7 @@
             "mlb_team": "Ari",
             "opponent": "Mia",
             "home": false,
+            "points": 0.8,
             "opponent_ops": 0.723,
             "opponent_ops_split": 0.708,
             "pitcher_hand": "R"
@@ -993,7 +998,7 @@
             "mlb_team": "Tor",
             "opponent": "Phi",
             "home": true,
-            "points": 0.0,
+            "points": 15.4,
             "opponent_ops": 0.679,
             "opponent_ops_split": 0.635,
             "pitcher_hand": "R"
@@ -1038,7 +1043,7 @@
             "mlb_team": "Bos",
             "opponent": "TB",
             "home": false,
-            "points": 0.0,
+            "points": 0.9,
             "opponent_ops": 0.746,
             "opponent_ops_split": 0.736,
             "pitcher_hand": "L"
@@ -1069,7 +1074,7 @@
             "mlb_team": "LAA",
             "opponent": "Hou",
             "home": true,
-            "points": 0.0,
+            "points": 11.6,
             "opponent_ops": 0.689,
             "opponent_ops_split": 0.683
           }
@@ -1116,7 +1121,7 @@
             "mlb_team": "Oak",
             "opponent": "Mil",
             "home": true,
-            "points": 0.0,
+            "points": 1.1,
             "opponent_ops": 0.778,
             "opponent_ops_split": 0.771,
             "pitcher_hand": "R"
@@ -1147,6 +1152,7 @@
             "mlb_team": "Mia",
             "opponent": "Ari",
             "home": true,
+            "points": 5.8,
             "opponent_ops": 0.723,
             "opponent_ops_split": 0.624,
             "pitcher_hand": "R"
@@ -1162,6 +1168,7 @@
             "mlb_team": "Pit",
             "opponent": "LAD",
             "home": true,
+            "points": 9.4,
             "opponent_ops": 0.813,
             "opponent_ops_split": 0.811,
             "pitcher_hand": "R"
@@ -1316,14 +1323,6 @@
         "mlb_team": "LAD",
         "starts": [
           {
-            "date": "2026-06-09",
-            "mlb_team": "LAD",
-            "opponent": "Pit",
-            "home": false,
-            "opponent_ops": 0.739,
-            "opponent_ops_split": 0.759
-          },
-          {
             "date": "2026-06-10",
             "mlb_team": "LAD",
             "opponent": "Pit",
@@ -1342,6 +1341,7 @@
             "mlb_team": "Det",
             "opponent": "Min",
             "home": true,
+            "points": 2.5,
             "opponent_ops": 0.695,
             "opponent_ops_split": 0.71,
             "pitcher_hand": "R"
@@ -1368,7 +1368,7 @@
             "mlb_team": "Cin",
             "opponent": "SD",
             "home": false,
-            "points": 0.0,
+            "points": 7.8,
             "opponent_ops": 0.626,
             "opponent_ops_split": 0.597,
             "pitcher_hand": "R"
@@ -1599,7 +1599,7 @@
             "mlb_team": "NYY",
             "opponent": "Cle",
             "home": false,
-            "points": 0.0,
+            "points": 3.2,
             "opponent_ops": 0.693,
             "opponent_ops_split": 0.688,
             "pitcher_hand": "R"
@@ -1645,7 +1645,7 @@
             "mlb_team": "TB",
             "opponent": "Bos",
             "home": true,
-            "points": 0.0,
+            "points": 9.2,
             "opponent_ops": 0.725,
             "opponent_ops_split": 0.71,
             "pitcher_hand": "R"
@@ -1661,6 +1661,7 @@
             "mlb_team": "Min",
             "opponent": "Det",
             "home": false,
+            "points": -4.5,
             "opponent_ops": 0.682,
             "opponent_ops_split": 0.673,
             "pitcher_hand": "R"
@@ -1828,7 +1829,7 @@
       "season_pts": 68.31,
       "gs": 7,
       "pts_per_gs": 9.76,
-      "pr30_pts": 23.68,
+      "pr30_pts": 26.75,
       "starts": [
         {
           "date": "2026-06-09",
@@ -2069,6 +2070,25 @@
       ]
     },
     {
+      "name": "Brandon Eisert",
+      "mlb_team": "ChW",
+      "season_pts": 18.38,
+      "gs": 3,
+      "pts_per_gs": 6.13,
+      "pr30_pts": 23.49,
+      "starts": [
+        {
+          "date": "2026-06-09",
+          "mlb_team": "ChW",
+          "opponent": "Atl",
+          "home": true,
+          "opponent_ops": 0.709,
+          "opponent_ops_split": 0.744,
+          "pitcher_hand": "L"
+        }
+      ]
+    },
+    {
       "name": "Miles Mikolas",
       "mlb_team": "Wsh",
       "season_pts": 34.91,
@@ -2093,7 +2113,7 @@
       "season_pts": 72.35,
       "gs": 13,
       "pts_per_gs": 5.57,
-      "pr30_pts": 23.88,
+      "pr30_pts": 26.33,
       "starts": [
         {
           "date": "2026-06-09",
@@ -2187,7 +2207,7 @@
       "season_pts": 66.99,
       "gs": 13,
       "pts_per_gs": 5.15,
-      "pr30_pts": 44.42,
+      "pr30_pts": 35.06,
       "starts": [
         {
           "date": "2026-06-08",
@@ -2253,7 +2273,7 @@
       "season_pts": 55.29,
       "gs": 12,
       "pts_per_gs": 4.61,
-      "pr30_pts": 28.71,
+      "pr30_pts": 17.66,
       "starts": [
         {
           "date": "2026-06-12",
@@ -2291,7 +2311,7 @@
       "season_pts": 38.66,
       "gs": 9,
       "pts_per_gs": 4.3,
-      "pr30_pts": 23.78,
+      "pr30_pts": 26.73,
       "starts": [
         {
           "date": "2026-06-09",
@@ -2329,7 +2349,7 @@
       "season_pts": 8.37,
       "gs": 2,
       "pts_per_gs": 4.18,
-      "pr30_pts": -0.18,
+      "pr30_pts": 0,
       "starts": [
         {
           "date": "2026-06-10",
@@ -2642,7 +2662,7 @@
       "season_pts": 40.83,
       "gs": 0,
       "pts_per_gs": 0.0,
-      "pr30_pts": 32.24,
+      "pr30_pts": 29.43,
       "starts": [
         {
           "date": "2026-06-12",
