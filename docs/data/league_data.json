@@ -5,7 +5,7 @@
     "num_teams": 12,
     "total_weeks": 19,
     "playoff_cutoff": 6,
-    "last_updated": "2026-06-12T10:58:43Z",
+    "last_updated": "2026-06-13T06:38:22Z",
     "current_week": 19,
     "total_matchup_weeks": 19,
     "current_matchup_week": 11,
@@ -246,7 +246,7 @@
         4,
         7,
         3,
-        0,
+        3,
         null,
         null,
         null,
@@ -359,7 +359,7 @@
         8,
         8,
         7,
-        4,
+        5,
         null,
         null,
         null,
@@ -472,7 +472,7 @@
         8,
         8,
         8,
-        5,
+        6,
         null,
         null,
         null,
@@ -585,7 +585,7 @@
         8,
         8,
         8,
-        4,
+        5,
         null,
         null,
         null,
@@ -698,7 +698,7 @@
         8,
         8,
         8,
-        2,
+        4,
         null,
         null,
         null,
@@ -811,7 +811,7 @@
         8,
         8,
         8,
-        4,
+        6,
         null,
         null,
         null,
@@ -1263,7 +1263,7 @@
         8,
         8,
         8,
-        2,
+        7,
         null,
         null,
         null,
@@ -3541,10 +3541,34 @@
     {
       "all": [
         {
+          "name": "Jacob Misiorowski",
+          "mlb_team": "Mil",
+          "fantasy_team": "STRN",
+          "score": 34.79
+        },
+        {
+          "name": "Bryce Eldridge",
+          "mlb_team": "SF",
+          "fantasy_team": "PEDS",
+          "score": 22.75
+        },
+        {
           "name": "Drew Rasmussen",
           "mlb_team": "TB",
           "fantasy_team": "BKRF",
           "score": 21.67
+        },
+        {
+          "name": "Nick Kurtz",
+          "mlb_team": "Oak",
+          "fantasy_team": "JB",
+          "score": 20.5
+        },
+        {
+          "name": "Byron Buxton",
+          "mlb_team": "Min",
+          "fantasy_team": "JB",
+          "score": 18.25
         },
         {
           "name": "Reid Detmers",
@@ -3559,10 +3583,10 @@
           "score": 18.15
         },
         {
-          "name": "Bryce Eldridge",
+          "name": "Matt Chapman",
           "mlb_team": "SF",
-          "fantasy_team": "PEDS",
-          "score": 17.5
+          "fantasy_team": "BERN",
+          "score": 18.0
         },
         {
           "name": "Logan Webb",
@@ -3571,37 +3595,19 @@
           "score": 17.48
         },
         {
-          "name": "Matt Chapman",
-          "mlb_team": "SF",
-          "fantasy_team": "BERN",
-          "score": 17.0
-        },
-        {
           "name": "Tyler Soderstrom",
           "mlb_team": "Oak",
           "fantasy_team": "CEEJ",
-          "score": 16.75
-        },
-        {
-          "name": "Nick Kurtz",
-          "mlb_team": "Oak",
-          "fantasy_team": "JB",
-          "score": 16.25
-        },
-        {
-          "name": "Cristopher Sanchez",
-          "mlb_team": "Phi",
-          "fantasy_team": "SW",
-          "score": 15.67
-        },
-        {
-          "name": "Dustin May",
-          "mlb_team": "StL",
-          "fantasy_team": "YOFF",
-          "score": 15.36
+          "score": 17.25
         }
       ],
       "pitchers": [
+        {
+          "name": "Jacob Misiorowski",
+          "mlb_team": "Mil",
+          "fantasy_team": "STRN",
+          "score": 34.79
+        },
         {
           "name": "Drew Rasmussen",
           "mlb_team": "TB",
@@ -3619,6 +3625,12 @@
           "mlb_team": "SF",
           "fantasy_team": "YOFF",
           "score": 17.48
+        },
+        {
+          "name": "Bryce Miller",
+          "mlb_team": "Sea",
+          "fantasy_team": "PEDS",
+          "score": 16.98
         },
         {
           "name": "Cristopher Sanchez",
@@ -3639,31 +3651,37 @@
           "score": 15.36
         },
         {
+          "name": "Tanner Bibee",
+          "mlb_team": "Cle",
+          "fantasy_team": "DECA",
+          "score": 15.17
+        },
+        {
           "name": "Davis Martin",
           "mlb_team": "ChW",
           "fantasy_team": "BKRF",
           "score": 14.36
-        },
-        {
-          "name": "Jesus Luzardo",
-          "mlb_team": "Phi",
-          "fantasy_team": "STRN",
-          "score": 12.09
-        },
-        {
-          "name": "Logan Gilbert",
-          "mlb_team": "Sea",
-          "fantasy_team": "STRN",
-          "score": 11.86
-        },
-        {
-          "name": "Walbert Urena",
-          "mlb_team": "LAA",
-          "fantasy_team": "wOBA",
-          "score": 11.55
         }
       ],
       "hitters": [
+        {
+          "name": "Bryce Eldridge",
+          "mlb_team": "SF",
+          "fantasy_team": "PEDS",
+          "score": 22.75
+        },
+        {
+          "name": "Nick Kurtz",
+          "mlb_team": "Oak",
+          "fantasy_team": "JB",
+          "score": 20.5
+        },
+        {
+          "name": "Byron Buxton",
+          "mlb_team": "Min",
+          "fantasy_team": "JB",
+          "score": 18.25
+        },
         {
           "name": "Shohei Ohtani",
           "mlb_team": "LAD",
@@ -3671,58 +3689,40 @@
           "score": 18.15
         },
         {
-          "name": "Bryce Eldridge",
-          "mlb_team": "SF",
-          "fantasy_team": "PEDS",
-          "score": 17.5
-        },
-        {
           "name": "Matt Chapman",
           "mlb_team": "SF",
           "fantasy_team": "BERN",
-          "score": 17.0
+          "score": 18.0
         },
         {
           "name": "Tyler Soderstrom",
           "mlb_team": "Oak",
           "fantasy_team": "CEEJ",
-          "score": 16.75
+          "score": 17.25
         },
         {
-          "name": "Nick Kurtz",
-          "mlb_team": "Oak",
-          "fantasy_team": "JB",
-          "score": 16.25
-        },
-        {
-          "name": "Dillon Dingler",
-          "mlb_team": "Det",
-          "fantasy_team": "wOBA",
-          "score": 15.25
-        },
-        {
-          "name": "Daylen Lile",
-          "mlb_team": "Wsh",
-          "fantasy_team": "DECA",
-          "score": 15.0
+          "name": "Alec Burleson",
+          "mlb_team": "StL",
+          "fantasy_team": "STRN",
+          "score": 17.25
         },
         {
           "name": "Otto Lopez",
           "mlb_team": "Mia",
           "fantasy_team": "DECA",
-          "score": 15.0
+          "score": 17.0
         },
         {
-          "name": "Jackson Chourio",
-          "mlb_team": "Mil",
-          "fantasy_team": "SCHN",
-          "score": 14.25
+          "name": "James Wood",
+          "mlb_team": "Wsh",
+          "fantasy_team": "YOFF",
+          "score": 16.75
         },
         {
-          "name": "Taylor Ward",
+          "name": "Pete Alonso",
           "mlb_team": "Bal",
-          "fantasy_team": "wOBA",
-          "score": 13.75
+          "fantasy_team": "STEW",
+          "score": 16.75
         }
       ]
     }
