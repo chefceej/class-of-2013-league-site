@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Playoff Bracket — 2026 Fantasy Baseball</title>
+  <link rel="stylesheet" href="css/styles.css" />
+  <link rel="stylesheet" href="css/bracket.css" />
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>2026 Fantasy Baseball</h1>
+      <p class="subtitle">Playoff Bracket</p>
+      <p class="last-updated" id="last-updated"></p>
+      <nav class="header-nav">
+        <a href="index.html" class="nav-link">Standings</a>
+        <a href="position.html" class="nav-link">Position Scores</a>
+        <a href="starts.html" class="nav-link">Start Planner</a>
+        <a href="bracket.html" class="nav-link active">Bracket</a>
+        <a href="changelog.html" class="nav-link">Changelog</a>
+        <a href="admin.html" class="nav-link">Admin</a>
+      </nav>
+    </header>
+
+    <section class="bracket-section">
+      <h2>Winners Bracket</h2>
+      <div class="bracket" id="winners-bracket"></div>
+    </section>
+
+    <section class="bracket-section">
+      <h2>Losers Bracket</h2>
+      <div class="bracket" id="losers-bracket"></div>
+    </section>
+
+    <footer>
+      <p>Data from ESPN Fantasy Baseball · Playoffs start Aug 10</p>
+    </footer>
+  </div>
+
+  <script src="js/bracket.js"></script>
+</body>
+</html>

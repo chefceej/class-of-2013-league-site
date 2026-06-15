@@ -137,20 +137,22 @@ tbody td {
 
 /* Standings table column alignment */
 #standings-table thead th:nth-child(1),
-#standings-table thead th:nth-child(3),
+#standings-table thead th:nth-child(2),
 #standings-table thead th:nth-child(4),
-#standings-table thead th:nth-child(5) {
+#standings-table thead th:nth-child(5),
+#standings-table thead th:nth-child(6) {
   text-align: center;
 }
 
 #standings-table tbody td:nth-child(1),
-#standings-table tbody td:nth-child(3),
-#standings-table tbody td:nth-child(4) {
+#standings-table tbody td:nth-child(2),
+#standings-table tbody td:nth-child(4),
+#standings-table tbody td:nth-child(5) {
   text-align: center;
   color: #94a3b8;
 }
 
-#standings-table tbody td:nth-child(5) {
+#standings-table tbody td:nth-child(6) {
   text-align: center;
   font-weight: 700;
   font-variant-numeric: tabular-nums;
@@ -167,12 +169,12 @@ tbody tr.cutoff-border td {
 .score-zero     { color: #facc15; }
 
 /* Playoff / non-playoff row indicator */
-tbody tr.in-playoffs td:nth-child(2) {
+tbody tr.in-playoffs td:nth-child(3) {
   border-left: 3px solid #4ade80;
   padding-left: calc(1rem - 3px);
 }
 
-tbody tr.out-playoffs td:nth-child(2) {
+tbody tr.out-playoffs td:nth-child(3) {
   border-left: 3px solid #f87171;
   padding-left: calc(1rem - 3px);
 }

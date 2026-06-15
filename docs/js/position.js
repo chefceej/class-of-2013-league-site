@@ -73,18 +73,22 @@ function render() {
 function renderTeamByWeek(headEl, bodyEl, teams, positions, weeks) {
   const byWeek = state.data.position_scores_by_week;
 
-  let globalMin = Infinity, globalMax = -Infinity;
-  let totalMin = Infinity, totalMax = -Infinity;
-  for (const team of teams) {
-    for (const pos of positions) {
-      let rowTotal = 0;
+  // Per-position min/max for heatmap
+  const weeklyRange = {};
+  const totalRange = {};
+  for (const pos of positions) {
+    const weekVals = [], totals = [];
+    for (const team of teams) {
+      let rt = 0;
       for (const w of weeks) {
         const v = getVal(team, pos, w);
-        if (v > 0) { globalMin = Math.min(globalMin, v); globalMax = Math.max(globalMax, v); }
-        rowTotal += v;
+        weekVals.push(v);
+        rt += v;
       }
-      if (rowTotal > 0) { totalMin = Math.min(totalMin, rowTotal); totalMax = Math.max(totalMax, rowTotal); }
+      totals.push(rt);
     }
+    weeklyRange[pos] = computeMinMax(weekVals);
+    totalRange[pos] = computeMinMax(totals);
   }
 
   function teamSortVal(team, col) {
@@ -146,19 +150,21 @@ function renderTeamByWeek(headEl, bodyEl, teams, positions, weeks) {
       row.appendChild(posTd);
 
       let rowTotal = 0;
+      const [wMin, wMax] = weeklyRange[pos] || [0, 0];
       for (const w of weeks) {
         const v = getVal(team, pos, w);
         rowTotal += v;
         const td = document.createElement("td");
         td.textContent = byWeek[w]?.[team]?.[pos] != null ? v.toFixed(1) : "—";
-        if (v > 0) td.style.background = cellColor(v, globalMin, globalMax);
+        if (v > 0) td.style.background = cellColor(v, wMin, wMax);
         row.appendChild(td);
       }
 
+      const [tMin, tMax] = totalRange[pos] || [0, 0];
       const totalTd = document.createElement("td");
       totalTd.textContent = rowTotal > 0 ? rowTotal.toFixed(1) : "—";
       totalTd.className = "total-col";
-      if (rowTotal > 0) totalTd.style.background = cellColor(rowTotal, totalMin, totalMax);
+      if (rowTotal > 0) totalTd.style.background = cellColor(rowTotal, tMin, tMax);
       row.appendChild(totalTd);
 
       bodyEl.appendChild(row);
@@ -194,11 +200,11 @@ function renderTeamByWeek(headEl, bodyEl, teams, positions, weeks) {
 /* ── View 2: By Team + Total (Team rows × Position columns) ── */
 
 function renderTeamTotal(headEl, bodyEl, teams, positions, weeks) {
-  const allVals = [];
-  for (const team of teams)
-    for (const pos of positions)
-      allVals.push(getAgg(team, pos, weeks));
-  const [gMin, gMax] = computeMinMax(allVals);
+  // Per-position (column) min/max for heatmap
+  const colRange = {};
+  for (const pos of positions) {
+    colRange[pos] = computeMinMax(teams.map(t => getAgg(t, pos, weeks)));
+  }
 
   function teamSortVal(team, col) {
     if (col === "team") return 0;
@@ -235,9 +241,10 @@ function renderTeamTotal(headEl, bodyEl, teams, positions, weeks) {
     for (const pos of positions) {
       const v = getAgg(team, pos, weeks);
       teamTotal += v;
+      const [cMin, cMax] = colRange[pos] || [0, 0];
       const td = document.createElement("td");
       td.textContent = v > 0 ? v.toFixed(1) : "—";
-      if (v > 0) td.style.background = cellColor(v, gMin, gMax);
+      if (v > 0) td.style.background = cellColor(v, cMin, cMax);
       row.appendChild(td);
     }
 
@@ -277,18 +284,22 @@ function renderTeamTotal(headEl, bodyEl, teams, positions, weeks) {
 /* ── View 3: By Position + By Week (Position > Team rows × Week columns) ── */
 
 function renderPositionByWeek(headEl, bodyEl, teams, positions, weeks) {
-  let globalMin = Infinity, globalMax = -Infinity;
-  let totalMin = Infinity, totalMax = -Infinity;
-  for (const team of teams) {
-    for (const pos of positions) {
+  // Per-position min/max for heatmap
+  const weeklyRange = {};
+  const totalRange = {};
+  for (const pos of positions) {
+    const weekVals = [], totals = [];
+    for (const team of teams) {
       let rt = 0;
       for (const w of weeks) {
         const v = getVal(team, pos, w);
-        if (v > 0) { globalMin = Math.min(globalMin, v); globalMax = Math.max(globalMax, v); }
+        weekVals.push(v);
         rt += v;
       }
-      if (rt > 0) { totalMin = Math.min(totalMin, rt); totalMax = Math.max(totalMax, rt); }
+      totals.push(rt);
     }
+    weeklyRange[pos] = computeMinMax(weekVals);
+    totalRange[pos] = computeMinMax(totals);
   }
 
   function posSortVal(pos, col) {
@@ -349,19 +360,21 @@ function renderPositionByWeek(headEl, bodyEl, teams, positions, weeks) {
       row.appendChild(teamTd);
 
       let rt = 0;
+      const [wMin, wMax] = weeklyRange[pos] || [0, 0];
       for (const w of weeks) {
         const v = getVal(team, pos, w);
         rt += v;
         const td = document.createElement("td");
         td.textContent = v > 0 ? v.toFixed(1) : "—";
-        if (v > 0) td.style.background = cellColor(v, globalMin, globalMax);
+        if (v > 0) td.style.background = cellColor(v, wMin, wMax);
         row.appendChild(td);
       }
 
+      const [tMin, tMax] = totalRange[pos] || [0, 0];
       const totalTd = document.createElement("td");
       totalTd.textContent = rt > 0 ? rt.toFixed(1) : "—";
       totalTd.className = "total-col";
-      if (rt > 0) totalTd.style.background = cellColor(rt, totalMin, totalMax);
+      if (rt > 0) totalTd.style.background = cellColor(rt, tMin, tMax);
       row.appendChild(totalTd);
 
       bodyEl.appendChild(row);

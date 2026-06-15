@@ -79,20 +79,49 @@ def fetch_espn_pro_schedule():
     return game_lookup
 
 
-def extract_daily_points(player, today_sp, today_date):
-    """Returns {date_str (YYYY-MM-DD): appliedTotal} from a player's daily stats."""
-    out = {}
-    for s in player.get("stats", []):
-        if s.get("statSourceId") != 0:        # actual (not projected)
+
+def fetch_daily_pitcher_points(league, week_start, today_date):
+    """
+    Fetch per-day fantasy points for all rostered pitchers on past days of the week.
+    Returns {player_full_name: {date_str: points}}.
+    """
+    today_sp = league.current_week
+    pitcher_slot_ids = {13, 14, 15}
+    daily_points = defaultdict(dict)
+
+    d = week_start
+    while d < today_date:
+        sp = today_sp + (d - today_date).days
+        if sp < 1:
+            d += timedelta(days=1)
             continue
-        if s.get("statSplitTypeId") != 5:     # 5 = single day
-            continue
-        sp = s.get("scoringPeriodId")
-        if sp is None:
-            continue
-        d = today_date + timedelta(days=sp - today_sp)
-        out[d.strftime("%Y-%m-%d")] = round(s.get("appliedTotal", 0.0), 1)
-    return out
+        date_str = d.strftime("%Y-%m-%d")
+        try:
+            data = league.espn_request.league_get(
+                params={"view": "mRoster", "scoringPeriodId": sp}
+            )
+            for team_data in data.get("teams", []):
+                for entry in team_data.get("roster", {}).get("entries", []):
+                    player = entry.get("playerPoolEntry", {}).get("player", {})
+                    eligible = set(player.get("eligibleSlots", []))
+                    if not eligible & pitcher_slot_ids:
+                        continue
+                    name = player.get("fullName", "")
+                    if not name:
+                        continue
+                    for s in player.get("stats", []):
+                        if (s.get("statSourceId") == 0
+                                and s.get("statSplitTypeId") == 5
+                                and s.get("scoringPeriodId") == sp):
+                            pts = round(s.get("appliedTotal", 0.0), 1)
+                            if pts != 0.0:
+                                daily_points[name][date_str] = pts
+                            break
+        except Exception as e:
+            print(f"  Warning: could not fetch roster for SP {sp} ({date_str}): {e}")
+        d += timedelta(days=1)
+
+    return dict(daily_points)
 
 
 def fetch_espn_starters(league, game_lookup, week_start, week_end, today_date):
@@ -108,7 +137,9 @@ def fetch_espn_starters(league, game_lookup, week_start, week_end, today_date):
     start_str = week_start.strftime("%Y-%m-%d")
     end_str = week_end.strftime("%Y-%m-%d")
     today_str = today_date.strftime("%Y-%m-%d")
-    today_sp = league.current_week
+
+    # Fetch actual daily points for past days in this week
+    daily_points_map = fetch_daily_pitcher_points(league, week_start, today_date)
 
     # Get rostered players with starterStatusByProGame
     data = league.espn_request.league_get(params={"view": "mRoster"})
@@ -129,7 +160,6 @@ def fetch_espn_starters(league, game_lookup, week_start, week_end, today_date):
             pro_team_id = player.get("proTeamId", 0)
             mlb_team = PRO_TEAM_MAP.get(pro_team_id, "?")
             starter_map = player.get("starterStatusByProGame", {})
-            daily_pts = extract_daily_points(player, today_sp, today_date)
 
             for gid_str, status in starter_map.items():
                 if status not in ("PROBABLE", "STARTING"):
@@ -153,9 +183,10 @@ def fetch_espn_starters(league, game_lookup, week_start, week_end, today_date):
                     "opponent": PRO_TEAM_MAP.get(opp_id, "?"),
                     "home": home,
                 }
-                # Attach actual points if game is past
-                if game["date"] < today_str and game["date"] in daily_pts:
-                    start_entry["points"] = daily_pts[game["date"]]
+                if game["date"] < today_str:
+                    pts = daily_points_map.get(name, {}).get(game["date"])
+                    if pts is not None:
+                        start_entry["points"] = pts
                 rostered[abbrev][name].append(start_entry)
 
     # Get free agent pitchers with starts
@@ -185,7 +216,6 @@ def fetch_espn_starters(league, game_lookup, week_start, week_end, today_date):
         pro_team_id = player.get("proTeamId", 0)
         mlb_team = PRO_TEAM_MAP.get(pro_team_id, "?")
         starter_map = player.get("starterStatusByProGame", {})
-        daily_pts = extract_daily_points(player, today_sp, today_date)
 
         for gid_str, status in starter_map.items():
             if status not in ("PROBABLE", "STARTING"):
@@ -209,8 +239,10 @@ def fetch_espn_starters(league, game_lookup, week_start, week_end, today_date):
                 "opponent": PRO_TEAM_MAP.get(opp_id, "?"),
                 "home": home,
             }
-            if game["date"] < today_str and game["date"] in daily_pts:
-                start_entry["points"] = daily_pts[game["date"]]
+            if game["date"] < today_str:
+                pts = daily_points_map.get(name, {}).get(game["date"])
+                if pts is not None:
+                    start_entry["points"] = pts
             fa_starters[name].append(start_entry)
             fa_player_info[name] = {"mlb_team": mlb_team, "pro_team_id": pro_team_id}
 
@@ -522,7 +554,7 @@ def main():
     pitcher_hands = fetch_pitcher_hands()
     print(f"  Got handedness for {len(pitcher_hands)} pitchers")
 
-    print("Fetching ESPN rosters + probable starters...")
+    print("Fetching ESPN rosters + probable starters + daily scores...")
     league = League(league_id=LEAGUE_ID, year=SEASON_YEAR, espn_s2=ESPN_S2, swid=SWID)
     rostered_starts, fa_starters, fa_player_info = fetch_espn_starters(
         league, game_lookup, week_start, week_end, today_date

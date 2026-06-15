@@ -333,6 +333,7 @@ function buildWeeklyTable(headEl, bodyEl, teams, currentWeek, dataKey, colorFn, 
 
     tr.innerHTML = `
       <td>${rank + 1}</td>
+      <td>${team.team_abbrev || ""}</td>
       <td>${team.team_name}</td>
       <td>${cumPts?.toFixed(1) ?? "—"}</td>
       <td>${team.total_score?.toFixed(1) ?? "—"}</td>
