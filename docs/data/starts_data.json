@@ -2,7 +2,7 @@
   "metadata": {
     "week_start": "2026-06-15",
     "week_end": "2026-06-21",
-    "last_updated": "2026-06-17T08:27:52Z",
+    "last_updated": "2026-06-17T11:44:16Z",
     "start_limit": 8
   },
   "dates": [
@@ -331,6 +331,15 @@
             "opponent_ops": 0.769,
             "opponent_ops_split": 0.712,
             "pitcher_hand": "R"
+          },
+          {
+            "date": "2026-06-21",
+            "mlb_team": "Sea",
+            "opponent": "Bos",
+            "home": true,
+            "opponent_ops": 0.736,
+            "opponent_ops_split": 0.716,
+            "pitcher_hand": "R"
           }
         ]
       },
@@ -376,6 +385,21 @@
       }
     ],
     "SW": [
+      {
+        "name": "Bryan Woo",
+        "mlb_team": "Sea",
+        "starts": [
+          {
+            "date": "2026-06-18",
+            "mlb_team": "Sea",
+            "opponent": "Bal",
+            "home": true,
+            "opponent_ops": 0.769,
+            "opponent_ops_split": 0.712,
+            "pitcher_hand": "R"
+          }
+        ]
+      },
       {
         "name": "Cristopher Sanchez",
         "mlb_team": "Phi",
@@ -772,6 +796,21 @@
         ]
       },
       {
+        "name": "Bryce Miller",
+        "mlb_team": "Sea",
+        "starts": [
+          {
+            "date": "2026-06-19",
+            "mlb_team": "Sea",
+            "opponent": "Bos",
+            "home": true,
+            "opponent_ops": 0.736,
+            "opponent_ops_split": 0.716,
+            "pitcher_hand": "R"
+          }
+        ]
+      },
+      {
         "name": "Carlos Rodon",
         "mlb_team": "NYY",
         "starts": [
@@ -827,21 +866,6 @@
             "home": false,
             "opponent_ops": 0.751,
             "opponent_ops_split": 0.664,
-            "pitcher_hand": "L"
-          }
-        ]
-      },
-      {
-        "name": "Robbie Ray",
-        "mlb_team": "SF",
-        "starts": [
-          {
-            "date": "2026-06-17",
-            "mlb_team": "SF",
-            "opponent": "Atl",
-            "home": false,
-            "opponent_ops": 0.664,
-            "opponent_ops_split": 0.652,
             "pitcher_hand": "L"
           }
         ]
@@ -1257,6 +1281,21 @@
             "opponent_ops_split": 0.727
           }
         ]
+      },
+      {
+        "name": "Troy Melton",
+        "mlb_team": "Det",
+        "starts": [
+          {
+            "date": "2026-06-20",
+            "mlb_team": "Det",
+            "opponent": "ChW",
+            "home": true,
+            "opponent_ops": 0.744,
+            "opponent_ops_split": 0.739,
+            "pitcher_hand": "R"
+          }
+        ]
       }
     ],
     "CEEJ": [
@@ -1444,6 +1483,21 @@
         ]
       },
       {
+        "name": "Emerson Hancock",
+        "mlb_team": "Sea",
+        "starts": [
+          {
+            "date": "2026-06-20",
+            "mlb_team": "Sea",
+            "opponent": "Bos",
+            "home": true,
+            "opponent_ops": 0.736,
+            "opponent_ops_split": 0.716,
+            "pitcher_hand": "R"
+          }
+        ]
+      },
+      {
         "name": "Emmet Sheehan",
         "mlb_team": "LAD",
         "starts": [
@@ -1579,7 +1633,7 @@
       "season_pts": 50.69,
       "gs": 1,
       "pts_per_gs": 50.69,
-      "pr30_pts": 39.29,
+      "pr30_pts": 36.05,
       "starts": [
         {
           "date": "2026-06-18",
@@ -1617,7 +1671,7 @@
       "season_pts": 74.89,
       "gs": 4,
       "pts_per_gs": 18.72,
-      "pr30_pts": 21.64,
+      "pr30_pts": 21.02,
       "starts": [
         {
           "date": "2026-06-16",
@@ -1674,6 +1728,34 @@
           "opponent_ops": 0.687,
           "opponent_ops_split": 0.732,
           "pitcher_hand": "L"
+        }
+      ]
+    },
+    {
+      "name": "Jack Perkins",
+      "mlb_team": "Oak",
+      "season_pts": 41.21,
+      "gs": 3,
+      "pts_per_gs": 13.74,
+      "pr30_pts": 13.44,
+      "starts": [
+        {
+          "date": "2026-06-16",
+          "mlb_team": "Oak",
+          "opponent": "Pit",
+          "home": true,
+          "opponent_ops": 0.767,
+          "opponent_ops_split": 0.716,
+          "pitcher_hand": "R"
+        },
+        {
+          "date": "2026-06-21",
+          "mlb_team": "Oak",
+          "opponent": "LAA",
+          "home": true,
+          "opponent_ops": 0.777,
+          "opponent_ops_split": 0.765,
+          "pitcher_hand": "R"
         }
       ]
     },
@@ -1740,7 +1822,7 @@
       "season_pts": 52.08,
       "gs": 6,
       "pts_per_gs": 8.68,
-      "pr30_pts": 42.42,
+      "pr30_pts": 38.83,
       "starts": [
         {
           "date": "2026-06-20",
@@ -1816,7 +1898,7 @@
       "season_pts": 78.67,
       "gs": 10,
       "pts_per_gs": 7.87,
-      "pr30_pts": 32.91,
+      "pr30_pts": 30.05,
       "starts": [
         {
           "date": "2026-06-17",
@@ -1830,31 +1912,12 @@
       ]
     },
     {
-      "name": "Keider Montero",
-      "mlb_team": "Det",
-      "season_pts": 94.67,
-      "gs": 13,
-      "pts_per_gs": 7.28,
-      "pr30_pts": 35.76,
-      "starts": [
-        {
-          "date": "2026-06-20",
-          "mlb_team": "Det",
-          "opponent": "ChW",
-          "home": true,
-          "opponent_ops": 0.744,
-          "opponent_ops_split": 0.739,
-          "pitcher_hand": "R"
-        }
-      ]
-    },
-    {
       "name": "Erick Fedde",
       "mlb_team": "ChW",
       "season_pts": 57.46,
       "gs": 8,
       "pts_per_gs": 7.18,
-      "pr30_pts": 11.13,
+      "pr30_pts": 16.2,
       "starts": [
         {
           "date": "2026-06-19",
@@ -1892,7 +1955,7 @@
       "season_pts": 99.6,
       "gs": 14,
       "pts_per_gs": 7.11,
-      "pr30_pts": 56.81,
+      "pr30_pts": 44.91,
       "starts": [
         {
           "date": "2026-06-16",
@@ -2062,7 +2125,7 @@
       "season_pts": 56.94,
       "gs": 11,
       "pts_per_gs": 5.18,
-      "pr30_pts": 11.15,
+      "pr30_pts": 10.37,
       "starts": [
         {
           "date": "2026-06-20",
@@ -2128,7 +2191,7 @@
       "season_pts": 69.49,
       "gs": 15,
       "pts_per_gs": 4.63,
-      "pr30_pts": 11.3,
+      "pr30_pts": 1.94,
       "starts": [
         {
           "date": "2026-06-19",
@@ -2261,7 +2324,7 @@
       "season_pts": 20.44,
       "gs": 5,
       "pts_per_gs": 4.09,
-      "pr30_pts": 20.44,
+      "pr30_pts": 17.7,
       "starts": [
         {
           "date": "2026-06-16",
@@ -2327,7 +2390,7 @@
       "season_pts": 17.79,
       "gs": 5,
       "pts_per_gs": 3.56,
-      "pr30_pts": 17.79,
+      "pr30_pts": 12.24,
       "starts": [
         {
           "date": "2026-06-21",
@@ -2403,7 +2466,7 @@
       "season_pts": 41.96,
       "gs": 14,
       "pts_per_gs": 3.0,
-      "pr30_pts": 22.44,
+      "pr30_pts": 25.2,
       "starts": [
         {
           "date": "2026-06-16",
@@ -2441,7 +2504,7 @@
       "season_pts": 34.46,
       "gs": 14,
       "pts_per_gs": 2.46,
-      "pr30_pts": 14.94,
+      "pr30_pts": 5.08,
       "starts": [
         {
           "date": "2026-06-21",
@@ -2517,7 +2580,7 @@
       "season_pts": 8.24,
       "gs": 15,
       "pts_per_gs": 0.55,
-      "pr30_pts": -0.4,
+      "pr30_pts": 5.32,
       "starts": [
         {
           "date": "2026-06-15",
@@ -2535,6 +2598,25 @@
           "home": true,
           "opponent_ops": 0.767,
           "opponent_ops_split": 0.716,
+          "pitcher_hand": "R"
+        }
+      ]
+    },
+    {
+      "name": "Justin Verlander",
+      "mlb_team": "Det",
+      "season_pts": 0.0,
+      "gs": 0,
+      "pts_per_gs": 0.0,
+      "pr30_pts": 0,
+      "starts": [
+        {
+          "date": "2026-06-21",
+          "mlb_team": "Det",
+          "opponent": "ChW",
+          "home": true,
+          "opponent_ops": 0.744,
+          "opponent_ops_split": 0.739,
           "pitcher_hand": "R"
         }
       ]
