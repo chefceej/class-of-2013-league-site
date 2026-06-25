@@ -66,6 +66,7 @@ function unlockStreaming() {
   document.getElementById("stream-lock").style.display = "none";
   document.getElementById("stream-content").style.display = "";
   renderStreamingTable();
+  loadRelievers();
 }
 
 /* ── Helpers ── */
@@ -540,6 +541,61 @@ function getStartOpsForSort(pitcher, date, teamOps) {
   const start = pitcher.starts.find(s => s.date === date);
   if (!start) return null;
   return getStartOpsValue(start, teamOps) ?? null;
+}
+
+/* ── Bulk Relievers ── */
+
+function loadRelievers() {
+  fetch("data/relievers_data.json")
+    .then(r => r.json())
+    .then(renderRelieverTable)
+    .catch(() => {
+      const body = document.getElementById("reliever-body");
+      if (body) body.innerHTML =
+        '<tr><td colspan="4" style="text-align:center;color:#f87171;padding:1.5rem">Could not load reliever data.</td></tr>';
+    });
+}
+
+function renderRelieverTable(data) {
+  const relievers = data.relievers || [];
+
+  const head = document.getElementById("reliever-head");
+  head.innerHTML =
+    '<tr>' +
+    '<th class="rel-name-col">Pitcher</th>' +
+    '<th class="rel-status-col">Status</th>' +
+    '<th class="rel-num-col">Last App</th>' +
+    '<th class="rel-num-col">Pts/IP</th>' +
+    '</tr>';
+
+  const body = document.getElementById("reliever-body");
+  body.innerHTML = "";
+
+  if (relievers.length === 0) {
+    body.innerHTML =
+      '<tr><td colspan="4" style="text-align:center;color:#64748b;padding:1.5rem">No bulk relievers found.</td></tr>';
+    document.getElementById("reliever-note").textContent = "";
+    return;
+  }
+
+  for (const r of relievers) {
+    const isDue = r.status === "due";
+    const last = r.days_since === 0 ? "Today" : `${r.days_since}d ago`;
+
+    const row = document.createElement("tr");
+    if (isDue) row.classList.add("reliever-due-row");
+    row.innerHTML =
+      `<td class="rel-name-col"><span class="pitcher-name">${r.name}</span><span class="pitcher-team">${r.mlb_team}</span></td>` +
+      `<td class="rel-status-col"><span class="rel-pill ${isDue ? "rel-due" : "rel-rested"}">${isDue ? "Due" : "Rested"}</span></td>` +
+      `<td class="rel-num-col">${last}</td>` +
+      `<td class="rel-num-col">${r.pts_per_ip.toFixed(2)}</td>`;
+    body.appendChild(row);
+  }
+
+  const dueCount = relievers.filter(r => r.status === "due").length;
+  document.getElementById("reliever-note").textContent =
+    `${relievers.length} bulk relievers · ${dueCount} due now. ` +
+    `Free-agent RPs who often work 1.1–3.0 innings and rarely exceed 3.0 (which would count as a start).`;
 }
 
 /* ── OPS mode toggle ── */

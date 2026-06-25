@@ -410,6 +410,78 @@ tr.pitcher-off .starts-check-col {
   color: #3b82f6;
 }
 
+/* ── Bulk Relievers ── */
+.reliever-block {
+  margin-top: 2.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid #1e2535;
+}
+
+#reliever-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+}
+
+#reliever-table th {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: #94a3b8;
+  text-align: left;
+  padding: 0.5rem 0.75rem;
+  background: #1e2535;
+  border-bottom: 1px solid #334155;
+  white-space: nowrap;
+}
+
+#reliever-table td {
+  padding: 0.5rem 0.75rem;
+  background: #161b27;
+  border-bottom: 1px solid #1e2535;
+  text-align: left;
+}
+
+#reliever-table tbody tr:hover td {
+  background: #1a2030;
+}
+
+.rel-num-col {
+  text-align: right !important;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+  color: #e2e8f0;
+}
+
+.rel-pill {
+  display: inline-block;
+  padding: 0.12rem 0.55rem;
+  border-radius: 999px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+.rel-pill.rel-due {
+  background: hsla(140, 60%, 20%, 0.95);
+  color: #4ade80;
+}
+
+.rel-pill.rel-rested {
+  background: #1e2535;
+  color: #94a3b8;
+}
+
+.reliever-due-row .rel-name-col {
+  border-left: 3px solid #4ade80;
+  padding-left: calc(0.75rem - 3px) !important;
+}
+
+.reliever-note {
+  margin-top: 0.75rem;
+  font-size: 0.75rem;
+  color: #64748b;
+}
+
 @media (max-width: 600px) {
   /* Make rostered table fit without horizontal scroll */
   #starts-table { table-layout: fixed; width: 100%; }

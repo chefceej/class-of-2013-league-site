@@ -51,6 +51,14 @@ header h1 {
   justify-content: center;
   gap: 0;
   border-bottom: 1px solid #1e2535;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;          /* Firefox */
+}
+
+.header-nav::-webkit-scrollbar {
+  display: none;                  /* Chrome/Safari */
 }
 
 .nav-link {
@@ -62,6 +70,8 @@ header h1 {
   border-bottom: 2px solid transparent;
   margin-bottom: -1px;
   transition: color 0.15s, border-color 0.15s;
+  flex: 0 0 auto;
+  white-space: nowrap;
 }
 
 .nav-link:hover {
@@ -392,5 +402,15 @@ footer {
   .wide-table-wrapper tbody td {
     padding: 0.4rem 0.45rem;
     font-size: 0.78rem;
+  }
+
+  /* Tabs scroll horizontally on mobile — left-align so the first tab is
+     reachable (centering clips the start of an overflowing flex row) */
+  .header-nav {
+    justify-content: flex-start;
+  }
+
+  .nav-link {
+    padding: 0.5rem 0.9rem;
   }
 }

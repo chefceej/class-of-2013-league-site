@@ -35,11 +35,17 @@ jobs:
           SWID: ${{ secrets.SWID }}
         run: python src/fetch_starts.py
 
+      - name: Fetch bulk relievers
+        env:
+          ESPN_S2: ${{ secrets.ESPN_S2 }}
+          SWID: ${{ secrets.SWID }}
+        run: python src/fetch_relievers.py
+
       - name: Commit and push updated data
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add docs/data/league_data.json docs/data/starts_data.json
+          git add docs/data/league_data.json docs/data/starts_data.json docs/data/relievers_data.json
           git diff --staged --quiet || git commit -m "chore: update league data $(date -u '+%Y-%m-%d %H:%M UTC')"
           git pull --rebase origin main
           git push
