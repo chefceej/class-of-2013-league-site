@@ -68,8 +68,8 @@
     </section>
 
     <section class="table-section streaming-section">
-      <h2 class="section-heading">Streaming Options</h2>
-      <p class="section-sub">Free agent pitchers with starts this week</p>
+      <h2 class="section-heading">Free Agent Targets</h2>
+      <p class="section-sub">Streaming starters and bulk relievers worth adding</p>
 
       <div id="stream-lock" class="stream-lock">
         <input type="password" id="pw-input" class="pw-input-inline" placeholder="Enter password" autocomplete="off" />
@@ -78,15 +78,22 @@
       </div>
 
       <div id="stream-content" style="display:none;">
-        <div class="wide-table-wrapper">
-          <table id="streaming-table">
-            <thead id="streaming-head"></thead>
-            <tbody id="streaming-body"></tbody>
-          </table>
+        <div class="stream-tab-toggle" id="stream-tab-toggle">
+          <button class="stream-tab-btn active" data-tab="starters">Starting Pitchers</button>
+          <button class="stream-tab-btn" data-tab="relievers">Bulk Relievers</button>
         </div>
 
-        <div class="reliever-block">
-          <h2 class="section-heading">Bulk Relievers</h2>
+        <div id="stream-pane-starters" class="stream-pane">
+          <p class="section-sub">Free agent starting pitchers with starts this week</p>
+          <div class="wide-table-wrapper">
+            <table id="streaming-table">
+              <thead id="streaming-head"></thead>
+              <tbody id="streaming-body"></tbody>
+            </table>
+          </div>
+        </div>
+
+        <div id="stream-pane-relievers" class="stream-pane" style="display:none;">
           <p class="section-sub">Overlooked multi-inning free-agent relievers, ranked by points per inning. &ldquo;Due&rdquo; = at or past their usual rest between outings.</p>
           <div class="wide-table-wrapper">
             <table id="reliever-table">

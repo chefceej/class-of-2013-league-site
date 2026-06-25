@@ -410,12 +410,38 @@ tr.pitcher-off .starts-check-col {
   color: #3b82f6;
 }
 
-/* ── Bulk Relievers ── */
-.reliever-block {
-  margin-top: 2.5rem;
-  padding-top: 1.5rem;
-  border-top: 1px solid #1e2535;
+/* ── Free Agent tabs (Starting Pitchers / Bulk Relievers) ── */
+.stream-tab-toggle {
+  display: inline-flex;
+  background: #0f1117;
+  border: 1px solid #334155;
+  border-radius: 8px;
+  overflow: hidden;
+  margin-bottom: 1.25rem;
 }
+
+.stream-tab-btn {
+  background: transparent;
+  border: none;
+  color: #94a3b8;
+  font-size: 0.9rem;
+  font-weight: 600;
+  padding: 0.55rem 1.15rem;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 0.15s, color 0.15s;
+}
+
+.stream-tab-btn:hover {
+  color: #e2e8f0;
+}
+
+.stream-tab-btn.active {
+  background: #3b82f6;
+  color: #fff;
+}
+
+/* ── Bulk Relievers ── */
 
 #reliever-table {
   width: 100%;
@@ -533,6 +559,18 @@ tr.pitcher-off .starts-check-col {
 
   .pitcher-team {
     font-size: 0.6rem;
+  }
+
+  /* Reliever table has room — show full names */
+  #reliever-table .pitcher-name {
+    font-size: 0.82rem;
+    white-space: normal;
+    overflow: visible;
+    max-width: none;
+  }
+
+  #reliever-table .pitcher-team {
+    font-size: 0.7rem;
   }
 
   /* Compact start cells — keep OPS visible but smaller */

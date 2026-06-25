@@ -10,6 +10,9 @@ let state = {
   streamSort: "pts_per_gs",
   streamSortAsc: false,
   opsMode: "30d",             // "30d" | "split"
+  relievers: [],
+  relieverSort: "status",     // default: due first, then by value
+  relieverSortAsc: true,
 };
 
 /* ── Selection persistence (localStorage, scoped to week) ── */
@@ -65,8 +68,26 @@ function initStreamGate() {
 function unlockStreaming() {
   document.getElementById("stream-lock").style.display = "none";
   document.getElementById("stream-content").style.display = "";
+  initStreamTabs();
   renderStreamingTable();
   loadRelievers();
+}
+
+function initStreamTabs() {
+  const toggle = document.getElementById("stream-tab-toggle");
+  if (!toggle || toggle.dataset.init) return;
+  toggle.dataset.init = "1";
+  toggle.querySelectorAll(".stream-tab-btn").forEach(btn => {
+    btn.addEventListener("click", () => {
+      const tab = btn.dataset.tab;
+      toggle.querySelectorAll(".stream-tab-btn").forEach(b =>
+        b.classList.toggle("active", b === btn));
+      document.getElementById("stream-pane-starters").style.display =
+        tab === "starters" ? "" : "none";
+      document.getElementById("stream-pane-relievers").style.display =
+        tab === "relievers" ? "" : "none";
+    });
+  });
 }
 
 /* ── Helpers ── */
@@ -548,7 +569,10 @@ function getStartOpsForSort(pitcher, date, teamOps) {
 function loadRelievers() {
   fetch("data/relievers_data.json")
     .then(r => r.json())
-    .then(renderRelieverTable)
+    .then(data => {
+      state.relievers = data.relievers || [];
+      renderRelieverTable();
+    })
     .catch(() => {
       const body = document.getElementById("reliever-body");
       if (body) body.innerHTML =
@@ -556,17 +580,47 @@ function loadRelievers() {
     });
 }
 
-function renderRelieverTable(data) {
-  const relievers = data.relievers || [];
+const RELIEVER_COLS = [
+  { key: "name", label: "Pitcher", cls: "rel-name-col", defaultAsc: true },
+  { key: "status", label: "Status", cls: "rel-status-col", defaultAsc: true },
+  { key: "days_since", label: "Last App", cls: "rel-num-col", defaultAsc: false },
+  { key: "pts_per_ip", label: "Pts/IP", cls: "rel-num-col", defaultAsc: false },
+];
+
+function compareRelievers(a, b) {
+  const key = state.relieverSort;
+  let cmp;
+  if (key === "name") {
+    cmp = a.name.localeCompare(b.name);
+  } else if (key === "status") {
+    const order = { due: 0, rested: 1 };
+    cmp = (order[a.status] ?? 9) - (order[b.status] ?? 9);
+    if (cmp === 0) cmp = b.pts_per_ip - a.pts_per_ip;  // tiebreak: value desc
+  } else {
+    cmp = (a[key] ?? -Infinity) - (b[key] ?? -Infinity);
+  }
+  return state.relieverSortAsc ? cmp : -cmp;
+}
+
+function renderRelieverTable() {
+  const relievers = state.relievers || [];
 
   const head = document.getElementById("reliever-head");
-  head.innerHTML =
-    '<tr>' +
-    '<th class="rel-name-col">Pitcher</th>' +
-    '<th class="rel-status-col">Status</th>' +
-    '<th class="rel-num-col">Last App</th>' +
-    '<th class="rel-num-col">Pts/IP</th>' +
-    '</tr>';
+  head.innerHTML = "";
+  const tr = document.createElement("tr");
+  for (const col of RELIEVER_COLS) {
+    const active = state.relieverSort === col.key;
+    const th = document.createElement("th");
+    th.className = col.cls + " sortable-col" + (active ? " sort-active" : "");
+    th.innerHTML = col.label + (active ? ` <span class="sort-arrow">${state.relieverSortAsc ? "▲" : "▼"}</span>` : "");
+    th.addEventListener("click", () => {
+      if (state.relieverSort === col.key) state.relieverSortAsc = !state.relieverSortAsc;
+      else { state.relieverSort = col.key; state.relieverSortAsc = col.defaultAsc; }
+      renderRelieverTable();
+    });
+    tr.appendChild(th);
+  }
+  head.appendChild(tr);
 
   const body = document.getElementById("reliever-body");
   body.innerHTML = "";
@@ -578,7 +632,8 @@ function renderRelieverTable(data) {
     return;
   }
 
-  for (const r of relievers) {
+  const sorted = [...relievers].sort(compareRelievers);
+  for (const r of sorted) {
     const isDue = r.status === "due";
     const last = r.days_since === 0 ? "Today" : `${r.days_since}d ago`;
 
