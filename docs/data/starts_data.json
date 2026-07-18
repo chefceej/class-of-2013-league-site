@@ -2,7 +2,7 @@
   "metadata": {
     "week_start": "2026-07-13",
     "week_end": "2026-07-19",
-    "last_updated": "2026-07-18T05:23:16Z",
+    "last_updated": "2026-07-18T08:46:56Z",
     "start_limit": 8
   },
   "dates": [
@@ -181,6 +181,7 @@
             "mlb_team": "Phi",
             "opponent": "NYM",
             "home": true,
+            "points": 4.9,
             "opponent_ops": 0.731,
             "opponent_ops_split": 0.728,
             "pitcher_hand": "R"
@@ -196,6 +197,7 @@
             "mlb_team": "TB",
             "opponent": "Bos",
             "home": false,
+            "points": -5.5,
             "opponent_ops": 0.747,
             "opponent_ops_split": 0.685,
             "pitcher_hand": "R"
@@ -272,6 +274,7 @@
             "mlb_team": "Oak",
             "opponent": "Wsh",
             "home": true,
+            "points": 2.5,
             "opponent_ops": 0.838,
             "opponent_ops_split": 0.857,
             "pitcher_hand": "L"
@@ -287,6 +290,7 @@
             "mlb_team": "SF",
             "opponent": "Sea",
             "home": false,
+            "points": 15.7,
             "opponent_ops": 0.603,
             "opponent_ops_split": 0.654,
             "pitcher_hand": "R"
@@ -364,6 +368,7 @@
             "mlb_team": "Hou",
             "opponent": "Bal",
             "home": true,
+            "points": 13.4,
             "opponent_ops": 0.72,
             "opponent_ops_split": 0.701,
             "pitcher_hand": "R"
@@ -441,6 +446,7 @@
             "mlb_team": "Wsh",
             "opponent": "Oak",
             "home": false,
+            "points": 13.4,
             "opponent_ops": 0.631,
             "opponent_ops_split": 0.798,
             "pitcher_hand": "R"
@@ -471,6 +477,7 @@
             "mlb_team": "StL",
             "opponent": "Ari",
             "home": false,
+            "points": 11.6,
             "opponent_ops": 0.697,
             "opponent_ops_split": 0.672,
             "pitcher_hand": "R"
@@ -503,6 +510,7 @@
             "mlb_team": "Sea",
             "opponent": "SF",
             "home": true,
+            "points": 6.6,
             "opponent_ops": 0.731,
             "opponent_ops_split": 0.816,
             "pitcher_hand": "R"
@@ -563,6 +571,7 @@
             "mlb_team": "Mil",
             "opponent": "Mia",
             "home": true,
+            "points": 10.1,
             "opponent_ops": 0.835,
             "opponent_ops_split": 0.814,
             "pitcher_hand": "R"
@@ -610,6 +619,7 @@
             "mlb_team": "Atl",
             "opponent": "Tex",
             "home": true,
+            "points": 19.2,
             "opponent_ops": 0.769,
             "opponent_ops_split": 0.789,
             "pitcher_hand": "L"
@@ -625,6 +635,7 @@
             "mlb_team": "Bos",
             "opponent": "TB",
             "home": true,
+            "points": 14.9,
             "opponent_ops": 0.776,
             "opponent_ops_split": 0.642,
             "pitcher_hand": "L"
@@ -640,6 +651,7 @@
             "mlb_team": "LAA",
             "opponent": "Det",
             "home": true,
+            "points": 15.4,
             "opponent_ops": 0.721,
             "opponent_ops_split": 0.716,
             "pitcher_hand": "L"
@@ -793,23 +805,10 @@
             "mlb_team": "SD",
             "opponent": "KC",
             "home": false,
+            "points": 8.1,
             "opponent_ops": 0.725,
             "opponent_ops_split": 0.807,
             "pitcher_hand": "R"
-          }
-        ]
-      },
-      {
-        "name": "Shohei Ohtani",
-        "mlb_team": "LAD",
-        "starts": [
-          {
-            "date": "2026-07-17",
-            "mlb_team": "LAD",
-            "opponent": "NYY",
-            "home": false,
-            "opponent_ops": 0.633,
-            "opponent_ops_split": 0.697
           }
         ]
       },
@@ -837,6 +836,7 @@
             "mlb_team": "Det",
             "opponent": "LAA",
             "home": false,
+            "points": 11.6,
             "opponent_ops": 0.691,
             "opponent_ops_split": 0.645,
             "pitcher_hand": "R"
@@ -854,6 +854,7 @@
             "mlb_team": "ChW",
             "opponent": "Tor",
             "home": false,
+            "points": 4.2,
             "opponent_ops": 0.646,
             "opponent_ops_split": 0.674,
             "pitcher_hand": "L"
@@ -884,6 +885,7 @@
             "mlb_team": "Mia",
             "opponent": "Mil",
             "home": false,
+            "points": 11.9,
             "opponent_ops": 0.73,
             "opponent_ops_split": 0.825,
             "pitcher_hand": "R"
@@ -946,6 +948,7 @@
             "mlb_team": "NYY",
             "opponent": "LAD",
             "home": true,
+            "points": 10.4,
             "opponent_ops": 0.737,
             "opponent_ops_split": 0.789,
             "pitcher_hand": "R"
@@ -991,6 +994,7 @@
             "mlb_team": "Ari",
             "opponent": "StL",
             "home": true,
+            "points": 8.1,
             "opponent_ops": 0.665,
             "opponent_ops_split": 0.76,
             "pitcher_hand": "R"
@@ -1006,6 +1010,7 @@
             "mlb_team": "LAD",
             "opponent": "NYY",
             "home": false,
+            "points": 12.6,
             "opponent_ops": 0.633,
             "opponent_ops_split": 0.726,
             "pitcher_hand": "R"
@@ -1066,6 +1071,25 @@
           "opponent_ops": 0.748,
           "opponent_ops_split": 0.766,
           "pitcher_hand": "L"
+        }
+      ]
+    },
+    {
+      "name": "Mason Englert",
+      "mlb_team": "TB",
+      "season_pts": 35.89,
+      "gs": 3,
+      "pts_per_gs": 11.96,
+      "pr30_pts": 7.64,
+      "starts": [
+        {
+          "date": "2026-07-17",
+          "mlb_team": "TB",
+          "opponent": "Bos",
+          "home": false,
+          "opponent_ops": 0.747,
+          "opponent_ops_split": 0.685,
+          "pitcher_hand": "R"
         }
       ]
     },
@@ -1492,7 +1516,7 @@
       "season_pts": 9.74,
       "gs": 0,
       "pts_per_gs": 0.0,
-      "pr30_pts": 0,
+      "pr30_pts": 9.74,
       "starts": [
         {
           "date": "2026-07-18",
@@ -1520,6 +1544,25 @@
           "home": true,
           "opponent_ops": 0.769,
           "opponent_ops_split": 0.755,
+          "pitcher_hand": "R"
+        }
+      ]
+    },
+    {
+      "name": "Randy Dobnak",
+      "mlb_team": "KC",
+      "season_pts": 13.83,
+      "gs": 0,
+      "pts_per_gs": 0.0,
+      "pr30_pts": 13.83,
+      "starts": [
+        {
+          "date": "2026-07-18",
+          "mlb_team": "KC",
+          "opponent": "SD",
+          "home": true,
+          "opponent_ops": 0.733,
+          "opponent_ops_split": 0.729,
           "pitcher_hand": "R"
         }
       ]
