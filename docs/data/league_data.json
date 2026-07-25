@@ -5,7 +5,7 @@
     "num_teams": 12,
     "total_weeks": 19,
     "playoff_cutoff": 6,
-    "last_updated": "2026-07-24T09:17:53Z",
+    "last_updated": "2026-07-25T05:43:01Z",
     "current_week": 19,
     "total_matchup_weeks": 19,
     "current_matchup_week": 16,
@@ -138,7 +138,7 @@
         8,
         8,
         10,
-        4,
+        5,
         null,
         null,
         null
@@ -251,7 +251,7 @@
         3,
         5,
         9,
-        2,
+        4,
         null,
         null,
         null
@@ -364,7 +364,7 @@
         8,
         6,
         11,
-        3,
+        4,
         null,
         null,
         null
@@ -590,7 +590,7 @@
         8,
         8,
         14,
-        4,
+        7,
         null,
         null,
         null
@@ -816,7 +816,7 @@
         8,
         8,
         11,
-        3,
+        5,
         null,
         null,
         null
@@ -1042,7 +1042,7 @@
         7,
         8,
         13,
-        2,
+        4,
         null,
         null,
         null
@@ -1155,7 +1155,7 @@
         8,
         8,
         11,
-        4,
+        5,
         null,
         null,
         null
@@ -1268,7 +1268,7 @@
         8,
         8,
         11,
-        6,
+        7,
         null,
         null,
         null
@@ -4481,10 +4481,16 @@
     {
       "all": [
         {
+          "name": "Cam Schlittler",
+          "mlb_team": "NYY",
+          "fantasy_team": "BERN",
+          "score": 21.94
+        },
+        {
           "name": "Dillon Dingler",
           "mlb_team": "Det",
           "fantasy_team": "wOBA",
-          "score": 21.5
+          "score": 21.75
         },
         {
           "name": "Gavin Williams",
@@ -4496,52 +4502,52 @@
           "name": "CJ Abrams",
           "mlb_team": "Wsh",
           "fantasy_team": "PEDS",
-          "score": 18.25
+          "score": 20.5
         },
         {
-          "name": "George Kirby",
-          "mlb_team": "Sea",
-          "fantasy_team": "CEEJ",
-          "score": 15.86
-        },
-        {
-          "name": "Fernando Tatis Jr.",
-          "mlb_team": "SD",
-          "fantasy_team": "STRN",
-          "score": 15.75
+          "name": "Tarik Skubal",
+          "mlb_team": "Det",
+          "fantasy_team": "JM",
+          "score": 18.94
         },
         {
           "name": "Gabriel Moreno",
           "mlb_team": "Ari",
           "fantasy_team": "BKRF",
-          "score": 15.0
+          "score": 17.75
         },
         {
           "name": "Yordan Alvarez",
           "mlb_team": "Hou",
           "fantasy_team": "BKRF",
-          "score": 14.75
+          "score": 17.25
         },
         {
-          "name": "Travis Bazzana",
-          "mlb_team": "Cle",
-          "fantasy_team": "BKRF",
-          "score": 14.5
-        },
-        {
-          "name": "Taj Bradley",
-          "mlb_team": "Min",
-          "fantasy_team": "SCHN",
-          "score": 14.17
-        },
-        {
-          "name": "Justin Wrobleski",
+          "name": "Roki Sasaki",
           "mlb_team": "LAD",
-          "fantasy_team": "CEEJ",
-          "score": 14.13
+          "fantasy_team": "PEDS",
+          "score": 17.17
+        },
+        {
+          "name": "Fernando Tatis Jr.",
+          "mlb_team": "SD",
+          "fantasy_team": "STRN",
+          "score": 16.25
+        },
+        {
+          "name": "Manny Machado",
+          "mlb_team": "SD",
+          "fantasy_team": "YOFF",
+          "score": 16.0
         }
       ],
       "pitchers": [
+        {
+          "name": "Cam Schlittler",
+          "mlb_team": "NYY",
+          "fantasy_team": "BERN",
+          "score": 21.94
+        },
         {
           "name": "Gavin Williams",
           "mlb_team": "Cle",
@@ -4549,10 +4555,28 @@
           "score": 20.67
         },
         {
+          "name": "Tarik Skubal",
+          "mlb_team": "Det",
+          "fantasy_team": "JM",
+          "score": 18.94
+        },
+        {
+          "name": "Roki Sasaki",
+          "mlb_team": "LAD",
+          "fantasy_team": "PEDS",
+          "score": 17.17
+        },
+        {
           "name": "George Kirby",
           "mlb_team": "Sea",
           "fantasy_team": "CEEJ",
           "score": 15.86
+        },
+        {
+          "name": "Jesus Luzardo",
+          "mlb_team": "Phi",
+          "fantasy_team": "STRN",
+          "score": 15.17
         },
         {
           "name": "Taj Bradley",
@@ -4573,34 +4597,10 @@
           "score": 14.05
         },
         {
-          "name": "Gerrit Cole",
-          "mlb_team": "NYY",
-          "fantasy_team": "STEW",
-          "score": 13.67
-        },
-        {
-          "name": "Griffin Jax",
-          "mlb_team": "TB",
-          "fantasy_team": "STRN",
-          "score": 13.36
-        },
-        {
-          "name": "Zack Wheeler",
-          "mlb_team": "Phi",
-          "fantasy_team": "STRN",
-          "score": 13.17
-        },
-        {
-          "name": "Jose Soriano",
-          "mlb_team": "LAA",
-          "fantasy_team": "JM",
-          "score": 13.17
-        },
-        {
-          "name": "Chase Burns",
-          "mlb_team": "Cin",
-          "fantasy_team": "CEEJ",
-          "score": 13.05
+          "name": "Aroldis Chapman",
+          "mlb_team": "Bos",
+          "fantasy_team": "SW",
+          "score": 13.93
         }
       ],
       "hitters": [
@@ -4608,61 +4608,61 @@
           "name": "Dillon Dingler",
           "mlb_team": "Det",
           "fantasy_team": "wOBA",
-          "score": 21.5
+          "score": 21.75
         },
         {
           "name": "CJ Abrams",
           "mlb_team": "Wsh",
           "fantasy_team": "PEDS",
-          "score": 18.25
-        },
-        {
-          "name": "Fernando Tatis Jr.",
-          "mlb_team": "SD",
-          "fantasy_team": "STRN",
-          "score": 15.75
+          "score": 20.5
         },
         {
           "name": "Gabriel Moreno",
           "mlb_team": "Ari",
           "fantasy_team": "BKRF",
-          "score": 15.0
+          "score": 17.75
         },
         {
           "name": "Yordan Alvarez",
           "mlb_team": "Hou",
           "fantasy_team": "BKRF",
-          "score": 14.75
+          "score": 17.25
+        },
+        {
+          "name": "Fernando Tatis Jr.",
+          "mlb_team": "SD",
+          "fantasy_team": "STRN",
+          "score": 16.25
+        },
+        {
+          "name": "Manny Machado",
+          "mlb_team": "SD",
+          "fantasy_team": "YOFF",
+          "score": 16.0
+        },
+        {
+          "name": "Corbin Carroll",
+          "mlb_team": "Ari",
+          "fantasy_team": "BKRF",
+          "score": 15.75
+        },
+        {
+          "name": "Jeremy Pena",
+          "mlb_team": "Hou",
+          "fantasy_team": "wOBA",
+          "score": 15.0
+        },
+        {
+          "name": "Pete Crow-Armstrong",
+          "mlb_team": "ChC",
+          "fantasy_team": "STEW",
+          "score": 14.5
         },
         {
           "name": "Travis Bazzana",
           "mlb_team": "Cle",
           "fantasy_team": "BKRF",
           "score": 14.5
-        },
-        {
-          "name": "Junior Caminero",
-          "mlb_team": "TB",
-          "fantasy_team": "JM",
-          "score": 13.25
-        },
-        {
-          "name": "Manny Machado",
-          "mlb_team": "SD",
-          "fantasy_team": "YOFF",
-          "score": 13.25
-        },
-        {
-          "name": "Yandy Diaz",
-          "mlb_team": "TB",
-          "fantasy_team": "wOBA",
-          "score": 11.75
-        },
-        {
-          "name": "Jeremy Pena",
-          "mlb_team": "Hou",
-          "fantasy_team": "wOBA",
-          "score": 11.75
         }
       ]
     }
