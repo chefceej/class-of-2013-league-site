@@ -2,7 +2,7 @@
   "metadata": {
     "week_start": "2026-08-03",
     "week_end": "2026-08-09",
-    "last_updated": "2026-08-04T05:45:20Z",
+    "last_updated": "2026-08-04T09:37:49Z",
     "start_limit": 8
   },
   "dates": [
@@ -87,6 +87,7 @@
             "mlb_team": "SF",
             "opponent": "Tex",
             "home": false,
+            "points": 15.9,
             "opponent_ops": 0.739,
             "opponent_ops_split": 0.748,
             "pitcher_hand": "R"
@@ -244,6 +245,7 @@
             "mlb_team": "Phi",
             "opponent": "Wsh",
             "home": true,
+            "points": 6.4,
             "opponent_ops": 0.805,
             "opponent_ops_split": 0.812,
             "pitcher_hand": "R"
@@ -268,6 +270,7 @@
             "mlb_team": "Pit",
             "opponent": "Mil",
             "home": false,
+            "points": 8.6,
             "opponent_ops": 0.728,
             "opponent_ops_split": 0.788,
             "pitcher_hand": "R"
@@ -575,6 +578,7 @@
             "mlb_team": "ChC",
             "opponent": "LAD",
             "home": true,
+            "points": 4.9,
             "opponent_ops": 0.716,
             "opponent_ops_split": 0.745,
             "pitcher_hand": "L"
@@ -691,6 +695,7 @@
             "mlb_team": "Mil",
             "opponent": "Pit",
             "home": true,
+            "points": -3.6,
             "opponent_ops": 0.683,
             "opponent_ops_split": 0.736,
             "pitcher_hand": "R"
@@ -769,6 +774,7 @@
             "mlb_team": "StL",
             "opponent": "NYY",
             "home": false,
+            "points": 6.0,
             "opponent_ops": 0.661,
             "opponent_ops_split": 0.652,
             "pitcher_hand": "R"
@@ -1154,6 +1160,7 @@
             "mlb_team": "NYY",
             "opponent": "StL",
             "home": true,
+            "points": -2.6,
             "opponent_ops": 0.616,
             "opponent_ops_split": 0.658,
             "pitcher_hand": "R"
@@ -1222,6 +1229,7 @@
             "mlb_team": "SD",
             "opponent": "Ari",
             "home": false,
+            "points": 2.5,
             "opponent_ops": 0.779,
             "opponent_ops_split": 0.731,
             "pitcher_hand": "R"
@@ -1234,21 +1242,6 @@
             "opponent_ops": 0.796,
             "opponent_ops_split": 0.773,
             "pitcher_hand": "R"
-          }
-        ]
-      },
-      {
-        "name": "Shohei Ohtani",
-        "mlb_team": "LAD",
-        "starts": [
-          {
-            "date": "2026-08-03",
-            "mlb_team": "LAD",
-            "opponent": "ChC",
-            "home": false,
-            "points": 2.5,
-            "opponent_ops": 0.769,
-            "opponent_ops_split": 0.772
           }
         ]
       },
@@ -1323,6 +1316,7 @@
             "mlb_team": "LAD",
             "opponent": "ChC",
             "home": false,
+            "points": -8.0,
             "opponent_ops": 0.769,
             "opponent_ops_split": 0.84,
             "pitcher_hand": "L"
@@ -1478,6 +1472,7 @@
             "mlb_team": "Tor",
             "opponent": "Hou",
             "home": false,
+            "points": 9.6,
             "opponent_ops": 0.796,
             "opponent_ops_split": 0.768,
             "pitcher_hand": "R"
@@ -1510,7 +1505,20 @@
       }
     ]
   },
-  "actual_gs": {},
+  "actual_gs": {
+    "SW": 0,
+    "YOFF": 1,
+    "CEEJ": 1,
+    "PEDS": 0,
+    "wOBA": 0,
+    "BERN": 1,
+    "BKRF": 0,
+    "STRN": 0,
+    "STEW": 0,
+    "DECA": 2,
+    "JM": 0,
+    "SCHN": 1
+  },
   "streaming_options": [
     {
       "name": "Mason Barnett",
@@ -1612,7 +1620,7 @@
       "season_pts": 77.38,
       "gs": 7,
       "pts_per_gs": 11.05,
-      "pr30_pts": 29.76,
+      "pr30_pts": 24.71,
       "starts": [
         {
           "date": "2026-08-03",
@@ -1631,7 +1639,7 @@
       "season_pts": 96.25,
       "gs": 9,
       "pts_per_gs": 10.69,
-      "pr30_pts": 32.72,
+      "pr30_pts": 30.17,
       "starts": [
         {
           "date": "2026-08-04",
@@ -1894,7 +1902,7 @@
       "season_pts": 88.59,
       "gs": 14,
       "pts_per_gs": 6.33,
-      "pr30_pts": 27.29,
+      "pr30_pts": 16.43,
       "starts": [
         {
           "date": "2026-08-04",
@@ -2252,7 +2260,7 @@
       "season_pts": 88.61,
       "gs": 20,
       "pts_per_gs": 4.43,
-      "pr30_pts": 46.96,
+      "pr30_pts": 40.41,
       "starts": [
         {
           "date": "2026-08-07",
@@ -2366,7 +2374,7 @@
       "season_pts": 57.73,
       "gs": 16,
       "pts_per_gs": 3.61,
-      "pr30_pts": 11.97,
+      "pr30_pts": 7.54,
       "starts": [
         {
           "date": "2026-08-05",
@@ -2499,7 +2507,7 @@
       "season_pts": 9.64,
       "gs": 5,
       "pts_per_gs": 1.93,
-      "pr30_pts": 25.08,
+      "pr30_pts": 21.96,
       "starts": [
         {
           "date": "2026-08-03",
