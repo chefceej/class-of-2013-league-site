@@ -5,7 +5,7 @@
     "num_teams": 12,
     "total_weeks": 19,
     "playoff_cutoff": 6,
-    "last_updated": "2026-08-04T09:37:42Z",
+    "last_updated": "2026-08-05T05:44:08Z",
     "current_week": 19,
     "total_matchup_weeks": 19,
     "current_matchup_week": 18,
@@ -253,7 +253,7 @@
         9,
         6,
         6,
-        0,
+        1,
         null
       ],
       "total_score": 3238.88
@@ -366,7 +366,7 @@
         11,
         7,
         8,
-        0,
+        2,
         null
       ],
       "total_score": 4005.35
@@ -479,7 +479,7 @@
         11,
         8,
         8,
-        0,
+        1,
         null
       ],
       "total_score": 3814.67
@@ -705,7 +705,7 @@
         9,
         7,
         8,
-        2,
+        3,
         null
       ],
       "total_score": 3257.3
@@ -818,7 +818,7 @@
         11,
         8,
         8,
-        0,
+        3,
         null
       ],
       "total_score": 3800.13
@@ -1044,7 +1044,7 @@
         13,
         7,
         7,
-        0,
+        2,
         null
       ],
       "total_score": 3943.02
@@ -1157,7 +1157,7 @@
         11,
         8,
         8,
-        1,
+        2,
         null
       ],
       "total_score": 4173.03
@@ -1383,7 +1383,7 @@
         10,
         8,
         8,
-        0,
+        2,
         null
       ],
       "total_score": 3473.26
@@ -1935,7 +1935,7 @@
         },
         {
           "name": "Robbie Ray",
-          "mlb_team": "SF",
+          "mlb_team": "SD",
           "fantasy_team": "PEDS",
           "score": 16.9
         },
@@ -4003,7 +4003,7 @@
         },
         {
           "name": "Robbie Ray",
-          "mlb_team": "SF",
+          "mlb_team": "SD",
           "fantasy_team": "PEDS",
           "score": 19.48
         },
@@ -4093,7 +4093,7 @@
       "all": [
         {
           "name": "Casey Mize",
-          "mlb_team": "Det",
+          "mlb_team": "SD",
           "fantasy_team": "BKRF",
           "score": 32.57
         },
@@ -4155,7 +4155,7 @@
       "pitchers": [
         {
           "name": "Casey Mize",
-          "mlb_team": "Det",
+          "mlb_team": "SD",
           "fantasy_team": "BKRF",
           "score": 32.57
         },
@@ -4844,67 +4844,79 @@
     {
       "all": [
         {
+          "name": "Jesus Luzardo",
+          "mlb_team": "Phi",
+          "fantasy_team": "STRN",
+          "score": 19.98
+        },
+        {
+          "name": "Troy Melton",
+          "mlb_team": "Det",
+          "fantasy_team": "BERN",
+          "score": 16.67
+        },
+        {
           "name": "Logan Webb",
           "mlb_team": "SF",
           "fantasy_team": "YOFF",
           "score": 15.86
+        },
+        {
+          "name": "Ryan Weathers",
+          "mlb_team": "NYY",
+          "fantasy_team": "PEDS",
+          "score": 15.36
+        },
+        {
+          "name": "MacKenzie Gore",
+          "mlb_team": "Tex",
+          "fantasy_team": "BKRF",
+          "score": 12.86
         },
         {
           "name": "Alec Burleson",
           "mlb_team": "StL",
           "fantasy_team": "STRN",
-          "score": 11.5
+          "score": 12.5
+        },
+        {
+          "name": "Logan Henderson",
+          "mlb_team": "Mil",
+          "fantasy_team": "PEDS",
+          "score": 12.36
         },
         {
           "name": "Jung Hoo Lee",
           "mlb_team": "SF",
           "fantasy_team": "DECA",
-          "score": 9.75
-        },
-        {
-          "name": "Junior Caminero",
-          "mlb_team": "TB",
-          "fantasy_team": "JM",
-          "score": 7.75
-        },
-        {
-          "name": "Ezequiel Duran",
-          "mlb_team": "Tex",
-          "fantasy_team": "BERN",
-          "score": 7.0
-        },
-        {
-          "name": "Jonathan Aranda",
-          "mlb_team": "TB",
-          "fantasy_team": "JM",
-          "score": 6.5
+          "score": 11.25
         },
         {
           "name": "Mickey Moniak",
           "mlb_team": "Col",
           "fantasy_team": "JM",
-          "score": 6.25
+          "score": 10.25
         },
         {
-          "name": "Michael McGreevy",
-          "mlb_team": "StL",
-          "fantasy_team": "DECA",
-          "score": 6.01
-        },
-        {
-          "name": "Seiya Suzuki",
-          "mlb_team": "ChC",
-          "fantasy_team": "DECA",
-          "score": 5.5
-        },
-        {
-          "name": "Jhoan Duran",
-          "mlb_team": "Phi",
-          "fantasy_team": "DECA",
-          "score": 5.31
+          "name": "Jonathan Aranda",
+          "mlb_team": "TB",
+          "fantasy_team": "JM",
+          "score": 10.25
         }
       ],
       "pitchers": [
+        {
+          "name": "Jesus Luzardo",
+          "mlb_team": "Phi",
+          "fantasy_team": "STRN",
+          "score": 19.98
+        },
+        {
+          "name": "Troy Melton",
+          "mlb_team": "Det",
+          "fantasy_team": "BERN",
+          "score": 16.67
+        },
         {
           "name": "Logan Webb",
           "mlb_team": "SF",
@@ -4912,58 +4924,46 @@
           "score": 15.86
         },
         {
+          "name": "Ryan Weathers",
+          "mlb_team": "NYY",
+          "fantasy_team": "PEDS",
+          "score": 15.36
+        },
+        {
+          "name": "MacKenzie Gore",
+          "mlb_team": "Tex",
+          "fantasy_team": "BKRF",
+          "score": 12.86
+        },
+        {
+          "name": "Logan Henderson",
+          "mlb_team": "Mil",
+          "fantasy_team": "PEDS",
+          "score": 12.36
+        },
+        {
+          "name": "Tarik Skubal",
+          "mlb_team": "LAD",
+          "fantasy_team": "JM",
+          "score": 8.86
+        },
+        {
+          "name": "J.T. Ginn",
+          "mlb_team": "Oak",
+          "fantasy_team": "BKRF",
+          "score": 6.86
+        },
+        {
+          "name": "David Bednar",
+          "mlb_team": "NYY",
+          "fantasy_team": "YOFF",
+          "score": 6.58
+        },
+        {
           "name": "Michael McGreevy",
           "mlb_team": "StL",
           "fantasy_team": "DECA",
           "score": 6.01
-        },
-        {
-          "name": "Jhoan Duran",
-          "mlb_team": "Phi",
-          "fantasy_team": "DECA",
-          "score": 5.31
-        },
-        {
-          "name": "Aaron Ashby",
-          "mlb_team": "Mil",
-          "fantasy_team": "JM",
-          "score": 5.12
-        },
-        {
-          "name": "Matthew Boyd",
-          "mlb_team": "ChC",
-          "fantasy_team": "SCHN",
-          "score": 4.9
-        },
-        {
-          "name": "Tyler Rogers",
-          "mlb_team": "Tor",
-          "fantasy_team": "STEW",
-          "score": 4.81
-        },
-        {
-          "name": "Gregory Soto",
-          "mlb_team": "Pit",
-          "fantasy_team": "STEW",
-          "score": 4.58
-        },
-        {
-          "name": "Fernando Cruz",
-          "mlb_team": "NYY",
-          "fantasy_team": "DECA",
-          "score": 3.31
-        },
-        {
-          "name": "Brandyn Garcia",
-          "mlb_team": "Ari",
-          "fantasy_team": "wOBA",
-          "score": 2.31
-        },
-        {
-          "name": "Tanner Scott",
-          "mlb_team": "LAD",
-          "fantasy_team": "SW",
-          "score": 1.54
         }
       ],
       "hitters": [
@@ -4971,61 +4971,61 @@
           "name": "Alec Burleson",
           "mlb_team": "StL",
           "fantasy_team": "STRN",
-          "score": 11.5
+          "score": 12.5
         },
         {
           "name": "Jung Hoo Lee",
           "mlb_team": "SF",
           "fantasy_team": "DECA",
-          "score": 9.75
-        },
-        {
-          "name": "Junior Caminero",
-          "mlb_team": "TB",
-          "fantasy_team": "JM",
-          "score": 7.75
-        },
-        {
-          "name": "Ezequiel Duran",
-          "mlb_team": "Tex",
-          "fantasy_team": "BERN",
-          "score": 7.0
-        },
-        {
-          "name": "Jonathan Aranda",
-          "mlb_team": "TB",
-          "fantasy_team": "JM",
-          "score": 6.5
+          "score": 11.25
         },
         {
           "name": "Mickey Moniak",
           "mlb_team": "Col",
           "fantasy_team": "JM",
-          "score": 6.25
+          "score": 10.25
+        },
+        {
+          "name": "Jonathan Aranda",
+          "mlb_team": "TB",
+          "fantasy_team": "JM",
+          "score": 10.25
+        },
+        {
+          "name": "Caleb Durbin",
+          "mlb_team": "Bos",
+          "fantasy_team": "PEDS",
+          "score": 9.5
+        },
+        {
+          "name": "Junior Caminero",
+          "mlb_team": "TB",
+          "fantasy_team": "JM",
+          "score": 9.5
         },
         {
           "name": "Seiya Suzuki",
           "mlb_team": "ChC",
           "fantasy_team": "DECA",
-          "score": 5.5
+          "score": 9.0
         },
         {
-          "name": "Michael Busch",
-          "mlb_team": "ChC",
+          "name": "Liam Hicks",
+          "mlb_team": "TB",
+          "fantasy_team": "STRN",
+          "score": 8.5
+        },
+        {
+          "name": "Kyle Tucker",
+          "mlb_team": "LAD",
           "fantasy_team": "YOFF",
-          "score": 5.25
+          "score": 8.0
         },
         {
-          "name": "Trent Grisham",
-          "mlb_team": "NYY",
-          "fantasy_team": "wOBA",
-          "score": 5.25
-        },
-        {
-          "name": "Luis Garcia Jr.",
-          "mlb_team": "NYY",
-          "fantasy_team": "SCHN",
-          "score": 5.0
+          "name": "Wilyer Abreu",
+          "mlb_team": "Bos",
+          "fantasy_team": "PEDS",
+          "score": 8.0
         }
       ]
     }
@@ -7127,7 +7127,7 @@
         "SP": 91.61,
         "C": 25.25,
         "2B": 13.0,
-        "SS": 9.5,
+        "SS": 10.25,
         "RP": 20.79
       },
       "BKRF": {
