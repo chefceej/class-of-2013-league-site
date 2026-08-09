@@ -5,7 +5,7 @@
     "num_teams": 12,
     "total_weeks": 19,
     "playoff_cutoff": 6,
-    "last_updated": "2026-08-08T07:44:36Z",
+    "last_updated": "2026-08-09T04:16:27Z",
     "current_week": 19,
     "total_matchup_weeks": 19,
     "current_matchup_week": 18,
@@ -140,7 +140,7 @@
         10,
         8,
         8,
-        5,
+        6,
         null
       ],
       "total_score": 4010.33
@@ -366,7 +366,7 @@
         11,
         7,
         8,
-        4,
+        5,
         null
       ],
       "total_score": 4120.22
@@ -479,7 +479,7 @@
         11,
         8,
         8,
-        6,
+        7,
         null
       ],
       "total_score": 3972.95
@@ -592,7 +592,7 @@
         14,
         9,
         8,
-        5,
+        7,
         null
       ],
       "total_score": 3910.97
@@ -818,7 +818,7 @@
         11,
         8,
         8,
-        7,
+        8,
         null
       ],
       "total_score": 3991.18
@@ -931,7 +931,7 @@
         11,
         8,
         8,
-        4,
+        7,
         null
       ],
       "total_score": 4288.89
@@ -1044,7 +1044,7 @@
         13,
         7,
         7,
-        7,
+        8,
         null
       ],
       "total_score": 4088.72
@@ -1157,7 +1157,7 @@
         11,
         8,
         8,
-        5,
+        6,
         null
       ],
       "total_score": 4329.64
@@ -1270,7 +1270,7 @@
         11,
         8,
         8,
-        3,
+        6,
         null
       ],
       "total_score": 4000.16
@@ -1383,7 +1383,7 @@
         10,
         8,
         8,
-        4,
+        6,
         null
       ],
       "total_score": 3572.95
@@ -4847,13 +4847,25 @@
           "name": "Pete Crow-Armstrong",
           "mlb_team": "ChC",
           "fantasy_team": "STEW",
-          "score": 25.25
+          "score": 26.75
+        },
+        {
+          "name": "Jake McCarthy",
+          "mlb_team": "Col",
+          "fantasy_team": "SCHN",
+          "score": 25.0
         },
         {
           "name": "Wilyer Abreu",
           "mlb_team": "Bos",
           "fantasy_team": "PEDS",
           "score": 24.5
+        },
+        {
+          "name": "Caleb Durbin",
+          "mlb_team": "Bos",
+          "fantasy_team": "PEDS",
+          "score": 23.25
         },
         {
           "name": "Jesus Luzardo",
@@ -4868,8 +4880,8 @@
           "score": 19.67
         },
         {
-          "name": "Caleb Durbin",
-          "mlb_team": "Bos",
+          "name": "Bryson Stott",
+          "mlb_team": "Phi",
           "fantasy_team": "PEDS",
           "score": 19.5
         },
@@ -4880,28 +4892,16 @@
           "score": 19.48
         },
         {
-          "name": "Drew Rasmussen",
-          "mlb_team": "TB",
-          "fantasy_team": "BKRF",
-          "score": 19.17
-        },
-        {
-          "name": "Payton Tolle",
-          "mlb_team": "Bos",
+          "name": "Bryce Harper",
+          "mlb_team": "Phi",
           "fantasy_team": "wOBA",
-          "score": 18.86
+          "score": 19.25
         },
         {
-          "name": "Shane Baz",
-          "mlb_team": "Bal",
-          "fantasy_team": "YOFF",
-          "score": 17.98
-        },
-        {
-          "name": "Troy Melton",
-          "mlb_team": "Det",
-          "fantasy_team": "BERN",
-          "score": 16.67
+          "name": "Sandy Alcantara",
+          "mlb_team": "Mia",
+          "fantasy_team": "CEEJ",
+          "score": 19.17
         }
       ],
       "pitchers": [
@@ -4922,6 +4922,12 @@
           "mlb_team": "KC",
           "fantasy_team": "JM",
           "score": 19.48
+        },
+        {
+          "name": "Sandy Alcantara",
+          "mlb_team": "Mia",
+          "fantasy_team": "CEEJ",
+          "score": 19.17
         },
         {
           "name": "Drew Rasmussen",
@@ -4958,12 +4964,6 @@
           "mlb_team": "Sea",
           "fantasy_team": "SW",
           "score": 16.17
-        },
-        {
-          "name": "Framber Valdez",
-          "mlb_team": "Det",
-          "fantasy_team": "SCHN",
-          "score": 16.17
         }
       ],
       "hitters": [
@@ -4971,7 +4971,13 @@
           "name": "Pete Crow-Armstrong",
           "mlb_team": "ChC",
           "fantasy_team": "STEW",
-          "score": 25.25
+          "score": 26.75
+        },
+        {
+          "name": "Jake McCarthy",
+          "mlb_team": "Col",
+          "fantasy_team": "SCHN",
+          "score": 25.0
         },
         {
           "name": "Wilyer Abreu",
@@ -4983,49 +4989,43 @@
           "name": "Caleb Durbin",
           "mlb_team": "Bos",
           "fantasy_team": "PEDS",
+          "score": 23.25
+        },
+        {
+          "name": "Bryson Stott",
+          "mlb_team": "Phi",
+          "fantasy_team": "PEDS",
           "score": 19.5
+        },
+        {
+          "name": "Bryce Harper",
+          "mlb_team": "Phi",
+          "fantasy_team": "wOBA",
+          "score": 19.25
+        },
+        {
+          "name": "Jackson Merrill",
+          "mlb_team": "SD",
+          "fantasy_team": "STRN",
+          "score": 17.0
+        },
+        {
+          "name": "Jonathan Aranda",
+          "mlb_team": "TB",
+          "fantasy_team": "JM",
+          "score": 17.0
+        },
+        {
+          "name": "Jackson Chourio",
+          "mlb_team": "Mil",
+          "fantasy_team": "SCHN",
+          "score": 16.75
         },
         {
           "name": "Carson Benge",
           "mlb_team": "NYM",
           "fantasy_team": "PEDS",
           "score": 16.5
-        },
-        {
-          "name": "Jonathan Aranda",
-          "mlb_team": "TB",
-          "fantasy_team": "JM",
-          "score": 16.25
-        },
-        {
-          "name": "Jackson Chourio",
-          "mlb_team": "Mil",
-          "fantasy_team": "SCHN",
-          "score": 16.25
-        },
-        {
-          "name": "Bryce Harper",
-          "mlb_team": "Phi",
-          "fantasy_team": "wOBA",
-          "score": 16.0
-        },
-        {
-          "name": "Jung Hoo Lee",
-          "mlb_team": "SF",
-          "fantasy_team": "DECA",
-          "score": 15.75
-        },
-        {
-          "name": "Junior Caminero",
-          "mlb_team": "TB",
-          "fantasy_team": "JM",
-          "score": 15.75
-        },
-        {
-          "name": "Seiya Suzuki",
-          "mlb_team": "ChC",
-          "fantasy_team": "DECA",
-          "score": 15.5
         }
       ]
     }
