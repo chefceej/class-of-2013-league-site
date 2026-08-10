@@ -267,6 +267,25 @@ def fetch_position_scores(req, espn_periods, all_sps_map, team_abbrev_map):
     }
 
 
+def fetch_period_scores(req):
+    """Return {matchup_period_id: {team_id: final_score}} from a single schedule fetch.
+
+    Reads home/away totalPoints directly rather than via league.scoreboard(), which
+    constructs Matchup objects that raise KeyError on playoff BYE matchups (a side with
+    no 'home'/'away' team). Missing sides are simply skipped here.
+    """
+    data = req.league_get(params={"view": ["mMatchup", "mMatchupScore"]})
+    by_period = defaultdict(dict)
+    for m in data.get("schedule", []):
+        mp = m.get("matchupPeriodId")
+        for side in ("home", "away"):
+            s = m.get(side)
+            if not s or "teamId" not in s:
+                continue  # BYE / placeholder bracket slot
+            by_period[mp][s["teamId"]] = s.get("totalPoints", 0.0) or 0.0
+    return by_period
+
+
 def main():
     league = League(league_id=LEAGUE_ID, year=SEASON_YEAR, espn_s2=ESPN_S2, swid=SWID)
 
@@ -307,19 +326,14 @@ def main():
     raw_scores = defaultdict(lambda: defaultdict(float))  # mw -> {team_id: summed score}
     raw_espn_week_scores = {}  # espn_week -> {team_id: score}
 
+    period_scores = fetch_period_scores(req)  # {matchupPeriodId: {team_id: final_score}}
     for espn_week in range(1, current_espn_week + 1):
         mw = espn_to_matchup[espn_week - 1]
-        matchups = league.scoreboard(espn_week)
         wk_scores = {}
-        for matchup in matchups:
-            home_id = matchup.home_team.team_id
-            away_id = matchup.away_team.team_id
-            if home_id in team_data:
-                raw_scores[mw][home_id] += matchup.home_final_score
-                wk_scores[home_id] = matchup.home_final_score
-            if away_id in team_data:
-                raw_scores[mw][away_id] += matchup.away_final_score
-                wk_scores[away_id] = matchup.away_final_score
+        for tid, score in period_scores.get(espn_week, {}).items():
+            if tid in team_data:
+                raw_scores[mw][tid] += score
+                wk_scores[tid] = score
         raw_espn_week_scores[espn_week] = wk_scores
 
     # Recalculate current_matchup_week based on last MW with any non-zero scores
