@@ -11,6 +11,7 @@ let state = {
   streamSortAsc: false,
   streamGreenOnly: false,     // filter streaming to favorable (green) upcoming matchups
   streamCollapsedDays: new Set(), // past day-columns collapsed in the streaming table
+  weekOpen: {},               // per-week collapsed/expanded state, keyed by week_start
   opsMode: "30d",             // "30d" | "split"
   relievers: [],
   relieverSort: "status",     // default: due first, then by value
@@ -195,6 +196,11 @@ function render() {
   const weeks = getWeeks();
 
   const container = document.getElementById("starts-weeks");
+  // Snapshot each week's current open/closed state before wiping, so an
+  // in-progress expand/collapse survives this rebuild (render runs on every click).
+  container.querySelectorAll(".week-block").forEach(b => {
+    if (b.dataset.weekKey) state.weekOpen[b.dataset.weekKey] = b.open;
+  });
   container.innerHTML = "";
 
   weeks.forEach((week, wi) => {
@@ -205,7 +211,13 @@ function render() {
 
     const block = document.createElement("details");
     block.className = "week-block" + (week.projected ? " week-projected" : "");
-    block.open = wi === 0;  // current week expanded, later weeks collapsed
+    // Persist expand/collapse across re-renders (a re-render happens on every
+    // start-cell click); default to current week open, later weeks collapsed.
+    const openKey = week.week_start || String(wi);
+    if (!(openKey in state.weekOpen)) state.weekOpen[openKey] = wi === 0;
+    block.dataset.weekKey = openKey;
+    block.open = state.weekOpen[openKey];
+    block.addEventListener("toggle", () => { state.weekOpen[openKey] = block.open; });
 
     const summary = document.createElement("summary");
     summary.className = "week-summary";
