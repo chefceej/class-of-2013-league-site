@@ -80,6 +80,62 @@ def fetch_espn_pro_schedule():
 
 
 
+def build_team_schedule(game_lookup):
+    """Return {pro_team_id: {date_str: (opponent_id, home_bool)}} from the pro schedule."""
+    sched = defaultdict(dict)
+    for g in game_lookup.values():
+        d = g["date"]
+        home_id = g["home_team_id"]
+        away_id = g["away_team_id"]
+        # first game of a doubleheader wins the slot; a team starts one pitcher/day anyway
+        sched[home_id].setdefault(d, (away_id, True))
+        sched[away_id].setdefault(d, (home_id, False))
+    return sched
+
+
+def project_rotation(anchor_date_str, pro_team_id, team_sched, horizon_end_str,
+                     existing_dates, cadence=5, max_starts=6):
+    """
+    Estimate a starter's future start dates by rolling their rotation turn forward.
+
+    From the anchor (their last known start), step `cadence` days at a time and snap to
+    the team's nearest actually-scheduled game day (within +/-2 days). Skips dates that
+    already have a real (probable/confirmed) start. Returns a list of date strings.
+    """
+    def parse(s):
+        return datetime.strptime(s, "%Y-%m-%d").date()
+
+    games = team_sched.get(pro_team_id, {})
+    if not games:
+        return []
+
+    anchor = parse(anchor_date_str)
+    end = parse(horizon_end_str)
+    last = anchor
+    target = anchor + timedelta(days=cadence)
+    projected = []
+    guard = 0
+    while target <= end and len(projected) < max_starts and guard < 60:
+        guard += 1
+        best = None
+        for off in (0, 1, -1, 2, -2):
+            cand = target + timedelta(days=off)
+            if cand <= last or cand > end:
+                continue
+            if cand.strftime("%Y-%m-%d") in games:
+                best = cand
+                break
+        if best is None:
+            target += timedelta(days=1)
+            continue
+        bs = best.strftime("%Y-%m-%d")
+        if bs not in existing_dates:
+            projected.append(bs)
+        last = best
+        target = best + timedelta(days=cadence)
+    return projected
+
+
 def fetch_daily_pitcher_points(league, week_start, today_date):
     """
     Fetch per-day fantasy points for all rostered pitchers on past days of the week.
@@ -133,6 +189,7 @@ def fetch_espn_starters(league, game_lookup, week_start, week_end, today_date):
       rostered: {fantasy_team_abbrev: {pitcher_name: [start_info, ...]}}
       fa_starters: {pitcher_name: [start_info, ...]}  (free agents with starts)
       fa_player_info: {pitcher_name: {mlb_team, pro_team_id}}
+      pitcher_pro_team: {pitcher_name: pro_team_id}  (rostered SPs, for rotation projection)
     """
     start_str = week_start.strftime("%Y-%m-%d")
     end_str = week_end.strftime("%Y-%m-%d")
@@ -146,6 +203,7 @@ def fetch_espn_starters(league, game_lookup, week_start, week_end, today_date):
     team_map = {t.team_id: t.team_abbrev for t in league.teams}
 
     rostered = defaultdict(lambda: defaultdict(list))
+    pitcher_pro_team = {}
     pitcher_slot_ids = {13, 14, 15}  # P, SP, RP
 
     for team_data in data.get("teams", []):
@@ -159,6 +217,9 @@ def fetch_espn_starters(league, game_lookup, week_start, week_end, today_date):
             name = player.get("fullName", "")
             pro_team_id = player.get("proTeamId", 0)
             mlb_team = PRO_TEAM_MAP.get(pro_team_id, "?")
+            # Only SP-eligible arms get rotation projection (slot 14 = SP)
+            if 14 in eligible and name:
+                pitcher_pro_team[name] = pro_team_id
             starter_map = player.get("starterStatusByProGame", {})
 
             for gid_str, status in starter_map.items():
@@ -250,7 +311,7 @@ def fetch_espn_starters(league, game_lookup, week_start, week_end, today_date):
         if name not in fa_player_info:
             fa_player_info[name] = {"mlb_team": mlb_team, "pro_team_id": pro_team_id}
 
-    return rostered, fa_starters, fa_player_info
+    return rostered, fa_starters, fa_player_info, pitcher_pro_team
 
 
 def fetch_free_agent_stats(league):
@@ -527,12 +588,16 @@ def fetch_actual_gs(league, matchup_period):
 
 def main():
     week_start, week_end = current_week_dates()
+    week2_start = week_end + timedelta(days=1)
+    week2_end = week2_start + timedelta(days=6)
     today_date = datetime.now(ET).date()
-    print(f"Week: {week_start} → {week_end}")
+    print(f"Week 1: {week_start} → {week_end}")
+    print(f"Week 2: {week2_start} → {week2_end} (rotation-projected)")
 
     print("Fetching ESPN pro game schedule...")
     game_lookup = fetch_espn_pro_schedule()
     print(f"  Got {len(game_lookup)} games in schedule")
+    team_sched = build_team_schedule(game_lookup)
 
     print("Fetching MLB team info...")
     team_id_map = fetch_mlb_teams()
@@ -556,8 +621,10 @@ def main():
 
     print("Fetching ESPN rosters + probable starters + daily scores...")
     league = League(league_id=LEAGUE_ID, year=SEASON_YEAR, espn_s2=ESPN_S2, swid=SWID)
-    rostered_starts, fa_starters, fa_player_info = fetch_espn_starters(
-        league, game_lookup, week_start, week_end, today_date
+    # Widen the real-probable window to cover both weeks (ESPN only flags ~5 days out,
+    # so week 2 is mostly empty here and gets filled by rotation projection below).
+    rostered_starts, fa_starters, fa_player_info, pitcher_pro_team = fetch_espn_starters(
+        league, game_lookup, week_start, week2_end, today_date
     )
     rostered_count = sum(
         sum(len(starts) for starts in pitchers.values())
@@ -575,12 +642,43 @@ def main():
     fa_stats = fetch_free_agent_stats(league)
     print(f"  Got stats for {len(fa_stats)} free agent pitchers")
 
-    # Build dates list
-    dates = []
-    d = week_start
-    while d <= week_end:
-        dates.append(d.strftime("%Y-%m-%d"))
-        d += timedelta(days=1)
+    # Build per-week date lists
+    def date_range(a, b):
+        out, d = [], a
+        while d <= b:
+            out.append(d.strftime("%Y-%m-%d"))
+            d += timedelta(days=1)
+        return out
+
+    dates = date_range(week_start, week_end)          # week 1
+    dates2 = date_range(week2_start, week2_end)        # week 2 (projected)
+    week2_end_str = week2_end.strftime("%Y-%m-%d")
+
+    # Rotation projection: fill week 2 (and any un-flagged tail) for each rostered SP.
+    # Anchor from the pitcher's last known real start, then roll their turn forward.
+    proj_count = 0
+    for abbrev, pitchers in rostered_starts.items():
+        for name, starts in pitchers.items():
+            pro_team_id = pitcher_pro_team.get(name)
+            if pro_team_id is None or not starts:
+                continue
+            existing_dates = {s["date"] for s in starts}
+            anchor = max(existing_dates)
+            for pdate in project_rotation(anchor, pro_team_id, team_sched,
+                                          week2_end_str, existing_dates):
+                game = team_sched.get(pro_team_id, {}).get(pdate)
+                if not game:
+                    continue
+                opp_id, home = game
+                starts.append({
+                    "date": pdate,
+                    "mlb_team": PRO_TEAM_MAP.get(pro_team_id, "?"),
+                    "opponent": PRO_TEAM_MAP.get(opp_id, "?"),
+                    "home": home,
+                    "projected": True,
+                })
+                proj_count += 1
+    print(f"  Projected {proj_count} week-2 rotation starts")
 
     # Add opponent OPS (30d standard + split-adjusted) to start info
     def annotate(name, starts):
@@ -643,6 +741,22 @@ def main():
             "last_updated": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
             "start_limit": START_LIMIT,
         },
+        "weeks": [
+            {
+                "label": "Week 1",
+                "week_start": week_start.strftime("%Y-%m-%d"),
+                "week_end": week_end.strftime("%Y-%m-%d"),
+                "dates": dates,
+                "projected": False,
+            },
+            {
+                "label": "Week 2",
+                "week_start": week2_start.strftime("%Y-%m-%d"),
+                "week_end": week2_end.strftime("%Y-%m-%d"),
+                "dates": dates2,
+                "projected": True,
+            },
+        ],
         "dates": dates,
         "team_ops_30d": team_ops,
         "fantasy_teams": output_teams,

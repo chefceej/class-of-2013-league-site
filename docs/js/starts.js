@@ -123,22 +123,12 @@ function dayHeader(date) {
 /* ── Counter ── */
 
 function updateCounter() {
-  const total = countSelectedStarts();
+  // Toolbar counter tracks the current (week 1) matchup — each week has its own cap.
+  const week1 = getWeeks()[0];
+  const total = week1 ? countSelectedInWeek(new Set(week1.dates || [])) : 0;
   const el = document.getElementById("start-counter");
   el.textContent = `${total} / ${START_LIMIT}`;
   el.className = "start-counter" + (total > START_LIMIT ? " over-limit" : total === START_LIMIT ? " at-limit" : "");
-}
-
-function countSelectedStarts() {
-  const pitchers = (state.data?.fantasy_teams?.[state.team] || []);
-  let count = 0;
-  for (const p of pitchers) {
-    for (const s of p.starts) {
-      if (state.checked.has(startKey(p.name, s.date))) count++;
-    }
-  }
-  count += state.streamChecked.size;
-  return count;
 }
 
 /* ── Get included streaming pitchers (full pitcher object, not just checked starts) ── */
@@ -154,6 +144,44 @@ function getIncludedStreamPitchers() {
 
 /* ── Rostered starts table ── */
 
+/* Weeks: prefer the new `weeks` array; fall back to legacy single-week shape. */
+function getWeeks() {
+  if (Array.isArray(state.data?.weeks) && state.data.weeks.length) {
+    return state.data.weeks;
+  }
+  return [{
+    label: "Week 1",
+    week_start: state.data?.metadata?.week_start,
+    week_end: state.data?.metadata?.week_end,
+    dates: state.data?.dates || [],
+    projected: false,
+  }];
+}
+
+function fmtRange(startStr, endStr) {
+  const opt = { month: "short", day: "numeric" };
+  const a = new Date(startStr + "T12:00:00").toLocaleDateString("en-US", opt);
+  const b = new Date(endStr + "T12:00:00").toLocaleDateString("en-US", opt);
+  return `${a} – ${b}`;
+}
+
+// Count a team's selected starts whose date falls within the given week.
+function countSelectedInWeek(dateSet) {
+  const pitchers = state.data?.fantasy_teams?.[state.team] || [];
+  let count = 0;
+  for (const p of pitchers) {
+    for (const s of p.starts) {
+      if (dateSet.has(s.date) && state.checked.has(startKey(p.name, s.date))) count++;
+    }
+  }
+  for (const p of getIncludedStreamPitchers()) {
+    for (const s of p.starts) {
+      if (dateSet.has(s.date) && state.streamChecked.has(startKey(p.name, s.date))) count++;
+    }
+  }
+  return count;
+}
+
 function render() {
   if (!state.data || !state.team) return;
 
@@ -161,56 +189,93 @@ function render() {
 
   const pitchers = state.data.fantasy_teams[state.team] || [];
   const streamPitchers = getIncludedStreamPitchers();
-  const dates = state.data.dates;
   const teamOps = state.data.team_ops_30d;
+  const weeks = getWeeks();
 
-  const headEl = document.getElementById("starts-head");
-  headEl.innerHTML = "";
-  const tr = document.createElement("tr");
+  const container = document.getElementById("starts-weeks");
+  container.innerHTML = "";
 
-  const cbTh = document.createElement("th");
-  cbTh.className = "starts-check-col";
-  tr.appendChild(cbTh);
+  weeks.forEach((week, wi) => {
+    const dates = week.dates || [];
+    const dateSet = new Set(dates);
+    // Streaming picks are week-1 only (their 2-week-out turns aren't meaningful).
+    const streamForWeek = wi === 0 ? streamPitchers : [];
 
-  const nameTh = document.createElement("th");
-  nameTh.textContent = "Pitcher";
-  nameTh.className = "starts-name-col";
-  tr.appendChild(nameTh);
+    const block = document.createElement("details");
+    block.className = "week-block" + (week.projected ? " week-projected" : "");
+    block.open = wi === 0;  // current week expanded, later weeks collapsed
 
-  for (const date of dates) {
-    const th = document.createElement("th");
-    th.innerHTML = dayHeader(date);
-    tr.appendChild(th);
-  }
+    const summary = document.createElement("summary");
+    summary.className = "week-summary";
+    const selCount = countSelectedInWeek(dateSet);
+    const overCls = selCount > START_LIMIT ? " over-limit" : selCount === START_LIMIT ? " at-limit" : "";
+    summary.innerHTML =
+      `<span class="week-title">${week.label || "Week " + (wi + 1)}</span>` +
+      `<span class="week-range">${fmtRange(week.week_start, week.week_end)}</span>` +
+      (week.projected ? `<span class="week-proj-badge">projected</span>` : "") +
+      `<span class="week-count${overCls}">${selCount} / ${START_LIMIT}</span>`;
+    block.appendChild(summary);
 
-  headEl.appendChild(tr);
+    if (week.projected) {
+      const note = document.createElement("p");
+      note.className = "week-proj-note";
+      note.innerHTML = `Estimated matchups. <span class="proj-dot">~</span> = rotation projection (dates roll each SP's turn onto their team's real schedule); solid cells are ESPN probables. Firms up as the week nears.`;
+      block.appendChild(note);
+    }
 
-  const bodyEl = document.getElementById("starts-body");
-  bodyEl.innerHTML = "";
+    const wrap = document.createElement("div");
+    wrap.className = "wide-table-wrapper";
+    const table = document.createElement("table");
+    table.className = "starts-table";
+    const thead = document.createElement("thead");
+    const tbody = document.createElement("tbody");
 
-  if (pitchers.length === 0 && streamPitchers.length === 0) {
-    const row = document.createElement("tr");
-    const td = document.createElement("td");
-    td.colSpan = dates.length + 2;
-    td.textContent = "No probable starts found for this team this week.";
-    td.style.cssText = "text-align:center;color:#64748b;padding:2rem";
-    row.appendChild(td);
-    bodyEl.appendChild(row);
-    updateCounter();
-    return;
-  }
+    const tr = document.createElement("tr");
+    const cbTh = document.createElement("th");
+    cbTh.className = "starts-check-col";
+    tr.appendChild(cbTh);
+    const nameTh = document.createElement("th");
+    nameTh.textContent = "Pitcher";
+    nameTh.className = "starts-name-col";
+    tr.appendChild(nameTh);
+    for (const date of dates) {
+      const th = document.createElement("th");
+      th.innerHTML = dayHeader(date);
+      tr.appendChild(th);
+    }
+    thead.appendChild(tr);
 
-  const sorted = [...pitchers].sort((a, b) =>
-    b.starts.length - a.starts.length || a.name.localeCompare(b.name)
-  );
+    // Only pitchers with at least one start in this week, sorted by that count.
+    const withStarts = pitchers
+      .map(p => ({ p, n: p.starts.filter(s => dateSet.has(s.date)).length }))
+      .filter(x => x.n > 0)
+      .sort((a, b) => b.n - a.n || a.p.name.localeCompare(b.p.name));
 
-  for (const pitcher of sorted) {
-    bodyEl.appendChild(buildRosteredRow(pitcher, dates, teamOps));
-  }
+    if (withStarts.length === 0 && streamForWeek.length === 0) {
+      const row = document.createElement("tr");
+      const td = document.createElement("td");
+      td.colSpan = dates.length + 2;
+      td.textContent = week.projected
+        ? "No projected starts for this team next week."
+        : "No probable starts found for this team this week.";
+      td.style.cssText = "text-align:center;color:#64748b;padding:2rem";
+      row.appendChild(td);
+      tbody.appendChild(row);
+    } else {
+      for (const { p } of withStarts) {
+        tbody.appendChild(buildRosteredRow(p, dates, teamOps));
+      }
+      for (const pitcher of streamForWeek) {
+        tbody.appendChild(buildStreamSelectedRow(pitcher, dates, teamOps));
+      }
+    }
 
-  for (const pitcher of streamPitchers) {
-    bodyEl.appendChild(buildStreamSelectedRow(pitcher, dates, teamOps));
-  }
+    table.appendChild(thead);
+    table.appendChild(tbody);
+    wrap.appendChild(table);
+    block.appendChild(wrap);
+    container.appendChild(block);
+  });
 
   updateCounter();
 }
@@ -222,13 +287,18 @@ function buildStartCell(start, isOn, teamOps, onClick) {
   if (isOn) td.classList.add("start-on");
   else td.classList.add("start-off");
   if (start.points != null) td.classList.add("start-played");
+  if (start.projected) {
+    td.classList.add("start-projected");
+    td.title = "Projected start (rotation estimate — not yet confirmed by ESPN)";
+  }
 
+  const projHtml = start.projected ? `<span class="proj-dot" aria-label="projected">~</span>` : "";
   const oppHtml = `<span class="opp-name">${start.home ? "" : "@"}${start.opponent}</span>`;
   const opsHtml = `<span class="opp-ops">${opsLabel(ops)}</span>`;
   const ptsHtml = start.points != null
     ? `<span class="start-points">${start.points.toFixed(1)}</span>`
     : "";
-  td.innerHTML = oppHtml + opsHtml + ptsHtml;
+  td.innerHTML = projHtml + oppHtml + opsHtml + ptsHtml;
 
   if (onClick) {
     td.style.cursor = "pointer";
@@ -238,17 +308,19 @@ function buildStartCell(start, isOn, teamOps, onClick) {
 }
 
 function buildRosteredRow(pitcher, dates, teamOps) {
+  const dateSet = new Set(dates);
+  const weekStarts = pitcher.starts.filter(s => dateSet.has(s.date));
   const startsByDate = {};
-  for (const s of pitcher.starts) startsByDate[s.date] = s;
+  for (const s of weekStarts) startsByDate[s.date] = s;
 
   const row = document.createElement("tr");
 
-  const allKeys = pitcher.starts.map(s => startKey(pitcher.name, s.date));
+  const allKeys = weekStarts.map(s => startKey(pitcher.name, s.date));
   const checkedCount = allKeys.filter(k => state.checked.has(k)).length;
-  const allChecked = checkedCount === pitcher.starts.length;
+  const allChecked = checkedCount === weekStarts.length;
   const noneChecked = checkedCount === 0;
 
-  if (noneChecked && pitcher.starts.length > 0) row.classList.add("pitcher-off");
+  if (noneChecked && weekStarts.length > 0) row.classList.add("pitcher-off");
 
   const cbTd = document.createElement("td");
   cbTd.className = "starts-check-col";
@@ -291,16 +363,18 @@ function buildRosteredRow(pitcher, dates, teamOps) {
 }
 
 function buildStreamSelectedRow(pitcher, dates, teamOps) {
+  const dateSet = new Set(dates);
+  const weekStarts = pitcher.starts.filter(s => dateSet.has(s.date));
   const startsByDate = {};
-  for (const s of pitcher.starts) startsByDate[s.date] = s;
+  for (const s of weekStarts) startsByDate[s.date] = s;
 
   const row = document.createElement("tr");
   row.classList.add("stream-selected-row");
 
-  const allKeys = pitcher.starts.map(s => startKey(pitcher.name, s.date));
+  const allKeys = weekStarts.map(s => startKey(pitcher.name, s.date));
   const checkedCount = allKeys.filter(k => state.streamChecked.has(k)).length;
   const noneChecked = checkedCount === 0;
-  if (noneChecked && pitcher.starts.length > 0) row.classList.add("pitcher-off");
+  if (noneChecked && weekStarts.length > 0) row.classList.add("pitcher-off");
 
   const cbTd = document.createElement("td");
   cbTd.className = "starts-check-col";
@@ -385,10 +459,12 @@ function renderGsSummary(data) {
   const actualGs = data.actual_gs || {};
   const limit = data.metadata?.start_limit || START_LIMIT;
 
+  const wk1Dates = new Set((getWeeks()[0]?.dates) || data.dates || []);
   const counts = teams.map(t => ({
     team: t,
     actual: actualGs[t] || 0,
-    probable: data.fantasy_teams[t].reduce((sum, p) => sum + p.starts.length, 0),
+    probable: data.fantasy_teams[t].reduce(
+      (sum, p) => sum + p.starts.filter(s => wk1Dates.has(s.date)).length, 0),
   }));
 
   counts.sort((a, b) => b.actual - a.actual || b.probable - a.probable);
