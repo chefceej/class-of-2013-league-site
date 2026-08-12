@@ -719,18 +719,24 @@ def main():
         if abbrev not in output_teams:
             output_teams[abbrev] = []
 
-    # Build streaming options (FA pitchers with starts + stats)
+    # Build streaming options (FA pitchers with starts + stats).
+    # Streaming is a week-1 view only, so drop any week-2 probables the widened
+    # fetch window picked up, and skip FAs with no week-1 start.
+    wk1_set = set(dates)
     streaming_options = []
     for pitcher_name, starts in sorted(fa_starters.items()):
+        wk1_starts = [s for s in starts if s["date"] in wk1_set]
+        if not wk1_starts:
+            continue
         stats = fa_stats.get(pitcher_name, {})
         streaming_options.append({
             "name": pitcher_name,
-            "mlb_team": starts[0]["mlb_team"] if starts else stats.get("mlb_team", "?"),
+            "mlb_team": wk1_starts[0]["mlb_team"],
             "season_pts": stats.get("season_pts", 0),
             "gs": stats.get("gs", 0),
             "pts_per_gs": stats.get("pts_per_gs", 0),
             "pr30_pts": stats.get("pr30_pts"),
-            "starts": sorted(starts, key=lambda s: s["date"]),
+            "starts": sorted(wk1_starts, key=lambda s: s["date"]),
         })
     streaming_options.sort(key=lambda x: x["pts_per_gs"], reverse=True)
 
@@ -738,6 +744,7 @@ def main():
         "metadata": {
             "week_start": week_start.strftime("%Y-%m-%d"),
             "week_end": week_end.strftime("%Y-%m-%d"),
+            "today": today_date.strftime("%Y-%m-%d"),
             "last_updated": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
             "start_limit": START_LIMIT,
         },

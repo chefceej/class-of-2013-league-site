@@ -9,6 +9,8 @@ let state = {
   streamIncluded: new Set(),  // streaming pitcher names included in planner view
   streamSort: "pts_per_gs",
   streamSortAsc: false,
+  streamGreenOnly: false,     // filter streaming to favorable (green) upcoming matchups
+  streamCollapsedDays: new Set(), // past day-columns collapsed in the streaming table
   opsMode: "30d",             // "30d" | "split"
   relievers: [],
   relieverSort: "status",     // default: due first, then by value
@@ -483,15 +485,58 @@ function renderGsSummary(data) {
 
 /* ── Streaming Options ── */
 
+function streamToday() {
+  return state.data?.metadata?.today || new Date().toLocaleDateString("en-CA");
+}
+
+function isGreenOps(ops) {
+  return ops != null && opsClass(ops) === "ops-easy";
+}
+
+// Best (lowest) opponent OPS among a pitcher's upcoming starts that are actually
+// shown in this table (visible week-1 columns, today or later).
+function bestUpcomingOps(pitcher, teamOps, today, dateSet) {
+  let best = null;
+  for (const s of pitcher.starts) {
+    if (!dateSet.has(s.date) || s.date < today) continue;
+    const ops = getStartOpsValue(s, teamOps);
+    if (ops == null) continue;
+    if (best == null || ops < best) best = ops;
+  }
+  return best;
+}
+
+function hasUpcomingGreen(pitcher, teamOps, today, dateSet) {
+  return pitcher.starts.some(
+    s => dateSet.has(s.date) && s.date >= today && isGreenOps(getStartOpsValue(s, teamOps))
+  );
+}
+
 function renderStreamingTable() {
   const data = state.data;
   if (!data) return;
   const options = data.streaming_options || [];
   const dates = data.dates;
   const teamOps = data.team_ops_30d;
+  const today = streamToday();
+  const dateSet = new Set(dates);  // only week-1 columns are shown in this table
 
-  const sorted = [...options].sort((a, b) => {
+  // Filter: only pitchers with a favorable (green) upcoming matchup.
+  let list = options;
+  if (state.streamGreenOnly) {
+    list = list.filter(p => hasUpcomingGreen(p, teamOps, today, dateSet));
+  }
+
+  const sorted = [...list].sort((a, b) => {
     const key = state.streamSort;
+    if (key === "bestOps") {
+      const oa = bestUpcomingOps(a, teamOps, today, dateSet);
+      const ob = bestUpcomingOps(b, teamOps, today, dateSet);
+      if (oa == null && ob == null) return 0;
+      if (oa == null) return 1;
+      if (ob == null) return -1;
+      return state.streamSortAsc ? oa - ob : ob - oa;  // asc = greenest first
+    }
     if (key.startsWith("day:")) {
       const date = key.slice(4);
       const opsA = getStartOpsForSort(a, date, teamOps);
@@ -538,13 +583,38 @@ function renderStreamingTable() {
   }
 
   for (const date of dates) {
+    const isPast = date < today;
+
+    if (state.streamCollapsedDays.has(date)) {
+      // Collapsed past-day: thin strip, click to expand.
+      const th = document.createElement("th");
+      th.className = "day-collapsed";
+      const dObj = new Date(date + "T12:00:00");
+      th.title = `${dObj.toLocaleDateString("en-US", { weekday: "short", month: "numeric", day: "numeric" })} — click to expand`;
+      th.innerHTML = `<span class="collapsed-label">${dObj.toLocaleDateString("en-US", { month: "numeric", day: "numeric" })}</span>`;
+      th.addEventListener("click", () => {
+        state.streamCollapsedDays.delete(date);
+        renderStreamingTable();
+      });
+      tr.appendChild(th);
+      continue;
+    }
+
     const th = document.createElement("th");
     const sortKey = "day:" + date;
     const active = state.streamSort === sortKey;
-    th.className = "sortable-col" + (active ? " sort-active" : "");
-    th.innerHTML = dayHeader(date) + (active ? `<br><span class="sort-arrow">${state.streamSortAsc ? "▲" : "▼"}</span>` : "");
+    th.className = "sortable-col" + (active ? " sort-active" : "") + (isPast ? " past-day" : "");
+    const collapseHandle = isPast
+      ? `<span class="col-collapse" title="Hide this past day">×</span>`
+      : "";
+    th.innerHTML = collapseHandle + dayHeader(date) + (active ? `<br><span class="sort-arrow">${state.streamSortAsc ? "▲" : "▼"}</span>` : "");
     th.style.cursor = "pointer";
-    th.addEventListener("click", () => {
+    th.addEventListener("click", (e) => {
+      if (e.target.classList.contains("col-collapse")) {
+        state.streamCollapsedDays.add(date);
+        renderStreamingTable();
+        return;
+      }
       if (state.streamSort === sortKey) state.streamSortAsc = !state.streamSortAsc;
       else { state.streamSort = sortKey; state.streamSortAsc = true; }
       renderStreamingTable();
@@ -561,10 +631,13 @@ function renderStreamingTable() {
     const row = document.createElement("tr");
     const td = document.createElement("td");
     td.colSpan = dates.length + 5;
-    td.textContent = "No streaming options found this week.";
+    td.textContent = state.streamGreenOnly
+      ? "No free agents with a green upcoming matchup. Turn off the green filter to see all."
+      : "No streaming options found this week.";
     td.style.cssText = "text-align:center;color:#64748b;padding:2rem";
     row.appendChild(td);
     bodyEl.appendChild(row);
+    syncStreamFilterUI();
     return;
   }
 
@@ -614,6 +687,12 @@ function renderStreamingTable() {
     }
 
     for (const date of dates) {
+      if (state.streamCollapsedDays.has(date)) {
+        const td = document.createElement("td");
+        td.className = "day-collapsed";
+        row.appendChild(td);
+        continue;
+      }
       const start = startsByDate[date];
       if (!start) {
         row.appendChild(document.createElement("td"));
@@ -632,6 +711,62 @@ function renderStreamingTable() {
 
     bodyEl.appendChild(row);
   }
+
+  syncStreamFilterUI();
+}
+
+// Which week-1 day columns are in the past (already played).
+function streamPastDates() {
+  const today = streamToday();
+  return (state.data?.dates || []).filter(d => d < today);
+}
+
+function syncStreamFilterUI() {
+  const green = document.getElementById("stream-green-toggle");
+  if (green) green.classList.toggle("active", state.streamGreenOnly);
+
+  const best = document.getElementById("stream-best-toggle");
+  if (best) best.classList.toggle("active", state.streamSort === "bestOps");
+
+  const hide = document.getElementById("stream-hidepast-toggle");
+  if (hide) {
+    const past = streamPastDates();
+    const allHidden = past.length > 0 && past.every(d => state.streamCollapsedDays.has(d));
+    hide.classList.toggle("active", allHidden);
+    hide.textContent = allHidden ? "Show past days" : "Hide past days";
+    hide.disabled = past.length === 0;
+  }
+}
+
+function initStreamFilters() {
+  const green = document.getElementById("stream-green-toggle");
+  if (green) green.addEventListener("click", () => {
+    state.streamGreenOnly = !state.streamGreenOnly;
+    renderStreamingTable();
+  });
+
+  const best = document.getElementById("stream-best-toggle");
+  if (best) best.addEventListener("click", () => {
+    if (state.streamSort === "bestOps") {
+      state.streamSortAsc = !state.streamSortAsc;
+    } else {
+      state.streamSort = "bestOps";
+      state.streamSortAsc = true;  // greenest (lowest OPS) first
+    }
+    renderStreamingTable();
+  });
+
+  const hide = document.getElementById("stream-hidepast-toggle");
+  if (hide) hide.addEventListener("click", () => {
+    const past = streamPastDates();
+    const allHidden = past.length > 0 && past.every(d => state.streamCollapsedDays.has(d));
+    if (allHidden) {
+      for (const d of past) state.streamCollapsedDays.delete(d);
+    } else {
+      for (const d of past) state.streamCollapsedDays.add(d);
+    }
+    renderStreamingTable();
+  });
 }
 
 function getStartOpsForSort(pitcher, date, teamOps) {
@@ -781,6 +916,7 @@ function loadData() {
       renderGsSummary(data);
       initTeamSelect(data);
       initOpsToggle();
+      initStreamFilters();
       render();
       initStreamGate();
     })

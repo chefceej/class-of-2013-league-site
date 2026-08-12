@@ -454,6 +454,112 @@ tr.pitcher-off .starts-check-col {
   margin-bottom: 1rem;
 }
 
+/* ── Streaming filter bar ── */
+.stream-filter-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin: -0.4rem 0 0.85rem;
+}
+
+.stream-filter-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.35rem 0.7rem;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: #cbd5e1;
+  background: #131c2e;
+  border: 1px solid #273449;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: background 0.12s ease, border-color 0.12s ease, color 0.12s ease;
+}
+
+.stream-filter-btn:hover {
+  background: #1a2438;
+  border-color: #3a4a63;
+}
+
+.stream-filter-btn.active {
+  color: #0b1220;
+  background: #7dd3a8;
+  border-color: #7dd3a8;
+}
+
+.stream-filter-btn:disabled {
+  opacity: 0.45;
+  cursor: default;
+}
+
+.stream-filter-btn .green-dot {
+  width: 0.62rem;
+  height: 0.62rem;
+  border-radius: 50%;
+  background: #2f9e5f;
+  border: 1px solid #3fce7d;
+}
+
+.stream-filter-btn.active .green-dot {
+  background: #14532d;
+  border-color: #14532d;
+}
+
+/* Collapse handle on past-day headers */
+.col-collapse {
+  display: inline-block;
+  font-size: 0.7rem;
+  line-height: 1;
+  color: #64748b;
+  padding: 0 0.15rem;
+  margin-bottom: 0.1rem;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+.col-collapse:hover {
+  color: #f87171;
+  background: rgba(248, 113, 113, 0.15);
+}
+
+#streaming-table th.past-day .day-name,
+#streaming-table th.past-day .day-date {
+  opacity: 0.6;
+}
+
+/* Collapsed (hidden) past-day column — thin strip, click to expand */
+#streaming-table th.day-collapsed,
+#streaming-table td.day-collapsed {
+  width: 14px;
+  min-width: 14px;
+  max-width: 14px;
+  padding: 0.2rem 0 !important;
+  background: #0d1424;
+  border-left: 1px solid #1e293b;
+  border-right: 1px solid #1e293b;
+  overflow: hidden;
+}
+
+#streaming-table th.day-collapsed {
+  cursor: pointer;
+  vertical-align: middle;
+}
+
+#streaming-table th.day-collapsed:hover {
+  background: #16203a;
+}
+
+.collapsed-label {
+  display: block;
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  font-size: 0.55rem;
+  color: #64748b;
+  letter-spacing: 0.02em;
+  margin: 0 auto;
+}
+
 /* ── Streaming table ── */
 #streaming-table {
   border-collapse: separate;
