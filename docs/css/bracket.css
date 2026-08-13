@@ -84,6 +84,63 @@
   font-style: italic;
 }
 
+.team-score {
+  font-size: 0.85rem;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  color: #94a3b8;
+  min-width: 3.2rem;
+  text-align: right;
+}
+
+/* In-progress leader of the current round */
+.matchup-team.leading {
+  background: rgba(56, 189, 148, 0.10);
+}
+.matchup-team.leading .team-name { color: #6ee7b7; }
+.matchup-team.leading .team-score { color: #34d399; }
+
+/* Settled winner (advanced) */
+.matchup-team.winner {
+  background: rgba(56, 189, 148, 0.16);
+}
+.matchup-team.winner .team-name { color: #a7f3d0; font-weight: 600; }
+.matchup-team.winner .team-score { color: #34d399; }
+
+/* Eliminated side of a settled matchup: dim it */
+.matchup:has(.winner) .matchup-team:not(.winner):not(.bye) {
+  opacity: 0.5;
+}
+
+/* Champion */
+.matchup-team.champion {
+  background: rgba(250, 204, 21, 0.16);
+}
+.matchup-team.champion .team-name { color: #fde68a; font-weight: 700; }
+.matchup-team.champion .team-score { color: #fbbf24; }
+
+/* Highlight the round currently being played */
+.bracket-round.active-round .round-label {
+  color: #34d399;
+}
+
+.bracket-legend {
+  font-size: 0.78rem;
+  color: #94a3b8;
+  line-height: 1.5;
+  margin: 0 0 1.25rem;
+}
+
+.legend-chip {
+  display: inline-block;
+  padding: 0.05rem 0.4rem;
+  border-radius: 4px;
+  font-weight: 700;
+  font-size: 0.72rem;
+}
+.legend-chip.legend-leading { background: rgba(56, 189, 148, 0.12); color: #34d399; }
+.legend-chip.legend-winner { background: rgba(56, 189, 148, 0.20); color: #a7f3d0; }
+
 .matchup-team.bye {
   background: #1e2535;
 }

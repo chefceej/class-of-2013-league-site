@@ -5,7 +5,7 @@
     "num_teams": 12,
     "total_weeks": 19,
     "playoff_cutoff": 6,
-    "last_updated": "2026-08-13T02:58:16Z",
+    "last_updated": "2026-08-13T03:09:02Z",
     "current_week": 19,
     "total_matchup_weeks": 19,
     "current_matchup_week": 19,
@@ -5211,6 +5211,12 @@
           "score": 11.75
         },
         {
+          "name": "Mike Trout",
+          "mlb_team": "LAA",
+          "fantasy_team": "CEEJ",
+          "score": 11.25
+        },
+        {
           "name": "Alec Burleson",
           "mlb_team": "StL",
           "fantasy_team": "STRN",
@@ -5221,12 +5227,6 @@
           "mlb_team": "KC",
           "fantasy_team": "SCHN",
           "score": 10.5
-        },
-        {
-          "name": "Jo Adell",
-          "mlb_team": "Cle",
-          "fantasy_team": "JM",
-          "score": 10.25
         }
       ]
     }
@@ -7778,5 +7778,45 @@
         "3B": 0.75
       }
     }
-  ]
+  ],
+  "playoff": {
+    "playoff_team_count": 6,
+    "regular_season_periods": 18,
+    "round_length_weeks": 2,
+    "current_matchup_period": 19,
+    "current_round": 1,
+    "rounds": [
+      {
+        "round": 1,
+        "matchup_period": 19,
+        "complete": false,
+        "scores": {
+          "BERN": 85.99,
+          "YOFF": 62.24,
+          "BKRF": 80.47,
+          "CEEJ": 69.62,
+          "STRN": 39.06,
+          "wOBA": 38.37,
+          "SW": 61.97,
+          "STEW": 37.17,
+          "PEDS": 63.47,
+          "SCHN": 54.11,
+          "DECA": 56.5,
+          "JM": 43.45
+        }
+      },
+      {
+        "round": 2,
+        "matchup_period": 20,
+        "complete": false,
+        "scores": {}
+      },
+      {
+        "round": 3,
+        "matchup_period": 21,
+        "complete": false,
+        "scores": {}
+      }
+    ]
+  }
 }

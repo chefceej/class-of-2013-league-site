@@ -389,6 +389,39 @@ def main():
         leader = top["all"][0] if top["all"] else None
         print(f"  MW {mw}: {leader['name']} ({leader['score']}) leads" if leader else f"  MW {mw}: no data")
 
+    # ── Playoff bracket scores ──
+    # Playoff rounds are ESPN matchup periods beyond the regular season, each spanning
+    # `playoffMatchupPeriodLength` weeks. fetch_period_scores already returned their
+    # per-team aggregate totals (bye-proof), so just shape them for the bracket page.
+    settings_data = req.league_get(params={"view": "mSettings"})
+    sched_settings = settings_data.get("settings", {}).get("scheduleSettings", {})
+    reg_periods = sched_settings.get("matchupPeriodCount", TOTAL_WEEKS - 1)
+    round_len = sched_settings.get("playoffMatchupPeriodLength", 2)
+    cur_mp = settings_data.get("status", {}).get("currentMatchupPeriod", current_espn_week)
+    num_playoff_rounds = max(1, (PLAYOFF_CUTOFF - 1).bit_length())  # 6 teams -> 3 rounds
+
+    playoff_rounds = []
+    for rnd, mp in enumerate(range(reg_periods + 1, reg_periods + num_playoff_rounds + 1), start=1):
+        rnd_scores = {}
+        for tid, sc in period_scores.get(mp, {}).items():
+            if tid in team_data:
+                rnd_scores[team_data[tid]["team_abbrev"]] = round(sc, 2)
+        playoff_rounds.append({
+            "round": rnd,
+            "matchup_period": mp,
+            "complete": cur_mp > mp,
+            "scores": rnd_scores,
+        })
+
+    playoff = {
+        "playoff_team_count": PLAYOFF_CUTOFF,
+        "regular_season_periods": reg_periods,
+        "round_length_weeks": round_len,
+        "current_matchup_period": cur_mp,
+        "current_round": max(0, cur_mp - reg_periods),
+        "rounds": playoff_rounds,
+    }
+
     output = {
         "metadata": {
             "league_id": LEAGUE_ID,
@@ -409,6 +442,7 @@ def main():
         },
         "top_players_by_week": top_players_by_week,
         "position_scores_by_week": position_scores_by_week,
+        "playoff": playoff,
     }
 
     os.makedirs(os.path.dirname(OUTPUT_PATH), exist_ok=True)
