@@ -1,0 +1,44 @@
+name: Deploy Pages
+
+on:
+  # The daily "Update League Data" job commits with the built-in token, whose
+  # pushes do NOT fire a `push` event — so deploy when that workflow finishes.
+  workflow_run:
+    workflows: ["Update League Data"]
+    types: [completed]
+  # Direct pushes to main (code/content changes) still deploy normally.
+  push:
+    branches: [main]
+    paths:
+      - 'docs/**'
+      - '.github/workflows/deploy_pages.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Serialize deploys; let an in-progress one finish rather than cancelling it.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    # Skip pointless redeploys when the data job failed (main is unchanged then).
+    if: ${{ github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success' }}
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main   # always publish the latest committed data on main
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: docs
+      - id: deployment
+        uses: actions/deploy-pages@v4
