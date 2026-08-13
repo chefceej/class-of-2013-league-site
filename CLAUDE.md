@@ -46,6 +46,8 @@ Dependencies for `main.py`: `espn_api`, `gspread`, `oauth2client`.
 
 **`.github/workflows/update_data.yml`** — Runs `fetch_data.py` daily at 7 AM UTC and commits updated JSON.
 
+**`.github/workflows/deploy_pages.yml`** — Deploys `docs/` to GitHub Pages via an Actions workflow (repo Pages `build_type: workflow`, NOT the legacy branch builder). Triggers on `workflow_run` after "Update League Data" finishes (its bot-token commit doesn't fire a `push` event) and on direct `push` to main touching `docs/**`. Deploys take ~20s. Do not use the old `gh api --method POST .../pages/builds` force-rebuild — the legacy builder is disabled.
+
 **`data/`** — Currently empty; likely intended for local data caching.
 
 ## Key Configuration
@@ -59,7 +61,7 @@ Dependencies for `main.py`: `espn_api`, `gspread`, `oauth2client`.
 
 ## GitHub Pages Setup
 
-1. Push repo to GitHub, then: Settings → Pages → Source: `main` branch, `/docs` folder
+1. Repo Settings → Pages → Source: **GitHub Actions** (build_type `workflow`). Publishing is handled by `deploy_pages.yml`, not a branch/folder source. (Was previously `main` branch `/docs` via the legacy builder, which hung repeatedly — migrated 2026-08-12.)
 2. Settings → Secrets → Add `ESPN_S2` and `SWID` (copy from `src/main.py` or browser cookies)
 3. Run `python src/fetch_data.py` locally to generate initial JSON, commit it
 4. Trigger workflow manually in Actions tab to verify
