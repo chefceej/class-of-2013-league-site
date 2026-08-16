@@ -1,6 +1,6 @@
 {
   "metadata": {
-    "last_updated": "2026-08-15T07:27:29Z",
+    "last_updated": "2026-08-16T03:46:35Z",
     "today": "2026-08-15",
     "current_sp": 144,
     "season_year": 2026,
@@ -11,6 +11,13 @@
     }
   },
   "relievers": [
+    {
+      "name": "Samy Natera Jr.",
+      "mlb_team": "LAA",
+      "status": "due",
+      "days_since": 4,
+      "pts_per_ip": 2.71
+    },
     {
       "name": "Lake Bachar",
       "mlb_team": "Pit",
@@ -33,25 +40,11 @@
       "pts_per_ip": 1.59
     },
     {
-      "name": "Brad Lord",
-      "mlb_team": "Wsh",
-      "status": "due",
-      "days_since": 6,
-      "pts_per_ip": 1.49
-    },
-    {
       "name": "Drew Anderson",
       "mlb_team": "Det",
       "status": "due",
       "days_since": 4,
       "pts_per_ip": 1.41
-    },
-    {
-      "name": "Will Dion",
-      "mlb_team": "Wsh",
-      "status": "due",
-      "days_since": 6,
-      "pts_per_ip": 1.34
     },
     {
       "name": "Mason Black",
@@ -82,6 +75,13 @@
       "pts_per_ip": 1.87
     },
     {
+      "name": "Wilber Dotel",
+      "mlb_team": "Pit",
+      "status": "rested",
+      "days_since": 0,
+      "pts_per_ip": 1.66
+    },
+    {
       "name": "Luis Medina",
       "mlb_team": "Oak",
       "status": "rested",
@@ -89,11 +89,25 @@
       "pts_per_ip": 1.65
     },
     {
-      "name": "Luis Mey",
-      "mlb_team": "Cin",
+      "name": "Will Dion",
+      "mlb_team": "Wsh",
       "status": "rested",
-      "days_since": 2,
-      "pts_per_ip": 1.44
+      "days_since": 0,
+      "pts_per_ip": 1.61
+    },
+    {
+      "name": "Victor Mederos",
+      "mlb_team": "Atl",
+      "status": "rested",
+      "days_since": 0,
+      "pts_per_ip": 1.59
+    },
+    {
+      "name": "Brad Lord",
+      "mlb_team": "Wsh",
+      "status": "rested",
+      "days_since": 0,
+      "pts_per_ip": 1.49
     },
     {
       "name": "Jonathan Pintaro",
@@ -148,8 +162,8 @@
       "name": "Ron Marinaccio",
       "mlb_team": "Cin",
       "status": "rested",
-      "days_since": 3,
-      "pts_per_ip": 0.77
+      "days_since": 0,
+      "pts_per_ip": 0.76
     }
   ]
 }
