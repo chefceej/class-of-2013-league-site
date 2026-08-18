@@ -2,8 +2,8 @@
   "metadata": {
     "week_start": "2026-08-17",
     "week_end": "2026-08-23",
-    "today": "2026-08-17",
-    "last_updated": "2026-08-18T03:41:58Z",
+    "today": "2026-08-18",
+    "last_updated": "2026-08-18T07:33:55Z",
     "start_limit": 8
   },
   "weeks": [
@@ -90,6 +90,7 @@
             "mlb_team": "LAD",
             "opponent": "Col",
             "home": false,
+            "points": 12.9,
             "opponent_ops": 0.721,
             "opponent_ops_split": 0.705,
             "pitcher_hand": "L"
@@ -264,6 +265,7 @@
             "mlb_team": "ChW",
             "opponent": "ChC",
             "home": false,
+            "points": 0.8,
             "opponent_ops": 0.785,
             "opponent_ops_split": 0.784,
             "pitcher_hand": "R"
@@ -494,6 +496,7 @@
             "mlb_team": "NYM",
             "opponent": "SD",
             "home": true,
+            "points": 8.9,
             "opponent_ops": 0.765,
             "opponent_ops_split": 0.812,
             "pitcher_hand": "R"
@@ -812,6 +815,7 @@
             "mlb_team": "Phi",
             "opponent": "Mia",
             "home": true,
+            "points": 10.4,
             "opponent_ops": 0.723,
             "opponent_ops_split": 0.7
           },
@@ -1017,6 +1021,7 @@
             "mlb_team": "ChC",
             "opponent": "ChW",
             "home": true,
+            "points": 9.9,
             "opponent_ops": 0.741,
             "opponent_ops_split": 0.715,
             "pitcher_hand": "L"
@@ -1077,6 +1082,7 @@
             "mlb_team": "Det",
             "opponent": "Pit",
             "home": false,
+            "points": 4.1,
             "opponent_ops": 0.654,
             "opponent_ops_split": 0.678,
             "pitcher_hand": "L"
@@ -1393,6 +1399,7 @@
             "mlb_team": "KC",
             "opponent": "Oak",
             "home": true,
+            "points": 3.0,
             "opponent_ops": 0.674,
             "opponent_ops_split": 0.624,
             "pitcher_hand": "R"
@@ -2227,38 +2234,6 @@
         ]
       },
       {
-        "name": "Shohei Ohtani",
-        "mlb_team": "LAD",
-        "starts": [
-          {
-            "date": "2026-08-17",
-            "mlb_team": "LAD",
-            "opponent": "Col",
-            "home": false,
-            "opponent_ops": 0.721,
-            "opponent_ops_split": 0.707
-          },
-          {
-            "date": "2026-08-22",
-            "mlb_team": "LAD",
-            "opponent": "Pit",
-            "home": true,
-            "projected": true,
-            "opponent_ops": 0.654,
-            "opponent_ops_split": 0.689
-          },
-          {
-            "date": "2026-08-27",
-            "mlb_team": "LAD",
-            "opponent": "Atl",
-            "home": false,
-            "projected": true,
-            "opponent_ops": 0.693,
-            "opponent_ops_split": 0.738
-          }
-        ]
-      },
-      {
         "name": "Sonny Gray",
         "mlb_team": "Bos",
         "starts": [
@@ -2511,6 +2486,7 @@
             "mlb_team": "TB",
             "opponent": "Bal",
             "home": true,
+            "points": 1.2,
             "opponent_ops": 0.722,
             "opponent_ops_split": 0.72,
             "pitcher_hand": "L"
@@ -2546,6 +2522,7 @@
             "mlb_team": "Bal",
             "opponent": "TB",
             "home": false,
+            "points": -1.8,
             "opponent_ops": 0.765,
             "opponent_ops_split": 0.818,
             "pitcher_hand": "R"
@@ -2815,6 +2792,25 @@
           "opponent_ops": 0.654,
           "opponent_ops_split": 0.724,
           "pitcher_hand": "R"
+        }
+      ]
+    },
+    {
+      "name": "Bryan Hudson",
+      "mlb_team": "ChW",
+      "season_pts": 96.85,
+      "gs": 6,
+      "pts_per_gs": 16.14,
+      "pr30_pts": 14.64,
+      "starts": [
+        {
+          "date": "2026-08-18",
+          "mlb_team": "ChW",
+          "opponent": "ChC",
+          "home": false,
+          "opponent_ops": 0.785,
+          "opponent_ops_split": 0.849,
+          "pitcher_hand": "L"
         }
       ]
     },
