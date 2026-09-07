@@ -5,7 +5,7 @@
     "num_teams": 12,
     "total_weeks": 19,
     "playoff_cutoff": 6,
-    "last_updated": "2026-09-06T11:30:13Z",
+    "last_updated": "2026-09-07T07:54:21Z",
     "current_week": 19,
     "total_matchup_weeks": 19,
     "current_matchup_week": 19,
@@ -7783,8 +7783,8 @@
     "playoff_team_count": 6,
     "regular_season_periods": 18,
     "round_length_weeks": 2,
-    "current_matchup_period": 20,
-    "current_round": 2,
+    "current_matchup_period": 21,
+    "current_round": 3,
     "rounds": [
       {
         "round": 1,
@@ -7808,27 +7808,40 @@
       {
         "round": 2,
         "matchup_period": 20,
-        "complete": false,
+        "complete": true,
         "scores": {
-          "BERN": 412.65,
-          "BKRF": 450.61,
-          "wOBA": 454.6,
-          "STRN": 374.49,
-          "YOFF": 334.72,
-          "CEEJ": 313.38,
-          "PEDS": 331.99,
-          "STEW": 262.34,
-          "SW": 374.27,
-          "JM": 416.46,
-          "SCHN": 388.03,
-          "DECA": 382.29
+          "BERN": 453.6,
+          "BKRF": 491.01,
+          "wOBA": 520.87,
+          "STRN": 400.55,
+          "YOFF": 365.28,
+          "CEEJ": 338.47,
+          "PEDS": 359.66,
+          "STEW": 294.82,
+          "SW": 423.49,
+          "JM": 441.96,
+          "SCHN": 454.12,
+          "DECA": 412.17
         }
       },
       {
         "round": 3,
         "matchup_period": 21,
         "complete": false,
-        "scores": {}
+        "scores": {
+          "wOBA": 0.0,
+          "BKRF": 0.0,
+          "BERN": 0.0,
+          "STRN": 0.0,
+          "YOFF": 0.0,
+          "CEEJ": 0.0,
+          "PEDS": 0.0,
+          "JM": 0.0,
+          "SCHN": 0.0,
+          "STEW": 0.0,
+          "SW": 0.0,
+          "DECA": 0.0
+        }
       }
     ]
   }
