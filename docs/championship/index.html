@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Championship Start Planner — I'm Ben F'n Mendel</title>
+  <link rel="stylesheet" href="../css/styles.css" />
+  <link rel="stylesheet" href="../css/starts.css" />
+  <link rel="stylesheet" href="champ.css" />
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1 id="team-name">Championship Start Planner</h1>
+      <p class="subtitle">2-Week Championship · continuous 14-day plan · 24 starts total</p>
+      <p class="last-updated" id="last-updated"></p>
+    </header>
+
+    <section class="table-section">
+      <div class="champ-controls">
+        <div class="counter-block">
+          <span class="control-label">Starts selected</span>
+          <span id="start-counter" class="start-counter">0 / 24</span>
+          <span id="week-breakdown" class="week-breakdown"></span>
+        </div>
+
+        <div class="control-cluster">
+          <div class="toggle-wrap">
+            <span class="control-label">Days</span>
+            <button id="hidepast-toggle" class="chip-btn" type="button">Hide past days</button>
+          </div>
+          <div class="toggle-wrap">
+            <span class="control-label">Opponent OPS</span>
+            <div id="ops-mode-toggle" class="ops-mode-toggle">
+              <button class="ops-toggle-btn active" data-mode="30d" title="Trailing 30-day team OPS">30d</button>
+              <button class="ops-toggle-btn" data-mode="split" title="Trailing 45-day OPS, split by home/away and pitcher handedness">Hardcore</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="wide-table-wrapper">
+        <table id="starts-table" class="starts-table champ-table">
+          <thead id="starts-head"></thead>
+          <tbody id="starts-body"></tbody>
+        </table>
+      </div>
+
+      <p id="ops-legend-standard" class="ops-legend">
+        Opponent OPS (last 30 days):
+        <span class="ops-chip ops-easy">≤ .680</span>
+        <span class="ops-chip ops-ok">.681–.740</span>
+        <span class="ops-chip ops-tough">&gt; .740</span>
+        <span class="ops-chip ops-none">No data</span>
+        <span class="legend-proj"><span class="proj-dot">~</span> rotation projection (not yet confirmed)</span>
+      </p>
+      <p id="ops-legend-split" class="ops-legend" style="display:none;">
+        Opponent OPS (45d, split by home/away &amp; vs pitcher handedness):
+        <span class="ops-chip ops-easy">≤ .680</span>
+        <span class="ops-chip ops-ok">.681–.740</span>
+        <span class="ops-chip ops-tough">&gt; .740</span>
+        <span class="ops-chip ops-none">No data</span>
+        <span class="legend-proj"><span class="proj-dot">~</span> rotation projection (not yet confirmed)</span>
+      </p>
+    </section>
+
+    <section class="table-section streaming-section">
+      <h2 class="section-heading">Stream Assistant</h2>
+      <p class="section-sub">Free-agent starters and bulk relievers worth adding to hit 24 starts</p>
+
+      <div id="stream-content">
+        <div class="stream-tab-toggle" id="stream-tab-toggle">
+          <button class="stream-tab-btn active" data-tab="starters">Starting Pitchers</button>
+          <button class="stream-tab-btn" data-tab="relievers">Bulk Relievers</button>
+        </div>
+
+        <div id="stream-pane-starters" class="stream-pane">
+          <p class="section-sub">Free-agent starting pitchers with a start in the 14-day window. Check to fold their turns into your plan above.</p>
+          <div class="stream-filter-bar">
+            <button id="stream-green-toggle" class="stream-filter-btn" type="button">
+              <span class="green-dot"></span> Green matchups only
+            </button>
+            <button id="stream-best-toggle" class="stream-filter-btn" type="button">Sort by best matchup</button>
+            <button id="stream-hidepast-toggle" class="stream-filter-btn" type="button">Hide past days</button>
+          </div>
+          <div class="wide-table-wrapper">
+            <table id="streaming-table">
+              <thead id="streaming-head"></thead>
+              <tbody id="streaming-body"></tbody>
+            </table>
+          </div>
+        </div>
+
+        <div id="stream-pane-relievers" class="stream-pane" style="display:none;">
+          <p class="section-sub">Overlooked multi-inning free-agent relievers, ranked by points per inning. &ldquo;Due&rdquo; = at or past their usual rest between outings.</p>
+          <div class="wide-table-wrapper">
+            <table id="reliever-table">
+              <thead id="reliever-head"></thead>
+              <tbody id="reliever-body"></tbody>
+            </table>
+          </div>
+          <p class="reliever-note" id="reliever-note"></p>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <p>Data from ESPN Fantasy Baseball &amp; MLB Stats API · Updated daily via GitHub Actions</p>
+    </footer>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
