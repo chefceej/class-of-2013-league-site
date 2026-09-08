@@ -1,0 +1,114 @@
+/* ── Championship planner: supplemental styles on top of styles.css + starts.css ── */
+
+.control-label {
+  display: block;
+  font-size: 0.72rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #64748b;
+  margin-bottom: 0.3rem;
+}
+
+/* Controls layout */
+.champ-controls {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 1.5rem;
+  margin-bottom: 1.25rem;
+  flex-wrap: wrap;
+}
+
+.counter-block { display: flex; flex-direction: column; }
+
+.start-counter {
+  font-size: 1.7rem;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  color: #4ade80;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+}
+.start-counter.at-limit { color: #facc15; }
+.start-counter.over-limit { color: #f87171; }
+
+.week-breakdown {
+  margin-top: 0.25rem;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: #94a3b8;
+  font-variant-numeric: tabular-nums;
+}
+.week-breakdown .wk-sep { margin: 0 0.4rem; color: #475569; }
+.week-breakdown .wk-full { color: #34d399; }
+.week-breakdown .wk-over { color: #f87171; }
+
+.control-cluster {
+  display: flex;
+  align-items: flex-end;
+  gap: 1.25rem;
+  flex-wrap: wrap;
+}
+.toggle-wrap { display: flex; flex-direction: column; }
+
+/* Chip button (Hide past days in the controls row) */
+.chip-btn {
+  padding: 0.4rem 0.85rem;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: #cbd5e1;
+  background: #131c2e;
+  border: 1px solid #273449;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: background 0.12s, border-color 0.12s, color 0.12s;
+}
+.chip-btn:hover { background: #1a2438; border-color: #3a4a63; }
+.chip-btn.active { color: #0b1220; background: #7dd3a8; border-color: #7dd3a8; }
+.chip-btn:disabled { opacity: 0.45; cursor: default; }
+
+.legend-proj { color: #64748b; }
+.legend-proj .proj-dot {
+  position: static;
+  color: #fbbf24;
+  font-weight: 700;
+  margin-right: 0.15rem;
+}
+
+/* ── Generalize past-day + collapse styling to the planner table ──
+   (starts.css scopes these to #streaming-table only) */
+#starts-table th.past-day .day-name,
+#starts-table th.past-day .day-date { opacity: 0.6; }
+
+#starts-table th.day-collapsed,
+#starts-table td.day-collapsed {
+  width: 14px;
+  min-width: 14px;
+  max-width: 14px;
+  padding: 0.2rem 0 !important;
+  background: #0d1424;
+  border-left: 1px solid #1e293b;
+  border-right: 1px solid #1e293b;
+  overflow: hidden;
+}
+#starts-table th.day-collapsed { cursor: pointer; vertical-align: middle; }
+#starts-table th.day-collapsed:hover { background: #16203a; }
+
+/* ── Mobile: the 14-column planner is inherently wide — let it scroll
+   horizontally (override starts.css's fixed/hidden 7-column layout). The
+   Hide-past-days control trims it down as the matchup progresses. ── */
+@media (max-width: 600px) {
+  .champ-controls { gap: 1rem; }
+  .start-counter { font-size: 1.4rem; }
+
+  .wide-table-wrapper:has(.champ-table) { overflow-x: auto; }
+  .champ-table { table-layout: auto; width: auto; min-width: 100%; }
+
+  /* Keep the pitcher name column readable while scrolling */
+  .champ-table .starts-name-col {
+    min-width: 5.5rem;
+    width: 5.5rem;
+  }
+  .champ-table .pitcher-name { max-width: 5.5rem; }
+}
