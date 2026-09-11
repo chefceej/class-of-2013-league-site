@@ -220,11 +220,64 @@ function buildBracket(containerEl, rounds, currentRoundIdx) {
     ["Round 1", "Semifinals", "Championship"],
     { topBye: 1, a1: 3, a2: 6, b1: 4, b2: 5, botBye: 2 }
   );
-  // Losers: 12 & 11 bye, 10v7, 9v8
-  const losersRounds = buildRounds(
-    ["Round 1", "Semifinals", "Toilet Bowl"],
-    { topBye: 12, a1: 10, a2: 7, b1: 9, b2: 8, botBye: 11 }
-  );
+  // ── Losers bracket (consolation) — explicit, commissioner-corrected ──
+  // ESPN runs the bottom six as a LOSERS_CONSOLATION_LADDER: all six teams play
+  // every round and are re-paired by cumulative consolation points, so there is
+  // no single-elim bracket to derive from seeds. Per the commissioner the final
+  // round pairs by total points — #1 JM vs #2 SCHN (McNeal v Schneider) and
+  // #3 DECA vs #4 SW (DeCamp v Winter) — so the losers matchups are specified
+  // by hand here instead of via buildRounds(). R1 scores are suppressed because
+  // the ladder's advancement is by cumulative points, not that round's score.
+  const teamByAbbrev = {};
+  for (const t of teams) teamByAbbrev[t.team_abbrev] = t;
+  function lTeam(abbrev) {
+    const t = teamByAbbrev[abbrev];
+    return { seed: null, abbrev, name: t ? `${abbrev} — ${t.team_name}` : abbrev };
+  }
+  // A losers matchup. `winner` (an abbrev) forces the advancer; otherwise the
+  // higher score wins once the round is settled. `showScores:false` hides the
+  // round's scores (used for R1, where score ≠ who advances).
+  function lGame(aAbbrev, bAbbrev, roundIdx, opts) {
+    opts = opts || {};
+    const A = lTeam(aAbbrev), B = lTeam(bAbbrev);
+    const show = opts.showScores !== false;
+    A.score = show ? (roundScore(roundIdx, aAbbrev) ?? null) : null;
+    B.score = show ? (roundScore(roundIdx, bAbbrev) ?? null) : null;
+    let winner = opts.winner;
+    if (!winner && A.score != null && B.score != null && A.score !== B.score) {
+      winner = A.score > B.score ? aAbbrev : bAbbrev;
+    }
+    if (winner) {
+      const w = winner === aAbbrev ? A : B;
+      if (roundSettled(roundIdx)) w.won = true; else w.leading = true;
+    }
+    return [A, B];
+  }
+  function lBye(abbrev) {
+    return { ...lTeam(abbrev), bye: true, score: null };
+  }
+
+  const losersRounds = [
+    {
+      label: "Round 1", dates: r1Dates, matchups: [
+        [lBye("JM"), tbd("BYE")],
+        lGame("SCHN", "PEDS", 0, { winner: "SCHN", showScores: false }),
+        lGame("SW", "STEW", 0, { winner: "SW", showScores: false }),
+        [lBye("DECA"), tbd("BYE")],
+      ],
+    },
+    {
+      label: "Semifinals", dates: r2Dates, matchups: [
+        lGame("SCHN", "JM", 1),
+        lGame("SW", "DECA", 1),
+      ],
+    },
+    {
+      label: "Toilet Bowl", dates: r3Dates, matchups: [
+        lGame("SCHN", "SW", 2),
+      ],
+    },
+  ];
 
   const currentRoundIdx = (playoff.current_round || 1) - 1;
   buildBracket(document.getElementById("winners-bracket"), winnersRounds, currentRoundIdx);
