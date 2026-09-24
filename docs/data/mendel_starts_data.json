@@ -7,8 +7,8 @@
     "season": 2026,
     "window_start": "2026-09-21",
     "window_end": "2026-10-04",
-    "today": "2026-09-23",
-    "last_updated": "2026-09-23T12:32:37Z",
+    "today": "2026-09-24",
+    "last_updated": "2026-09-24T08:09:15Z",
     "start_limit_week": 12,
     "start_limit_total": 24
   },
@@ -63,36 +63,36 @@
     "2026-10-04"
   ],
   "team_ops_30d": {
-    "Mil": 0.781,
-    "SD": 0.79,
-    "ChC": 0.831,
-    "Pit": 0.755,
-    "Tor": 0.736,
-    "Col": 0.727,
-    "NYM": 0.75,
-    "LAD": 0.804,
-    "Ari": 0.723,
-    "Cle": 0.732,
-    "Atl": 0.711,
-    "NYY": 0.716,
-    "TB": 0.712,
-    "Sea": 0.727,
-    "Det": 0.732,
+    "SD": 0.785,
+    "Mil": 0.775,
+    "ChC": 0.822,
+    "Pit": 0.747,
+    "Tor": 0.726,
+    "Col": 0.721,
+    "LAD": 0.8,
+    "NYM": 0.751,
+    "NYY": 0.732,
+    "Ari": 0.719,
     "Mia": 0.732,
-    "Tex": 0.716,
-    "Oak": 0.713,
-    "Cin": 0.714,
-    "StL": 0.667,
-    "SF": 0.704,
-    "Phi": 0.679,
-    "Wsh": 0.677,
-    "KC": 0.701,
-    "Min": 0.684,
-    "Hou": 0.704,
-    "LAA": 0.642,
-    "Bos": 0.679,
-    "Bal": 0.657,
-    "ChW": 0.681
+    "Sea": 0.725,
+    "Atl": 0.712,
+    "Cle": 0.721,
+    "Det": 0.733,
+    "TB": 0.705,
+    "Oak": 0.725,
+    "StL": 0.669,
+    "KC": 0.706,
+    "Cin": 0.707,
+    "SF": 0.694,
+    "Tex": 0.698,
+    "Min": 0.685,
+    "Phi": 0.674,
+    "Wsh": 0.674,
+    "Hou": 0.707,
+    "Bos": 0.678,
+    "LAA": 0.647,
+    "ChW": 0.678,
+    "Bal": 0.65
   },
   "pitchers": [
     {
@@ -104,8 +104,8 @@
           "mlb_team": "Min",
           "opponent": "Tex",
           "home": true,
-          "opponent_ops": 0.716,
-          "opponent_ops_split": 0.694,
+          "opponent_ops": 0.698,
+          "opponent_ops_split": 0.684,
           "pitcher_hand": "R"
         }
       ]
@@ -119,7 +119,7 @@
           "mlb_team": "LAA",
           "opponent": "Sea",
           "home": false,
-          "opponent_ops": 0.727,
+          "opponent_ops": 0.725,
           "opponent_ops_split": 0.711,
           "pitcher_hand": "R"
         }
@@ -134,8 +134,8 @@
           "mlb_team": "Mia",
           "opponent": "Atl",
           "home": true,
-          "opponent_ops": 0.711,
-          "opponent_ops_split": 0.663,
+          "opponent_ops": 0.712,
+          "opponent_ops_split": 0.662,
           "pitcher_hand": "R"
         }
       ]
@@ -155,47 +155,9 @@
           "mlb_team": "Tor",
           "opponent": "Cin",
           "home": true,
-          "opponent_ops": 0.714,
-          "opponent_ops_split": 0.69,
+          "opponent_ops": 0.707,
+          "opponent_ops_split": 0.685,
           "pitcher_hand": "R"
-        }
-      ]
-    },
-    {
-      "name": "Tim Mayza",
-      "mlb_team": "Phi",
-      "season_pts": 136.0,
-      "gs": 6,
-      "pts_per_gs": 22.67,
-      "pr30_pts": 12.0,
-      "starts": [
-        {
-          "date": "2026-09-24",
-          "mlb_team": "Phi",
-          "opponent": "Mil",
-          "home": true,
-          "opponent_ops": 0.781,
-          "opponent_ops_split": 0.703,
-          "pitcher_hand": "L"
-        }
-      ]
-    },
-    {
-      "name": "Bryan Hudson",
-      "mlb_team": "ChW",
-      "season_pts": 162.0,
-      "gs": 8,
-      "pts_per_gs": 20.25,
-      "pr30_pts": 42.0,
-      "starts": [
-        {
-          "date": "2026-09-23",
-          "mlb_team": "ChW",
-          "opponent": "KC",
-          "home": false,
-          "opponent_ops": 0.701,
-          "opponent_ops_split": 0.782,
-          "pitcher_hand": "L"
         }
       ]
     },
@@ -212,8 +174,8 @@
           "mlb_team": "NYY",
           "opponent": "TB",
           "home": true,
-          "opponent_ops": 0.712,
-          "opponent_ops_split": 0.693,
+          "opponent_ops": 0.705,
+          "opponent_ops_split": 0.691,
           "pitcher_hand": "R"
         }
       ]
@@ -231,9 +193,28 @@
           "mlb_team": "Det",
           "opponent": "Wsh",
           "home": true,
-          "opponent_ops": 0.677,
-          "opponent_ops_split": 0.628,
+          "opponent_ops": 0.674,
+          "opponent_ops_split": 0.626,
           "pitcher_hand": "R"
+        }
+      ]
+    },
+    {
+      "name": "Bryan Hudson",
+      "mlb_team": "ChW",
+      "season_pts": 153.0,
+      "gs": 9,
+      "pts_per_gs": 17.0,
+      "pr30_pts": 33.0,
+      "starts": [
+        {
+          "date": "2026-09-23",
+          "mlb_team": "ChW",
+          "opponent": "KC",
+          "home": false,
+          "opponent_ops": 0.706,
+          "opponent_ops_split": 0.783,
+          "pitcher_hand": "L"
         }
       ]
     },
@@ -250,36 +231,8 @@
           "mlb_team": "LAD",
           "opponent": "SD",
           "home": true,
-          "opponent_ops": 0.79,
-          "opponent_ops_split": 0.794,
-          "pitcher_hand": "R"
-        }
-      ]
-    },
-    {
-      "name": "Lake Bachar",
-      "mlb_team": "Pit",
-      "season_pts": 179.0,
-      "gs": 11,
-      "pts_per_gs": 16.27,
-      "pr30_pts": 27.0,
-      "starts": [
-        {
-          "date": "2026-09-23",
-          "mlb_team": "Pit",
-          "opponent": "StL",
-          "home": true,
-          "opponent_ops": 0.667,
-          "opponent_ops_split": 0.716,
-          "pitcher_hand": "R"
-        },
-        {
-          "date": "2026-09-26",
-          "mlb_team": "Pit",
-          "opponent": "Det",
-          "home": false,
-          "opponent_ops": 0.732,
-          "opponent_ops_split": 0.707,
+          "opponent_ops": 0.785,
+          "opponent_ops_split": 0.79,
           "pitcher_hand": "R"
         }
       ]
@@ -297,8 +250,8 @@
           "mlb_team": "NYM",
           "opponent": "Wsh",
           "home": false,
-          "opponent_ops": 0.677,
-          "opponent_ops_split": 0.674,
+          "opponent_ops": 0.674,
+          "opponent_ops_split": 0.673,
           "pitcher_hand": "R"
         }
       ]
@@ -316,27 +269,74 @@
           "mlb_team": "Bos",
           "opponent": "Cle",
           "home": true,
-          "opponent_ops": 0.732,
-          "opponent_ops_split": 0.687,
+          "opponent_ops": 0.721,
+          "opponent_ops_split": 0.678,
           "pitcher_hand": "L"
+        }
+      ]
+    },
+    {
+      "name": "Lake Bachar",
+      "mlb_team": "Pit",
+      "season_pts": 184.0,
+      "gs": 12,
+      "pts_per_gs": 15.33,
+      "pr30_pts": 32.0,
+      "starts": [
+        {
+          "date": "2026-09-23",
+          "mlb_team": "Pit",
+          "opponent": "StL",
+          "home": true,
+          "opponent_ops": 0.669,
+          "opponent_ops_split": 0.716,
+          "pitcher_hand": "R"
+        },
+        {
+          "date": "2026-09-26",
+          "mlb_team": "Pit",
+          "opponent": "Det",
+          "home": false,
+          "opponent_ops": 0.733,
+          "opponent_ops_split": 0.704,
+          "pitcher_hand": "R"
         }
       ]
     },
     {
       "name": "Nolan McLean",
       "mlb_team": "NYM",
-      "season_pts": 440.0,
-      "gs": 30,
-      "pts_per_gs": 14.67,
-      "pr30_pts": 53.0,
+      "season_pts": 462.0,
+      "gs": 31,
+      "pts_per_gs": 14.9,
+      "pr30_pts": 75.0,
       "starts": [
         {
           "date": "2026-09-23",
           "mlb_team": "NYM",
           "opponent": "Tex",
           "home": false,
-          "opponent_ops": 0.716,
-          "opponent_ops_split": 0.699,
+          "opponent_ops": 0.698,
+          "opponent_ops_split": 0.682,
+          "pitcher_hand": "R"
+        }
+      ]
+    },
+    {
+      "name": "Daniel Espino",
+      "mlb_team": "Cle",
+      "season_pts": 29.0,
+      "gs": 2,
+      "pts_per_gs": 14.5,
+      "pr30_pts": 14.0,
+      "starts": [
+        {
+          "date": "2026-09-24",
+          "mlb_team": "Cle",
+          "opponent": "Bos",
+          "home": false,
+          "opponent_ops": 0.678,
+          "opponent_ops_split": 0.734,
           "pitcher_hand": "R"
         }
       ]
@@ -354,8 +354,8 @@
           "mlb_team": "NYY",
           "opponent": "TB",
           "home": true,
-          "opponent_ops": 0.712,
-          "opponent_ops_split": 0.628,
+          "opponent_ops": 0.705,
+          "opponent_ops_split": 0.627,
           "pitcher_hand": "L"
         }
       ]
@@ -373,7 +373,7 @@
           "mlb_team": "SF",
           "opponent": "Min",
           "home": true,
-          "opponent_ops": 0.684,
+          "opponent_ops": 0.685,
           "opponent_ops_split": 0.702,
           "pitcher_hand": "R"
         }
@@ -392,8 +392,8 @@
           "mlb_team": "KC",
           "opponent": "ChW",
           "home": true,
-          "opponent_ops": 0.681,
-          "opponent_ops_split": 0.736,
+          "opponent_ops": 0.678,
+          "opponent_ops_split": 0.73,
           "pitcher_hand": "L"
         },
         {
@@ -401,8 +401,8 @@
           "mlb_team": "KC",
           "opponent": "Cle",
           "home": true,
-          "opponent_ops": 0.732,
-          "opponent_ops_split": 0.687,
+          "opponent_ops": 0.721,
+          "opponent_ops_split": 0.678,
           "pitcher_hand": "L"
         }
       ]
@@ -420,8 +420,8 @@
           "mlb_team": "Min",
           "opponent": "SF",
           "home": false,
-          "opponent_ops": 0.704,
-          "opponent_ops_split": 0.724,
+          "opponent_ops": 0.694,
+          "opponent_ops_split": 0.715,
           "pitcher_hand": "R"
         }
       ]
@@ -439,8 +439,8 @@
           "mlb_team": "NYM",
           "opponent": "Tex",
           "home": false,
-          "opponent_ops": 0.716,
-          "opponent_ops_split": 0.767,
+          "opponent_ops": 0.698,
+          "opponent_ops_split": 0.75,
           "pitcher_hand": "L"
         },
         {
@@ -448,8 +448,8 @@
           "mlb_team": "NYM",
           "opponent": "Wsh",
           "home": false,
-          "opponent_ops": 0.677,
-          "opponent_ops_split": 0.715,
+          "opponent_ops": 0.674,
+          "opponent_ops_split": 0.71,
           "pitcher_hand": "L"
         }
       ]
@@ -467,8 +467,8 @@
           "mlb_team": "Ari",
           "opponent": "SD",
           "home": false,
-          "opponent_ops": 0.79,
-          "opponent_ops_split": 0.753,
+          "opponent_ops": 0.785,
+          "opponent_ops_split": 0.75,
           "pitcher_hand": "R"
         }
       ]
@@ -486,8 +486,8 @@
           "mlb_team": "Ari",
           "opponent": "Col",
           "home": false,
-          "opponent_ops": 0.727,
-          "opponent_ops_split": 0.764,
+          "opponent_ops": 0.721,
+          "opponent_ops_split": 0.758,
           "pitcher_hand": "R"
         },
         {
@@ -495,8 +495,8 @@
           "mlb_team": "Ari",
           "opponent": "SD",
           "home": false,
-          "opponent_ops": 0.79,
-          "opponent_ops_split": 0.753,
+          "opponent_ops": 0.785,
+          "opponent_ops_split": 0.75,
           "pitcher_hand": "R"
         }
       ]
@@ -515,7 +515,7 @@
           "opponent": "Mia",
           "home": true,
           "opponent_ops": 0.732,
-          "opponent_ops_split": 0.665,
+          "opponent_ops_split": 0.666,
           "pitcher_hand": "L"
         }
       ]
@@ -533,7 +533,7 @@
           "mlb_team": "Pit",
           "opponent": "StL",
           "home": true,
-          "opponent_ops": 0.667,
+          "opponent_ops": 0.669,
           "opponent_ops_split": 0.716,
           "pitcher_hand": "R"
         },
@@ -542,8 +542,8 @@
           "mlb_team": "Pit",
           "opponent": "Det",
           "home": false,
-          "opponent_ops": 0.732,
-          "opponent_ops_split": 0.707,
+          "opponent_ops": 0.733,
+          "opponent_ops_split": 0.704,
           "pitcher_hand": "R"
         }
       ]
@@ -561,8 +561,8 @@
           "mlb_team": "Mia",
           "opponent": "ChC",
           "home": false,
-          "opponent_ops": 0.831,
-          "opponent_ops_split": 0.816,
+          "opponent_ops": 0.822,
+          "opponent_ops_split": 0.807,
           "pitcher_hand": "R"
         }
       ]
@@ -580,8 +580,8 @@
           "mlb_team": "Min",
           "opponent": "Tex",
           "home": true,
-          "opponent_ops": 0.716,
-          "opponent_ops_split": 0.694,
+          "opponent_ops": 0.698,
+          "opponent_ops_split": 0.684,
           "pitcher_hand": "R"
         }
       ]
@@ -599,28 +599,9 @@
           "mlb_team": "Bos",
           "opponent": "Cle",
           "home": true,
-          "opponent_ops": 0.732,
-          "opponent_ops_split": 0.687,
+          "opponent_ops": 0.721,
+          "opponent_ops_split": 0.678,
           "pitcher_hand": "L"
-        }
-      ]
-    },
-    {
-      "name": "Ethan Pecko",
-      "mlb_team": "Hou",
-      "season_pts": 47.0,
-      "gs": 4,
-      "pts_per_gs": 11.75,
-      "pr30_pts": 43.0,
-      "starts": [
-        {
-          "date": "2026-09-23",
-          "mlb_team": "Hou",
-          "opponent": "Sea",
-          "home": false,
-          "opponent_ops": 0.727,
-          "opponent_ops_split": 0.711,
-          "pitcher_hand": "R"
         }
       ]
     },
@@ -637,8 +618,8 @@
           "mlb_team": "KC",
           "opponent": "ChW",
           "home": true,
-          "opponent_ops": 0.681,
-          "opponent_ops_split": 0.701,
+          "opponent_ops": 0.678,
+          "opponent_ops_split": 0.699,
           "pitcher_hand": "R"
         }
       ]
@@ -656,7 +637,7 @@
           "mlb_team": "SF",
           "opponent": "Min",
           "home": true,
-          "opponent_ops": 0.684,
+          "opponent_ops": 0.685,
           "opponent_ops_split": 0.702,
           "pitcher_hand": "R"
         }
@@ -675,8 +656,8 @@
           "mlb_team": "Oak",
           "opponent": "Hou",
           "home": true,
-          "opponent_ops": 0.704,
-          "opponent_ops_split": 0.714,
+          "opponent_ops": 0.707,
+          "opponent_ops_split": 0.716,
           "pitcher_hand": "R"
         }
       ]
@@ -694,8 +675,8 @@
           "mlb_team": "Det",
           "opponent": "Pit",
           "home": true,
-          "opponent_ops": 0.755,
-          "opponent_ops_split": 0.688,
+          "opponent_ops": 0.747,
+          "opponent_ops_split": 0.685,
           "pitcher_hand": "R"
         }
       ]
@@ -713,8 +694,8 @@
           "mlb_team": "ChW",
           "opponent": "KC",
           "home": false,
-          "opponent_ops": 0.701,
-          "opponent_ops_split": 0.816,
+          "opponent_ops": 0.706,
+          "opponent_ops_split": 0.815,
           "pitcher_hand": "R"
         }
       ]
@@ -732,8 +713,8 @@
           "mlb_team": "Atl",
           "opponent": "Cin",
           "home": true,
-          "opponent_ops": 0.714,
-          "opponent_ops_split": 0.69,
+          "opponent_ops": 0.707,
+          "opponent_ops_split": 0.685,
           "pitcher_hand": "R"
         }
       ]
@@ -741,18 +722,18 @@
     {
       "name": "Connor Prielipp",
       "mlb_team": "Min",
-      "season_pts": 207.0,
-      "gs": 21,
-      "pts_per_gs": 9.86,
-      "pr30_pts": 65.0,
+      "season_pts": 216.0,
+      "gs": 22,
+      "pts_per_gs": 9.82,
+      "pr30_pts": 74.0,
       "starts": [
         {
           "date": "2026-09-23",
           "mlb_team": "Min",
           "opponent": "SF",
           "home": false,
-          "opponent_ops": 0.704,
-          "opponent_ops_split": 0.662,
+          "opponent_ops": 0.694,
+          "opponent_ops_split": 0.653,
           "pitcher_hand": "L"
         }
       ]
@@ -760,18 +741,18 @@
     {
       "name": "Cesar Perdomo",
       "mlb_team": "SF",
-      "season_pts": 29.0,
-      "gs": 3,
-      "pts_per_gs": 9.67,
-      "pr30_pts": 29.0,
+      "season_pts": 38.0,
+      "gs": 4,
+      "pts_per_gs": 9.5,
+      "pr30_pts": 38.0,
       "starts": [
         {
           "date": "2026-09-23",
           "mlb_team": "SF",
           "opponent": "Min",
           "home": true,
-          "opponent_ops": 0.684,
-          "opponent_ops_split": 0.644,
+          "opponent_ops": 0.685,
+          "opponent_ops_split": 0.647,
           "pitcher_hand": "L"
         }
       ]
@@ -785,13 +766,32 @@
       "pr30_pts": 50.0,
       "starts": [
         {
-          "date": "2026-09-27",
+          "date": "2026-09-25",
           "mlb_team": "ChC",
           "opponent": "Bos",
           "home": false,
-          "opponent_ops": 0.679,
-          "opponent_ops_split": 0.771,
+          "opponent_ops": 0.678,
+          "opponent_ops_split": 0.767,
           "pitcher_hand": "L"
+        }
+      ]
+    },
+    {
+      "name": "Ethan Pecko",
+      "mlb_team": "Hou",
+      "season_pts": 45.0,
+      "gs": 5,
+      "pts_per_gs": 9.0,
+      "pr30_pts": 41.0,
+      "starts": [
+        {
+          "date": "2026-09-23",
+          "mlb_team": "Hou",
+          "opponent": "Sea",
+          "home": false,
+          "opponent_ops": 0.725,
+          "opponent_ops_split": 0.711,
+          "pitcher_hand": "R"
         }
       ]
     },
@@ -808,8 +808,8 @@
           "mlb_team": "Det",
           "opponent": "Wsh",
           "home": true,
-          "opponent_ops": 0.677,
-          "opponent_ops_split": 0.628,
+          "opponent_ops": 0.674,
+          "opponent_ops_split": 0.626,
           "pitcher_hand": "R"
         },
         {
@@ -817,8 +817,8 @@
           "mlb_team": "Det",
           "opponent": "Pit",
           "home": true,
-          "opponent_ops": 0.755,
-          "opponent_ops_split": 0.688,
+          "opponent_ops": 0.747,
+          "opponent_ops_split": 0.685,
           "pitcher_hand": "R"
         }
       ]
@@ -836,8 +836,27 @@
           "mlb_team": "Col",
           "opponent": "Ari",
           "home": true,
-          "opponent_ops": 0.723,
-          "opponent_ops_split": 0.672,
+          "opponent_ops": 0.719,
+          "opponent_ops_split": 0.668,
+          "pitcher_hand": "R"
+        }
+      ]
+    },
+    {
+      "name": "Mason Adams",
+      "mlb_team": "Col",
+      "season_pts": 52.0,
+      "gs": 6,
+      "pts_per_gs": 8.67,
+      "pr30_pts": 52.0,
+      "starts": [
+        {
+          "date": "2026-09-23",
+          "mlb_team": "Col",
+          "opponent": "Ari",
+          "home": true,
+          "opponent_ops": 0.719,
+          "opponent_ops_split": 0.668,
           "pitcher_hand": "R"
         }
       ]
@@ -855,8 +874,8 @@
           "mlb_team": "Pit",
           "opponent": "Det",
           "home": false,
-          "opponent_ops": 0.732,
-          "opponent_ops_split": 0.707,
+          "opponent_ops": 0.733,
+          "opponent_ops_split": 0.704,
           "pitcher_hand": "R"
         }
       ]
@@ -874,8 +893,8 @@
           "mlb_team": "SD",
           "opponent": "Ari",
           "home": true,
-          "opponent_ops": 0.723,
-          "opponent_ops_split": 0.672,
+          "opponent_ops": 0.719,
+          "opponent_ops_split": 0.668,
           "pitcher_hand": "R"
         }
       ]
@@ -893,8 +912,8 @@
           "mlb_team": "Cin",
           "opponent": "Atl",
           "home": false,
-          "opponent_ops": 0.711,
-          "opponent_ops_split": 0.676,
+          "opponent_ops": 0.712,
+          "opponent_ops_split": 0.674,
           "pitcher_hand": "L"
         },
         {
@@ -902,8 +921,8 @@
           "mlb_team": "Cin",
           "opponent": "Tor",
           "home": false,
-          "opponent_ops": 0.736,
-          "opponent_ops_split": 0.698,
+          "opponent_ops": 0.726,
+          "opponent_ops_split": 0.692,
           "pitcher_hand": "L"
         }
       ]
@@ -917,12 +936,12 @@
       "pr30_pts": 61.0,
       "starts": [
         {
-          "date": "2026-09-25",
+          "date": "2026-09-24",
           "mlb_team": "Phi",
-          "opponent": "TB",
+          "opponent": "Mil",
           "home": true,
-          "opponent_ops": 0.712,
-          "opponent_ops_split": 0.693,
+          "opponent_ops": 0.775,
+          "opponent_ops_split": 0.755,
           "pitcher_hand": "R"
         }
       ]
@@ -940,17 +959,8 @@
           "mlb_team": "Hou",
           "opponent": "Sea",
           "home": false,
-          "opponent_ops": 0.727,
+          "opponent_ops": 0.725,
           "opponent_ops_split": 0.711,
-          "pitcher_hand": "R"
-        },
-        {
-          "date": "2026-09-27",
-          "mlb_team": "Hou",
-          "opponent": "Oak",
-          "home": false,
-          "opponent_ops": 0.713,
-          "opponent_ops_split": 0.804,
           "pitcher_hand": "R"
         }
       ]
@@ -968,8 +978,8 @@
           "mlb_team": "Mia",
           "opponent": "ChC",
           "home": false,
-          "opponent_ops": 0.831,
-          "opponent_ops_split": 0.816,
+          "opponent_ops": 0.822,
+          "opponent_ops_split": 0.807,
           "pitcher_hand": "R"
         },
         {
@@ -977,8 +987,8 @@
           "mlb_team": "Mia",
           "opponent": "Atl",
           "home": true,
-          "opponent_ops": 0.711,
-          "opponent_ops_split": 0.663,
+          "opponent_ops": 0.712,
+          "opponent_ops_split": 0.662,
           "pitcher_hand": "R"
         }
       ]
@@ -986,18 +996,18 @@
     {
       "name": "Ryan Gusto",
       "mlb_team": "Mia",
-      "season_pts": 125.0,
-      "gs": 17,
-      "pts_per_gs": 7.35,
-      "pr30_pts": 32.0,
+      "season_pts": 134.0,
+      "gs": 18,
+      "pts_per_gs": 7.44,
+      "pr30_pts": 41.0,
       "starts": [
         {
           "date": "2026-09-23",
           "mlb_team": "Mia",
           "opponent": "ChC",
           "home": false,
-          "opponent_ops": 0.831,
-          "opponent_ops_split": 0.816,
+          "opponent_ops": 0.822,
+          "opponent_ops_split": 0.807,
           "pitcher_hand": "R"
         }
       ]
@@ -1015,8 +1025,8 @@
           "mlb_team": "LAA",
           "opponent": "Oak",
           "home": false,
-          "opponent_ops": 0.713,
-          "opponent_ops_split": 0.804,
+          "opponent_ops": 0.725,
+          "opponent_ops_split": 0.809,
           "pitcher_hand": "L"
         },
         {
@@ -1024,8 +1034,8 @@
           "mlb_team": "LAA",
           "opponent": "Sea",
           "home": false,
-          "opponent_ops": 0.727,
-          "opponent_ops_split": 0.655,
+          "opponent_ops": 0.725,
+          "opponent_ops_split": 0.657,
           "pitcher_hand": "L"
         }
       ]
@@ -1033,18 +1043,18 @@
     {
       "name": "Chris Bassitt",
       "mlb_team": "Bal",
-      "season_pts": 120.0,
-      "gs": 17,
-      "pts_per_gs": 7.06,
-      "pr30_pts": 57.0,
+      "season_pts": 125.0,
+      "gs": 18,
+      "pts_per_gs": 6.94,
+      "pr30_pts": 62.0,
       "starts": [
         {
           "date": "2026-09-23",
           "mlb_team": "Bal",
           "opponent": "Tor",
           "home": true,
-          "opponent_ops": 0.736,
-          "opponent_ops_split": 0.745,
+          "opponent_ops": 0.726,
+          "opponent_ops_split": 0.734,
           "pitcher_hand": "R"
         }
       ]
@@ -1062,28 +1072,9 @@
           "mlb_team": "Col",
           "opponent": "ChW",
           "home": false,
-          "opponent_ops": 0.681,
-          "opponent_ops_split": 0.734,
+          "opponent_ops": 0.678,
+          "opponent_ops_split": 0.733,
           "pitcher_hand": "R"
-        }
-      ]
-    },
-    {
-      "name": "Cody Bradford",
-      "mlb_team": "Tex",
-      "season_pts": 45.0,
-      "gs": 7,
-      "pts_per_gs": 6.43,
-      "pr30_pts": 10.0,
-      "starts": [
-        {
-          "date": "2026-09-23",
-          "mlb_team": "Tex",
-          "opponent": "NYM",
-          "home": true,
-          "opponent_ops": 0.75,
-          "opponent_ops_split": 0.728,
-          "pitcher_hand": "L"
         }
       ]
     },
@@ -1100,8 +1091,27 @@
           "mlb_team": "Cin",
           "opponent": "Tor",
           "home": false,
-          "opponent_ops": 0.736,
-          "opponent_ops_split": 0.698,
+          "opponent_ops": 0.726,
+          "opponent_ops_split": 0.692,
+          "pitcher_hand": "L"
+        }
+      ]
+    },
+    {
+      "name": "Cody Bradford",
+      "mlb_team": "Tex",
+      "season_pts": 51.0,
+      "gs": 8,
+      "pts_per_gs": 6.38,
+      "pr30_pts": 16.0,
+      "starts": [
+        {
+          "date": "2026-09-23",
+          "mlb_team": "Tex",
+          "opponent": "NYM",
+          "home": true,
+          "opponent_ops": 0.751,
+          "opponent_ops_split": 0.729,
           "pitcher_hand": "L"
         }
       ]
@@ -1119,8 +1129,8 @@
           "mlb_team": "Bos",
           "opponent": "ChC",
           "home": true,
-          "opponent_ops": 0.831,
-          "opponent_ops_split": 0.809,
+          "opponent_ops": 0.822,
+          "opponent_ops_split": 0.802,
           "pitcher_hand": "L"
         }
       ]
@@ -1138,8 +1148,8 @@
           "mlb_team": "Cin",
           "opponent": "Atl",
           "home": false,
-          "opponent_ops": 0.711,
-          "opponent_ops_split": 0.715,
+          "opponent_ops": 0.712,
+          "opponent_ops_split": 0.713,
           "pitcher_hand": "R"
         }
       ]
@@ -1147,37 +1157,18 @@
     {
       "name": "Max Scherzer",
       "mlb_team": "Tor",
-      "season_pts": 89.0,
-      "gs": 16,
-      "pts_per_gs": 5.56,
-      "pr30_pts": 53.0,
+      "season_pts": 96.0,
+      "gs": 17,
+      "pts_per_gs": 5.65,
+      "pr30_pts": 60.0,
       "starts": [
         {
           "date": "2026-09-23",
           "mlb_team": "Tor",
           "opponent": "Bal",
           "home": false,
-          "opponent_ops": 0.657,
-          "opponent_ops_split": 0.694,
-          "pitcher_hand": "R"
-        }
-      ]
-    },
-    {
-      "name": "Mason Adams",
-      "mlb_team": "Col",
-      "season_pts": 27.0,
-      "gs": 5,
-      "pts_per_gs": 5.4,
-      "pr30_pts": 27.0,
-      "starts": [
-        {
-          "date": "2026-09-23",
-          "mlb_team": "Col",
-          "opponent": "Ari",
-          "home": true,
-          "opponent_ops": 0.723,
-          "opponent_ops_split": 0.672,
+          "opponent_ops": 0.65,
+          "opponent_ops_split": 0.686,
           "pitcher_hand": "R"
         }
       ]
@@ -1195,7 +1186,7 @@
           "mlb_team": "LAA",
           "opponent": "Sea",
           "home": false,
-          "opponent_ops": 0.727,
+          "opponent_ops": 0.725,
           "opponent_ops_split": 0.711,
           "pitcher_hand": "R"
         }
@@ -1214,8 +1205,8 @@
           "mlb_team": "Cin",
           "opponent": "Tor",
           "home": false,
-          "opponent_ops": 0.736,
-          "opponent_ops_split": 0.76,
+          "opponent_ops": 0.726,
+          "opponent_ops_split": 0.751,
           "pitcher_hand": "R"
         }
       ]
@@ -1233,8 +1224,8 @@
           "mlb_team": "Col",
           "opponent": "Ari",
           "home": true,
-          "opponent_ops": 0.723,
-          "opponent_ops_split": 0.766,
+          "opponent_ops": 0.719,
+          "opponent_ops_split": 0.765,
           "pitcher_hand": "L"
         },
         {
@@ -1242,8 +1233,8 @@
           "mlb_team": "Col",
           "opponent": "ChW",
           "home": false,
-          "opponent_ops": 0.681,
-          "opponent_ops_split": 0.771,
+          "opponent_ops": 0.678,
+          "opponent_ops_split": 0.766,
           "pitcher_hand": "L"
         }
       ]
@@ -1261,8 +1252,8 @@
           "mlb_team": "Ari",
           "opponent": "SD",
           "home": false,
-          "opponent_ops": 0.79,
-          "opponent_ops_split": 0.753,
+          "opponent_ops": 0.785,
+          "opponent_ops_split": 0.75,
           "pitcher_hand": "R"
         }
       ]
@@ -1280,8 +1271,8 @@
           "mlb_team": "Col",
           "opponent": "ChW",
           "home": false,
-          "opponent_ops": 0.681,
-          "opponent_ops_split": 0.771,
+          "opponent_ops": 0.678,
+          "opponent_ops_split": 0.766,
           "pitcher_hand": "L"
         }
       ]
@@ -1299,8 +1290,8 @@
           "mlb_team": "Wsh",
           "opponent": "Det",
           "home": false,
-          "opponent_ops": 0.732,
-          "opponent_ops_split": 0.687,
+          "opponent_ops": 0.733,
+          "opponent_ops_split": 0.689,
           "pitcher_hand": "L"
         }
       ]
@@ -1311,15 +1302,15 @@
       "season_pts": 0.0,
       "gs": 0,
       "pts_per_gs": 0.0,
-      "pr30_pts": 0,
+      "pr30_pts": -6.0,
       "starts": [
         {
           "date": "2026-09-26",
           "mlb_team": "Det",
           "opponent": "Pit",
           "home": true,
-          "opponent_ops": 0.755,
-          "opponent_ops_split": 0.688,
+          "opponent_ops": 0.747,
+          "opponent_ops_split": 0.685,
           "pitcher_hand": "R"
         }
       ]
